@@ -10,12 +10,12 @@ Modules included in default installation:
 
 Each variant contains additional modules.
 
-`:geoip2` :
+`:geoip2`
 
 - MaxMind::DB::Reader and dependencies
 - MaxMind::DB::Reader::XS and dependencies
 
-`geoip2-email-sender`:
+`geoip2-email-sender`
 
 - MaxMind::DB::Reader and dependencies
 - MaxMind::DB::Reader::XS and dependencies
@@ -23,7 +23,7 @@ Each variant contains additional modules.
 
 ## Steps
 1. Mount the `hlxce/scripts` folder on `/app`
-2. Run the container. If no errors are shown, your cron should be ready.
+2. Run the container. If no errors are shown, all should be good.
 
 ## Example
 
@@ -44,7 +44,7 @@ docker run -d \
 ## FAQ
 
 #### How to use GeoIP2 with the perl daemon?
- - As of `hlxce 1.6.19`, the perl daemon scripts has no support is included for GeoIP2. It was written only for GeoIP. You will have to change a bit of the code yourself to use the GeoIP2 API.
+ - As of `hlxce 1.6.19`, the perl daemon scripts has no support for GeoIP2. It was written only for GeoIP. You will have to change a bit of the code yourself to use the GeoIP2 API.
 
 #### How long will this Docker Image be supported?
  - As long as the repository is not marked deprecated, which should not happen.
