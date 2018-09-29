@@ -44,9 +44,9 @@ RUN apt-get update \
 RUN perl -MCPAN -e 'install Geo::IP::PurePerl'
 
 # Install modules for perl GeoIP2
-RUN perl -MCPAN -e 'install Geo::IP::PurePerl' && \
-    perl -MCPAN -e "install GeoIP2" && \
+RUN perl -MCPAN -e "install GeoIP2" && \
     perl -MCPAN -e 'install MaxMind::DB::Reader' \
+    ;
 
 # Install modules for perl GeoIP2 (faster db access)
 # Install maxmind DB::Reader::XS (faster than MaxMind::DB::Reader)
@@ -81,4 +81,4 @@ STOPSIGNAL SIGINT
 WORKDIR /app
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["perl", "./hlstats.pl", "--config=/hlstats.conf"]
+CMD ["perl", "./hlstats.pl"]

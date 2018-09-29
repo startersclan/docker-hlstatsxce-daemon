@@ -63,4 +63,4 @@ STOPSIGNAL SIGINT
 WORKDIR /app
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["perl", "./hlstats.pl", "--config=/hlstats.conf"]
+CMD ["perl", "./hlstats.pl"]
