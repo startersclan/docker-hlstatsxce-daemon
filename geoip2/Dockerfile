@@ -37,15 +37,23 @@ RUN apt-get update \
         build-essential \
         libdbi-perl \
         libdbd-mysql-perl \
+        cpanminus \
     && \
     rm -rf /var/lib/apt/lists/* \
     ;
 # Install modules for perl GeoIP
-RUN perl -MCPAN -e 'install Geo::IP::PurePerl'
+RUN cpanm Geo::IP::PurePerl
 
 # Install modules for perl GeoIP2
-RUN perl -MCPAN -e "install GeoIP2" && \
-    perl -MCPAN -e 'install MaxMind::DB::Reader' \
+RUN apt-get update && \
+    apt-get install -y \
+        libio-socket-ssl-perl \
+        libnet-ssleay-perl \
+        libwww-perl \
+    ;
+RUN cpanm \
+        GeoIP2 \
+        MaxMind::DB::Reader \
     ;
 
 # Install modules for perl GeoIP2 (faster db access)
@@ -58,7 +66,7 @@ RUN apt-get update && apt-get install -y software-properties-common && \
         libmaxminddb-dev \
         mmdb-bin \
     && \
-    perl -MCPAN -e 'install MaxMind::DB::Reader::XS' \
+    cpanm MaxMind::DB::Reader::XS \
     ;
 
 # Cleanup
@@ -66,6 +74,7 @@ RUN rm -rf /var/lib/apt/lists/* \
     && \
     apt-get purge --auto-remove -y \
         build-essential  \
+        cpanminus \
     && \
     rm -rf /root/.cpan/ \
     ;

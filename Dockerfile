@@ -37,17 +37,19 @@ RUN apt-get update \
         build-essential \
         libdbi-perl \
         libdbd-mysql-perl \
+        cpanminus \
     && \
     rm -rf /var/lib/apt/lists/* \
     ;
 # Install modules for perl GeoIP
-RUN perl -MCPAN -e 'install Geo::IP::PurePerl'
+RUN cpanm Geo::IP::PurePerl
 
 # Cleanup
 RUN rm -rf /var/lib/apt/lists/* \
     && \
     apt-get purge --auto-remove -y \
         build-essential  \
+        cpanminus \
     && \
     rm -rf /root/.cpan/ \
     ;
