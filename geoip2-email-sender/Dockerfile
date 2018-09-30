@@ -72,7 +72,6 @@ RUN apt-get update && apt-get install -y \
         MaxMind::DB::Reader::XS \
     && apt-get purge --auto-remove -y \
         build-essential  \
-        cpanminus \
     && rm -rf /var/lib/apt/lists/* /root/.cpan/ /root/.cpanm/
 
 # Install modules for perl-based email
