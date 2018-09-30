@@ -56,6 +56,7 @@ RUN apt-get update && apt-get install -y \
         libio-socket-ssl-perl \
         libnet-ssleay-perl \
         libwww-perl \
+        libdatetime-perl \
     && cpanm \
         GeoIP2 \
         MaxMind::DB::Reader \
