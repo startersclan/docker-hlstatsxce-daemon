@@ -31,43 +31,49 @@ ENV PERL_MM_USE_DEFAULT 1
 
 # Install perl modules through debian packages
 RUN apt-get update \
-    && \
-    apt-get install -y \
+    && apt-get install -y \
         perl \
-        build-essential \
         libdbi-perl \
         libdbd-mysql-perl \
-        cpanminus \
-    && \
-    rm -rf /var/lib/apt/lists/* \
-    ;
+    && rm -rf /var/lib/apt/lists/*
+
 # Install modules for perl GeoIP
-RUN cpanm Geo::IP::PurePerl
+RUN apt-get update && apt-get install -y \
+        build-essential \
+        cpanminus \
+    && cpanm \
+        Geo::IP::PurePerl \
+    && apt-get purge --auto-remove -y \
+        build-essential  \
+        cpanminus \
+    && rm -rf /var/lib/apt/lists/* /root/.cpan/ /root/.cpanm/
 
 # Install modules for perl GeoIP2
-RUN apt-get update && \
-    apt-get install -y \
+RUN apt-get update && apt-get install -y \
+        build-essential \
+        cpanminus \
+    && apt-get update && apt-get install -y \
         libio-socket-ssl-perl \
         libnet-ssleay-perl \
         libwww-perl \
-    ;
-RUN cpanm \
+    && cpanm \
         GeoIP2 \
         MaxMind::DB::Reader \
-    ;
-
-# Install modules for perl GeoIP2 (faster db access)
 # Install maxmind DB::Reader::XS (faster than MaxMind::DB::Reader)
 # See: https://github.com/maxmind/libmaxminddb
-RUN apt-get update && apt-get install -y software-properties-common && \
-    add-apt-repository -y ppa:maxmind/ppa && \
-    apt-get install -y \
+    && apt-get update && apt-get install -y \
+        software-properties-common \
+    && add-apt-repository -y ppa:maxmind/ppa \
+    && apt-get install -y \
         libmaxminddb0 \
         libmaxminddb-dev \
         mmdb-bin \
-    && \
-    cpanm MaxMind::DB::Reader::XS \
-    ;
+    && cpanm \
+        MaxMind::DB::Reader::XS \
+    && apt-get purge --auto-remove -y \
+        build-essential  \
+        cpanminus \
+    && rm -rf /var/lib/apt/lists/* /root/.cpan/ /root/.cpanm/
 
 # Install modules for perl-based email
 RUN apt-get update && \
@@ -76,21 +82,10 @@ RUN apt-get update && \
         libnet-ssleay-perl \
         libwww-perl \
         libemail-sender-perl \
-    ;
-#RUN cpanm Email::Sender::Simple \
-    #IO::Socket::SSL \
-    #Net-SSLeay \
-    #;
-
-# Cleanup
-RUN rm -rf /var/lib/apt/lists/* \
-    && \
-    apt-get purge --auto-remove -y \
-        build-essential  \
-        cpanminus \
-    && \
-    rm -rf /root/.cpan/ \
-    ;
+    #&& cpanm Email::Sender::Simple \
+        #IO::Socket::SSL \
+        #Net-SSLeay \
+    && rm -rf /var/lib/apt/lists/* /root/.cpan/ /root/.cpanm/
 
 COPY ./docker-entrypoint.sh /
 

@@ -31,28 +31,22 @@ ENV PERL_MM_USE_DEFAULT 1
 
 # Install perl modules through debian packages
 RUN apt-get update \
-    && \
-    apt-get install -y \
+    && apt-get install -y \
         perl \
-        build-essential \
         libdbi-perl \
         libdbd-mysql-perl \
-        cpanminus \
-    && \
-    rm -rf /var/lib/apt/lists/* \
-    ;
-# Install modules for perl GeoIP
-RUN cpanm Geo::IP::PurePerl
+    && rm -rf /var/lib/apt/lists/* \
 
-# Cleanup
-RUN rm -rf /var/lib/apt/lists/* \
-    && \
-    apt-get purge --auto-remove -y \
+# Install modules for perl GeoIP
+RUN apt-get update && apt-get install -y \
+        build-essential \
+        cpanminus \
+    && cpanm \
+        Geo::IP::PurePerl \
+    && apt-get purge --auto-remove -y \
         build-essential  \
         cpanminus \
-    && \
-    rm -rf /root/.cpan/ \
-    ;
+    && rm -rf /var/lib/apt/lists/* /root/.cpan/ /root/.cpanm/
 
 COPY ./docker-entrypoint.sh /
 
