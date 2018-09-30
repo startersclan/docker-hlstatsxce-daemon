@@ -21,6 +21,12 @@ Each variant contains additional modules.
 - MaxMind::DB::Reader::XS and dependencies
 - Email::Sender::Simple and dependencies
 
+`alpine`
+ - Same as `:latest`, but using `alpine`
+
+`alpine-geoip2`
+ - Same as geoip2, but using `alpine`
+
 ## Steps
 1. Mount the `hlxce/scripts` folder on `/app`
 2. Run the container. If no errors are shown, all should be good.
