@@ -52,3 +52,16 @@ RUN apk add --no-cache --virtual build-dependencies \
     #     MaxMind::DB::Reader::XS \
     && apk del build-dependencies \
     && rm -rf /root/.cpan /root/.cpanminus /var/cache/apk/*
+
+COPY ./docker-entrypoint.sh /
+
+RUN chmod +x /docker-entrypoint.sh
+
+EXPOSE 27500/udp
+
+STOPSIGNAL SIGINT
+
+WORKDIR /app
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["perl", "./hlstats.pl"]
