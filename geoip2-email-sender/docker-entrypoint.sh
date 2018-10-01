@@ -25,12 +25,17 @@ output() {
 [ ! -z "${DEBUG_HIGH}" ] && set "$@" "-dd"
 [ ! -z "${DEBUG_NONE}" ] && set "$@" "-nn"
 
-env
-echo "command line: $@"
+if [ ! -z "${ECHO_ENVIRONMENT}" ]; then
+    output "Environment: \n$( env )"
+    commandline="$@"
+    output "Command line: $commandline"
+fi
 
 # Download the GeoLite / GeoLite2 DB
 #[ ! -f install_binary_GeoLite.sh ] && perl install_binary_GeoLite.sh
 #[ ! -f install_binary_GeoLite2.sh ] && perl install_binary_GeoLite2.sh
+
+output "Starting daemon..."
 
 # Run script
 exec "$@"
