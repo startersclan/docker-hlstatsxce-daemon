@@ -39,6 +39,7 @@ docker run -d \
 ## Environment variables (optional)
 
 These environment variables are optional. Use them only if:
+
 1) not using the config file `./hlstats.conf`
 2) using the config file `./hlstats.conf` in same directory as `hlstats.pl`, but want to override the config file's settings.
 
