@@ -4,36 +4,33 @@ output() {
     echo "$( date --iso-8601=ns ) [ENTRYPOINT] $1";
 }
 
-# Exit if daemon config is not found
-[ ! -f "/app/hlstats.conf" ] && output "WARNING: Could not find the daemon config /app/hlstats.conf! Will use app defaults."
+# Note: As of hlxce 1.6.19, hlstats.pl's --configfile argument does not take effect.
+# To fix this, find this line in hlstats.pl:
+#    if ($configfile && -r $configfile) {
+# Add this code line before it:
+#   setOptionsConf(%copts);
+# That should fix hlstats.pl's --configfile argument issue.
+[ ! -z "${CONFIG_FILE}" ] && set "$@" "--configfile=${CONFIG_FILE}"
+[ ! -z "${MODE}" ] && set "$@" "--db-host=${MODE}"
+[ ! -z "${DB_HOST}" ] && set "$@" "--db-host=${DB_HOST}"
+[ ! -z "${DB_NAME}" ] && set "$@" "--db-name=${DB_NAME}"
+[ ! -z "${DB_USER}" ] && set "$@" "--db-username=${DB_USER}"
+[ ! -z "${DB_PASSWORD}" ] && set "$@" "--db-password=${DB_PASSWORD}"
+[ ! -z "${STDIN}" ] && set "$@" "--stdin"
+[ ! -z "${STDIN_SERVER_IP}" ] && set "$@" "--server-ip=${STDIN_SERVER_IP}"
+[ ! -z "${STDIN_SERVER_PORT}" ] && set "$@" "--server-port=${STDIN_SERVER_PORT}"
+[ ! -z "${USE_DAEMON_TIMESTAMP}" ] && set "$@" "--notimestamp"
+#[ ! -z "${EVENT_QUEUE_SIZE}" ] && set "$@" "--event-queue-size=${EVENT_QUEUE_SIZE}"
+[ ! -z "${DEBUG_LOW}" ] && set "$@" "-d"
+[ ! -z "${DEBUG_HIGH}" ] && set "$@" "-dd"
+[ ! -z "${DEBUG_NONE}" ] && set "$@" "-nn"
 
-# Exit if port is invalid
-[ -z "${DAEMON_PORT}" ] && DAEMON_PORT=27500
-DAEMON_PORT=$( echo "${DAEMON_PORT}" | grep -P '^\d{1,5}$'  )
-[ -z "${DAEMON_PORT}" ] && output "Environment variable \${DAEMON_PORT} must be an integer." && exit 1
-( [ "${DAEMON_PORT}" -lt 1 ] || [ "${DAEMON_PORT}" -gt 65535 ] ) && output "Invalid Environment variable \${DAEMON_PORT} specified. It must be between 1 and 65535." && exit 1
-
-[ -n "${DAEMON_PORT}" ] && output "Environment variable \${DAEMON_PORT} found! Will run the daemon on port ${DAEMON_PORT}"
-
-###################
-# Prepare the app #
-###################
-
-# Test GeoIP and GeoIP2 compatibility
-cd /app/GeoLiteCity
-if [ -f TestGeoLite.pl ]; then
-    echo "[Entrypoint] Testing GeoIP ..."
-    perl TestGeoLite.pl || exit 1
-fi
-if [ -f TestGeoLite2.pl ]; then
-    echo "[Entrypoint] Testing GeoIP2 ..."
-    perl TestGeoLite2.pl || exit 1
-fi
+env
+echo "command line: $@"
 
 # Download the GeoLite / GeoLite2 DB
 #[ ! -f install_binary_GeoLite.sh ] && perl install_binary_GeoLite.sh
 #[ ! -f install_binary_GeoLite2.sh ] && perl install_binary_GeoLite2.sh
 
 # Run script
-cd /app
-exec "$@ --port=${DAEMON_PORT}"
+exec "$@"
