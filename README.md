@@ -13,8 +13,8 @@ Each variant contains additional perl modules.
 
 | Name | Perl Modules |
 |:-------:|:---------:|
-| `:geoip2` | MaxMind::DB::Reader and dependencies<br> MaxMind::DB::Reader::XS and dependencies
-| `geoip2-email-sender` | MaxMind::DB::Reader and dependencies<br> MaxMind::DB::Reader::XS and dependencies<br> Email::Sender::Simple and dependencies
+| `:geoip2` | `MaxMind::DB::Reader` and dependencies<br> `MaxMind::DB::Reader::XS` and dependencies
+| `geoip2-email-sender` | `MaxMind::DB::Reader` and dependencies<br> `MaxMind::DB::Reader::XS` and dependencies<br> `Email::Sender::Simple` and dependencies
 | `alpine` | Same as `:latest`, but using `alpine`
 | `alpine-geoip2` | Same as `:geoip2`, but using `alpine`
 
@@ -36,7 +36,7 @@ docker run -d \
 ```
 
 
-## Environment variables
+## Environment variables (optional)
 
 > These environment variables are optional. Use them only if:
 > 1) not using the config file `./hlstats.conf`
@@ -44,7 +44,7 @@ docker run -d \
 
 | Name | Default value (as in hlstats.pl | Description | Corresponds to `hlstats.pl` argument |
 |:-------:|:---------:|:---------:|:---------:| --
-| `CONFIG_FILE` | `./hlstats.conf` <sup>a</sup> | Specific configfile to use, settings in this file can now path to config file. May be absolute or relative | -c,--configfile
+| `CONFIG_FILE` | `./hlstats.conf` | Specific configfile to use, settings in this file can now path to config file. May be absolute or relative | -c,--configfile
 | `MODE` | `Normal` | player tracking mode (`Normal`, `LAN` or `NameTrack`) | -m, --mode
 | `DB_HOST` | `localhost` | database ip or ip:port | --db-host
 | `DB_NAME` | `"hlstats"` | database name | --db-name
