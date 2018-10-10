@@ -97,9 +97,15 @@ docker service create --name hlstatsxce-daemon \
     -e DB_USER=DOCKER_SECRET:secret_db_user \
     -e DB_PASSWORD=DOCKER_SECRET:secret_db_password \
     -e DEBUG_NONE=1 \
+    --secret secret_db_name \
+    --secret secret_db_user \
+    --secret secret_db_password \
+    --
     -v /path/to/hlxce/scripts:/app \
     wonderous/hlstatsxce-perl
 ```
+
+The entrypoint script takes care of expanding the environment variables `DB_NAME`, `DB_USER`, and `DB_PASSWORD` from the respective secret files `/run/secrets/secret_db_name`, `/run/secrets/secret_db_user`, and `/run/secrets/secret_db_password`. This is done by using the syntax `ENVVARIABLE=DOCKER_SECRET:docker_secret_name` (note the colon).
 
 ## FAQ
 
