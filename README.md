@@ -43,7 +43,7 @@ These environment variables are optional. Use them only if:
 2. using the config file `./hlstats.conf` in same directory as `hlstats.pl`, but want to override the config file's settings.
 
 | Name | Default value (as in `hlstats.pl`) | Description | Corresponds to `hlstats.pl` argument |
-|:-------:|:---------:|:---------:|:---------:| --
+|:-------:|:---------:|:---------:|:---------:|
 | `CONFIG_FILE` | `./hlstats.conf` | Specific configfile to use, settings in this file can now path to config file. May be absolute or relative | `-c,--configfile`
 | `MODE` | `Normal` | player tracking mode (`Normal`, `LAN` or `NameTrack`) | `-m, --mode`
 | `DB_HOST` | `localhost` | database ip or ip:port | `--db-host`
@@ -58,11 +58,25 @@ These environment variables are optional. Use them only if:
 | `DEBUG_HIGH` | N.A. | enable debugging output (verbose) | `-dd, --debug --debug`
 | `DEBUG_NONE` | N.A. | disables debugging output | `--nodebug`
 
+### Warning: If using `CONFIG_FILE`
+There is a bug in `hlstats.pl` that does not allow the passing of `--configfile=<configfile>` properly. To fix that, find the line in `hlstats.pl` on line `1821`:
+
+```perl
+if ($configfile && -r $configfile) {
+```
+
+Add this code line before it:
+
+```perl
+setOptionsConf(%copts);
+```
+
+Save the file. That should fix hlstats.pl's `--configfile` argument issue.
+
 #### Example (with environment variables):
 
 ```
 docker run -d \
-    -e CONFIGFILE=/hlstats.pl \
     -e MODE=Normal \
     -e DB_HOST=db \
     -e DB_NAME=hlstatsxce \
@@ -70,10 +84,22 @@ docker run -d \
     -e DB_PASSWORD=pass \
     -e DEBUG_NONE=1 \
     -v /path/to/hlxce/scripts:/app \
-    -v /path/to/hlxce/scripts/hlstats.conf:/app/hlstats.conf \
     wonderous/hlstatsxce-perl
 ```
 
+#### Example (Swarm Mode with Docker Secrets):
+
+```
+docker service create --name hlstatsxce-daemon \
+    -e MODE=Normal \
+    -e DB_HOST=db \
+    -e DB_NAME=DOCKER_SECRET:secret_db_name \
+    -e DB_USER=DOCKER_SECRET:secret_db_user \
+    -e DB_PASSWORD=DOCKER_SECRET:secret_db_password \
+    -e DEBUG_NONE=1 \
+    -v /path/to/hlxce/scripts:/app \
+    wonderous/hlstatsxce-perl
+```
 
 ## FAQ
 
