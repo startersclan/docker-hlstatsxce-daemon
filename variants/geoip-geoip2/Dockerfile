@@ -26,7 +26,7 @@ ENV PERL_MM_USE_DEFAULT 1
 # Install perl
 RUN apt-get update \
     && apt-get install -y \
-        #apt-utils
+        apt-utils
         perl \
     && rm -rf /var/lib/apt/lists/*
 
