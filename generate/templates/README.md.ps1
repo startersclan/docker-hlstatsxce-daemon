@@ -5,7 +5,7 @@ Packages included: `curl`, `wget`
 
 | Tags |
 |:-------:| $( $VARIANTS | % {
-"`n| ``:$( $_['name'] )`` |"
+"`n| ``:$( $_['tag'] )`` |"
 })
 
 "@ + @'

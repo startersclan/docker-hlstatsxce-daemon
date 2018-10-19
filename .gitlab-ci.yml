@@ -14,8 +14,9 @@ build-geoip:
     - master
     - api
   variables:
-    VARIANT_NAME: "geoip"
-    VARIANT_TAG: "geoip-v1.0.0"
+    VARIANT_TAG: "geoip"
+    VARIANT_TAG_WITH_VERSION: "geoip-v1.0.0"
+    VARIANT_BUILD_DIR: "./variants/ubuntu/geoip"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -29,16 +30,20 @@ build-geoip:
     - date '+%Y-%m-%d %H:%M:%S %z'
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
       -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
-      "./variants/${VARIANT_NAME}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+      "${VARIANT_BUILD_DIR}"
 
     - date '+%Y-%m-%d %H:%M:%S %z'
 
     # Push to Docker Hub registry. E.g. 'namespace/my-project:tag'
     - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
 
     # Push to GitLab registry. E.g. 'registry.gitlab.com/namespace/my-project:tag
     - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
 
   after_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -55,8 +60,9 @@ build-geoip-geoip2:
     - master
     - api
   variables:
-    VARIANT_NAME: "geoip-geoip2"
-    VARIANT_TAG: "geoip-geoip2-v1.0.0"
+    VARIANT_TAG: "geoip-geoip2"
+    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-v1.0.0"
+    VARIANT_BUILD_DIR: "./variants/ubuntu/geoip-geoip2"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -70,16 +76,20 @@ build-geoip-geoip2:
     - date '+%Y-%m-%d %H:%M:%S %z'
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
       -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
-      "./variants/${VARIANT_NAME}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+      "${VARIANT_BUILD_DIR}"
 
     - date '+%Y-%m-%d %H:%M:%S %z'
 
     # Push to Docker Hub registry. E.g. 'namespace/my-project:tag'
     - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
 
     # Push to GitLab registry. E.g. 'registry.gitlab.com/namespace/my-project:tag
     - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
 
   after_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -96,8 +106,9 @@ build-geoip-geoip2-emailsender:
     - master
     - api
   variables:
-    VARIANT_NAME: "geoip-geoip2-emailsender"
-    VARIANT_TAG: "geoip-geoip2-emailsender-v1.0.0"
+    VARIANT_TAG: "geoip-geoip2-emailsender"
+    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-emailsender-v1.0.0"
+    VARIANT_BUILD_DIR: "./variants/ubuntu/geoip-geoip2-emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -111,16 +122,20 @@ build-geoip-geoip2-emailsender:
     - date '+%Y-%m-%d %H:%M:%S %z'
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
       -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
-      "./variants/${VARIANT_NAME}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+      "${VARIANT_BUILD_DIR}"
 
     - date '+%Y-%m-%d %H:%M:%S %z'
 
     # Push to Docker Hub registry. E.g. 'namespace/my-project:tag'
     - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
 
     # Push to GitLab registry. E.g. 'registry.gitlab.com/namespace/my-project:tag
     - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
 
   after_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -131,14 +146,15 @@ build-geoip-geoip2-emailsender:
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
  
-build-alpine-geoip:
+build-geoip-alpine:
   stage: build
   only:
     - master
     - api
   variables:
-    VARIANT_NAME: "alpine-geoip"
-    VARIANT_TAG: "alpine-geoip-v1.0.0"
+    VARIANT_TAG: "geoip-alpine"
+    VARIANT_TAG_WITH_VERSION: "geoip-alpine-v1.0.0"
+    VARIANT_BUILD_DIR: "./variants/alpine/geoip-alpine"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -152,16 +168,20 @@ build-alpine-geoip:
     - date '+%Y-%m-%d %H:%M:%S %z'
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
       -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
-      "./variants/${VARIANT_NAME}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+      "${VARIANT_BUILD_DIR}"
 
     - date '+%Y-%m-%d %H:%M:%S %z'
 
     # Push to Docker Hub registry. E.g. 'namespace/my-project:tag'
     - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
 
     # Push to GitLab registry. E.g. 'registry.gitlab.com/namespace/my-project:tag
     - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
 
   after_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -172,14 +192,15 @@ build-alpine-geoip:
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
  
-build-alpine-geoip-geoip2:
+build-geoip-geoip2-alpine:
   stage: build
   only:
     - master
     - api
   variables:
-    VARIANT_NAME: "alpine-geoip-geoip2"
-    VARIANT_TAG: "alpine-geoip-geoip2-v1.0.0"
+    VARIANT_TAG: "geoip-geoip2-alpine"
+    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-alpine-v1.0.0"
+    VARIANT_BUILD_DIR: "./variants/alpine/geoip-geoip2-alpine"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -193,16 +214,20 @@ build-alpine-geoip-geoip2:
     - date '+%Y-%m-%d %H:%M:%S %z'
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
       -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
-      "./variants/${VARIANT_NAME}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+      "${VARIANT_BUILD_DIR}"
 
     - date '+%Y-%m-%d %H:%M:%S %z'
 
     # Push to Docker Hub registry. E.g. 'namespace/my-project:tag'
     - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
 
     # Push to GitLab registry. E.g. 'registry.gitlab.com/namespace/my-project:tag
     - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
 
   after_script:
     - date '+%Y-%m-%d %H:%M:%S %z'

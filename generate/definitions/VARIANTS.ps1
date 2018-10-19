@@ -2,37 +2,63 @@
 $VARIANTS_VERSION = "1.0.0"
 $VARIANTS = @(
     @{
-        name = 'geoip'
-        includeEntrypointScript = $true
+        tag = 'geoip'
         distro = 'ubuntu'
     }
     @{
-        name = 'geoip-geoip2'
-        includeEntrypointScript = $true
+        tag = 'geoip-geoip2'
         distro = 'ubuntu'
     }
     @{
-        name = 'geoip-geoip2-emailsender'
-        includeEntrypointScript = $true
+        tag = 'geoip-geoip2-emailsender'
         distro = 'ubuntu'
     }
     @{
-        name = 'alpine-geoip'
-        includeEntrypointScript = $true
+        tag = 'geoip-alpine'
         distro = 'alpine'
     }
     @{
-        name = 'alpine-geoip-geoip2'
-        includeEntrypointScript = $true
+        tag = 'geoip-geoip2-alpine'
         distro = 'alpine'
     }
 )
 
+# Docker image variants' definitions (shared)
+$VARIANTS_SHARED = @{
+    version = $VARIANTS_VERSION
+    buildContextFiles = @{
+        templates = @{
+            'Dockerfile' = @{
+                common = $false
+                includeHeader = $true
+                includeFooter = $true
+                passes = @(
+                    @{
+                        variables = @{}
+                    }
+                )
+            }
+            'docker-entrypoint.sh' = @{
+                common = $true
+                passes = @(
+                    @{
+                        variables = @{}
+                    }
+                )
+            }
+        }
+        copies = @(
+
+        )
+     }
+}
+
 # Intelligently add properties
 $VARIANTS | % {
     $VARIANT = $_
-    $_['version'] = $VARIANTS_VERSION
-    $_['extensions'] = $_['name'] -split '-' | ? { $_.Trim() } | ? { $_ -ne $VARIANT['distro'] }
+    $VARIANTS_SHARED.GetEnumerator() | % {
+        $VARIANT[$_.Name] =  $_.Value
+    }
 }
 
 # Send definitions down the pipeline

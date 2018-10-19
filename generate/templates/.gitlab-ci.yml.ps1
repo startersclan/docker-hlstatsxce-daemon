@@ -11,14 +11,15 @@ stages:
 $( $VARIANTS | % {
 @"
 
-build-$( $_['name'] ):
+build-$( $_['tag'] ):
   stage: build
   only:
     - master
     - api
   variables:
-    VARIANT_NAME: "$( $_['name'] )"
-    VARIANT_TAG: "$( $_['name'] )-v$( $_['version'] )"
+    VARIANT_TAG: "$( $_['tag'] )"
+    VARIANT_TAG_WITH_VERSION: "$( $_['tag'] )-v$( $_['version'] )"
+    VARIANT_BUILD_DIR: "./variants/$( if ( $_['distro'] ) { "$( $_['distro'] )/$( $_['tag'] )" } else { "$( $_['tag'] )" } )"
 "@ + @'
 
   before_script:
@@ -34,16 +35,20 @@ build-$( $_['name'] ):
     - date '+%Y-%m-%d %H:%M:%S %z'
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
       -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
-      "./variants/${VARIANT_NAME}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+      "${VARIANT_BUILD_DIR}"
 
     - date '+%Y-%m-%d %H:%M:%S %z'
 
     # Push to Docker Hub registry. E.g. 'namespace/my-project:tag'
     - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
 
     # Push to GitLab registry. E.g. 'registry.gitlab.com/namespace/my-project:tag
     - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
 
   after_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
