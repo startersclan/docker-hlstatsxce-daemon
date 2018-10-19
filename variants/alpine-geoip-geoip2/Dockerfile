@@ -1,20 +1,28 @@
 FROM alpine:3.8
 
-MAINTAINER The Oh Brothers
-
+# Install perl
 RUN apk add --no-cache \
     wget \
     perl \
     perl-dev \
     perl-doc
 
-# Install perl modules through Alpine packages
-RUN apk add --no-cache --virtual build-dependencies \
-        build-base \
-        perl-app-cpanminus \
+#
+# Perl modules
+#
+
+# Install DB perl modules through packages
+RUN apk update \
     && apk add --no-cache \
         perl-dbi \
-        perl-dbd-mysql \
+        perl-dbd-mysql
+    && rm -rf /var/cache/apk/*
+
+# Install modules for perl GeoIP
+RUN apk update \
+    && apk add --no-cache --virtual build-dependencies \
+        build-base \
+        perl-app-cpanminus \
     && cpanm \
         Geo::IP::PurePerl \
     && apk del build-dependencies \
@@ -23,7 +31,8 @@ RUN apk add --no-cache --virtual build-dependencies \
 # Install modules for perl GeoIP2
 # 11 dependencies missing for GeoIP2:
 #   - 11 dependencies missing (Data::Validate::IP,LWP::Protocol::https,List::SomeUtils,MaxMind::DB::Metadata,MaxMind::DB::Reader,Moo,Moo::Role,Params::Validate,Path::Class,Throwable::Error,namespace::clean);
-RUN apk add --no-cache --virtual build-dependencies \
+RUN apk update \
+    && add --no-cache --virtual build-dependencies \
         build-base \
         perl-app-cpanminus \
     && apk add --no-cache \

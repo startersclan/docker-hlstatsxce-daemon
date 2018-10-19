@@ -1,6 +1,4 @@
-FROM ubuntu
-
-MAINTAINER The Oh Brothers
+FROM ubuntu:16:04
 
 #
 # Export these environment variables
@@ -25,20 +23,26 @@ ENV PERL_MM_USE_DEFAULT 1
 #   export PERL5LIB=/usr/share/perl5
 #ENV PERL5LIB /usr/share/perl5
 
+# Install perl
+RUN apt-get update \
+    && apt-get install -y \
+        perl \
+    && rm -rf /var/lib/apt/lists/*
+
 #
 # Perl modules
 #
 
-# Install perl modules through debian packages
+# Install DB perl modules through packages
 RUN apt-get update \
     && apt-get install -y \
-        perl \
         libdbi-perl \
         libdbd-mysql-perl \
     && rm -rf /var/lib/apt/lists/*
 
 # Install modules for perl GeoIP
-RUN apt-get update && apt-get install -y \
+RUN apt-get update \
+    && apt-get install -y \
         build-essential \
         cpanminus \
     && cpanm \

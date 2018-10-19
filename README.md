@@ -1,22 +1,17 @@
 # hlstatsxce-perl
 Docker image for the HLStatsX:CE perl daemon.
 
-Perl Modules included in `:latest`:
-- DBI
-- DBD::mysql
-- Geo::IP::PurePerl
-
-
 ## Variants
 
 Each variant contains additional perl modules.
 
 | Name | Perl Modules |
 |:-------:|:---------:|
-| `:geoip2` | `MaxMind::DB::Reader` and dependencies<br> `MaxMind::DB::Reader::XS` and dependencies
-| `:geoip2-email-sender` | `MaxMind::DB::Reader` and dependencies<br> `MaxMind::DB::Reader::XS` and dependencies<br> `Email::Sender::Simple` and dependencies
-| `:alpine` | Same as `:latest`, but using `alpine`
-| `:alpine-geoip2` | Same as `:geoip2`, but using `alpine`
+| `geoip` | `DBI`<br>`DBD::mysql`<br>`Geo::IP::PurePerl`
+| `:geoip-geoip2` | `MaxMind::DB::Reader` and dependencies<br> `MaxMind::DB::Reader::XS` and dependencies
+| `:geoip-geoip2-emailsender` | `MaxMind::DB::Reader` and dependencies<br> `MaxMind::DB::Reader::XS` and dependencies<br> `Email::Sender::Simple` and dependencies
+| `:alpine-geoip` | Same as `:geoip`, but using `alpine`
+| `:alpine-geoip-geoip2` | Same as `:geoip2`, but using `alpine`
 
 
 ## Steps
