@@ -1,5 +1,5 @@
 @"
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 #
 # Export these environment variables
@@ -27,6 +27,7 @@ ENV PERL_MM_USE_DEFAULT 1
 # Install perl
 RUN apt-get update \
     && apt-get install -y \
+        #apt-utils
         perl \
     && rm -rf /var/lib/apt/lists/*
 
