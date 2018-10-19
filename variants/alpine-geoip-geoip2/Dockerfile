@@ -15,7 +15,7 @@ RUN apk add --no-cache \
 RUN apk update \
     && apk add --no-cache \
         perl-dbi \
-        perl-dbd-mysql
+        perl-dbd-mysql \
     && rm -rf /var/cache/apk/*
 
 # Install modules for perl GeoIP
