@@ -10,10 +10,35 @@ $ErrorActionPreference = 'Stop'
 cd $GENERATE_BASE_DIR
 
 # Get variants' definition
-$VARIANTS = & (Join-Path $GENERATE_DEFINITIONS_DIR "VARIANTS.ps1")
+$VARIANTS = & ( Join-Path $GENERATE_DEFINITIONS_DIR "VARIANTS.ps1" )
 
 # Get files' definition
-$FILES = &(Join-Path $GENERATE_DEFINITIONS_DIR "FILES.ps1")
+$FILES = & ( Join-Path $GENERATE_DEFINITIONS_DIR "FILES.ps1" )
+
+# Intelligently add properties
+$VARIANTS | % {
+    $VARIANT = $_
+    $VARIANTS_SHARED.GetEnumerator() | % {
+        $VARIANT[$_.Name] =  $_.Value
+    }
+    $VARIANT['tag_without_distro'] = if ( $VARIANT['distro'] ) {
+                                        # The variant's build directory name, stripped of the distro name if present
+                                        $variant_tag_regex = [regex]::Escape( $VARIANT['distro'] )
+                                        if ( $VARIANT['tag'] -match "^(.*)$variant_tag_regex(.*)$" ) {
+                                            "$( $matches[1] )-$( $matches[2] )".Trim('-')
+                                        }else {
+                                            $VARIANT['tag']
+                                        }
+                                     }else {
+                                            $VARIANT['tag']
+                                     }
+    $VARIANT['build_dir_rel'] = if ( $VARIANT['distro'] ) {
+                                "./variants/$( $VARIANT['distro'] )/$( $VARIANT['tag_without_distro'] )"
+                            }else {
+                                    "./variants/$($VARIANT['tag'])"
+                            }
+    $VARIANT['build_dir'] = Join-Path "$PROJECT_BASE_DIR" $VARIANT['build_dir_rel']
+}
 
 function Get-ContentFromTemplate {
     param (
@@ -72,20 +97,11 @@ function Get-ContextFileContent {
 # Generate each Docker image variant's build context files
 $VARIANTS | % {
     $VARIANT = $_
-    $VARIANT_DIR =  if ( $VARIANT['distro'] ) {
-                        # The variant's build directory name, stripped of the distro name if present
-                        $variant_tag_regex = [regex]::Escape( $VARIANT['distro'] )
-                        $variant_dir_name = if ( $VARIANT['tag'] -match "^(.*)$variant_tag_regex(.*)$" ) {
-                                                "$( $matches[1] )-$( $matches[2] )".Trim('-')
-                                            }else { $VARIANT['tag'] }
-                        "$PROJECT_BASE_DIR/variants/$( $VARIANT['distro'] )/$variant_dir_name"
-                    }else {
-                        "$PROJECT_BASE_DIR/variants/$($VARIANT['tag'])"
-                    }
 
-    "Generating variant of name $( $VARIANT['tag'] ), variant dir: $VARIANT_DIR" | Write-Host -ForegroundColor Green
-    if ( ! (Test-Path $VARIANT_DIR) ) {
-        New-Item -Path $VARIANT_DIR -ItemType Directory -Force > $null
+    "Generating variant of name $( $VARIANT['tag'] ), variant dir: $( $VARIANT['build_dir'] )" | Write-Host -ForegroundColor Green
+    "Generating variant of name $( $VARIANT['tag'] ), variant dir: $( $VARIANT['build_dir'] )" | Write-Host -ForegroundColor Green
+    if ( ! (Test-Path $VARIANT['build_dir']) ) {
+        New-Item -Path $VARIANT['build_dir'] -ItemType Directory -Force > $null
     }
 
     # Generate Docker build context files
@@ -97,10 +113,14 @@ $VARIANTS | % {
                 $templateFileConfig = $_.Value
                 $templateObject = @{
                     TemplateFile = $templateFile
-                    TemplateDirectory = if ( ! $templateFileConfig['common'] -and $VARIANT['distro'] ) {
-                                            "$GENERATE_TEMPLATES_DIR/$templateFile/$( $VARIANT['distro'] )"
-                                        }else {
+                    TemplateDirectory = if ( $templateFileConfig['common'] ) {
                                             $GENERATE_TEMPLATES_DIR
+                                        }else {
+                                            if ( $VARIANT['distro'] ) {
+                                                "$GENERATE_TEMPLATES_DIR/$templateFile/$( $VARIANT['distro'] )"
+                                            }else {
+                                                "$GENERATE_TEMPLATES_DIR/$templateFile"
+                                            }
                                         }
                     Header = if ( $templateFileConfig['includeHeader'] ) { $true } else { $false }
                     # Dynamically determine the sub templates from the name of the variant. (E.g. 'foo-bar' will comprise of foo and bar variant sub templates for this template file)
@@ -110,11 +130,11 @@ $VARIANTS | % {
                     Footer = if ( $templateFileConfig['includeFooter'] ) { $true } else { $false }
                 }
 
-                $generatedFile = "$VARIANT_DIR/$templateFile"
+                $generatedFile = "$( $VARIANT['build_dir'] )/$templateFile"
                 $templateFileConfig['passes'] | % {
                     $pass = $_
                     $templateObject['TemplatePassVariables'] = if ( $pass['variables'] ) { $pass['variables'] } else { @() }
-                    $generatedFile = if ( $pass['generatedFileNameOverride'] ) { "$VARIANT_DIR/$( $pass['generatedFileNameOverride'] )" } else { $generatedFile }
+                    $generatedFile = if ( $pass['generatedFileNameOverride'] ) { "$( $VARIANT['build_dir'] )/$( $pass['generatedFileNameOverride'] )" } else { $generatedFile }
                     $generatedFileContent = Get-ContextFileContent @templateObject
                     $generatedFileContent | Out-File $generatedFile -Encoding Utf8 -Force -NoNewline
                 }
@@ -131,7 +151,7 @@ $VARIANTS | % {
                 }else {
                     $fullPathBlob = "$GENERATE_TEMPLATES_DIR/variants/$( $VARIANT['tag'] )/$blob"
                 }
-                Copy-Item -Path $fullPathBlob -Destination $VARIANT_DIR -Force -Recurse
+                Copy-Item -Path $fullPathBlob -Destination $VARIANT['build_dir'] -Force -Recurse
             }
         }
     }

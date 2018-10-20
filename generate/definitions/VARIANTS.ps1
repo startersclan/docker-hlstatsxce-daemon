@@ -53,13 +53,5 @@ $VARIANTS_SHARED = @{
      }
 }
 
-# Intelligently add properties
-$VARIANTS | % {
-    $VARIANT = $_
-    $VARIANTS_SHARED.GetEnumerator() | % {
-        $VARIANT[$_.Name] =  $_.Value
-    }
-}
-
 # Send definitions down the pipeline
 $VARIANTS

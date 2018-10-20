@@ -53,7 +53,7 @@ build-geoip:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip-geoip2:
   stage: build
   only:
@@ -99,7 +99,7 @@ build-geoip-geoip2:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip-geoip2-emailsender:
   stage: build
   only:
@@ -145,7 +145,7 @@ build-geoip-geoip2-emailsender:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip-alpine:
   stage: build
   only:
@@ -154,7 +154,7 @@ build-geoip-alpine:
   variables:
     VARIANT_TAG: "geoip-alpine"
     VARIANT_TAG_WITH_VERSION: "geoip-alpine-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/alpine/geoip-alpine"
+    VARIANT_BUILD_DIR: "./variants/alpine/geoip"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -191,7 +191,7 @@ build-geoip-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip-geoip2-alpine:
   stage: build
   only:
@@ -200,7 +200,7 @@ build-geoip-geoip2-alpine:
   variables:
     VARIANT_TAG: "geoip-geoip2-alpine"
     VARIANT_TAG_WITH_VERSION: "geoip-geoip2-alpine-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/alpine/geoip-geoip2-alpine"
+    VARIANT_BUILD_DIR: "./variants/alpine/geoip-geoip2"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
