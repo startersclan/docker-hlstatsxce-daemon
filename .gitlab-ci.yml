@@ -16,7 +16,7 @@ build-geoip:
   variables:
     VARIANT_TAG: "geoip"
     VARIANT_TAG_WITH_VERSION: "geoip-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/ubuntu/geoip"
+    VARIANT_BUILD_DIR: "variants/ubuntu/geoip"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -53,7 +53,7 @@ build-geoip:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
-
+ 
 build-geoip-geoip2:
   stage: build
   only:
@@ -62,7 +62,7 @@ build-geoip-geoip2:
   variables:
     VARIANT_TAG: "geoip-geoip2"
     VARIANT_TAG_WITH_VERSION: "geoip-geoip2-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/ubuntu/geoip-geoip2"
+    VARIANT_BUILD_DIR: "variants/ubuntu/geoip-geoip2"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -99,7 +99,7 @@ build-geoip-geoip2:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
-
+ 
 build-geoip-geoip2-emailsender:
   stage: build
   only:
@@ -108,7 +108,7 @@ build-geoip-geoip2-emailsender:
   variables:
     VARIANT_TAG: "geoip-geoip2-emailsender"
     VARIANT_TAG_WITH_VERSION: "geoip-geoip2-emailsender-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/ubuntu/geoip-geoip2-emailsender"
+    VARIANT_BUILD_DIR: "variants/ubuntu/geoip-geoip2-emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -145,7 +145,7 @@ build-geoip-geoip2-emailsender:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
-
+ 
 build-geoip-alpine:
   stage: build
   only:
@@ -154,7 +154,7 @@ build-geoip-alpine:
   variables:
     VARIANT_TAG: "geoip-alpine"
     VARIANT_TAG_WITH_VERSION: "geoip-alpine-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/alpine/geoip"
+    VARIANT_BUILD_DIR: "variants/alpine/geoip"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
@@ -191,7 +191,7 @@ build-geoip-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
-
+ 
 build-geoip-geoip2-alpine:
   stage: build
   only:
@@ -200,7 +200,7 @@ build-geoip-geoip2-alpine:
   variables:
     VARIANT_TAG: "geoip-geoip2-alpine"
     VARIANT_TAG_WITH_VERSION: "geoip-geoip2-alpine-v1.0.0"
-    VARIANT_BUILD_DIR: "./variants/alpine/geoip-geoip2"
+    VARIANT_BUILD_DIR: "variants/alpine/geoip-geoip2"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
 
