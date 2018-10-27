@@ -1,5 +1,5 @@
 # Docker image variants' definitions
-$VARIANTS_VERSION = "1.0.0"
+$VARIANTS_VERSION = "1.0.1a"
 $VARIANTS = @(
     @{
         tag = 'geoip'
@@ -14,11 +14,19 @@ $VARIANTS = @(
         distro = 'ubuntu'
     }
     @{
+        tag = 'cron'
+        distro = 'ubuntu'
+    }
+    @{
         tag = 'geoip-alpine'
         distro = 'alpine'
     }
     @{
         tag = 'geoip-geoip2-alpine'
+        distro = 'alpine'
+    }
+    @{
+        tag = 'cron'
         distro = 'alpine'
     }
 )
