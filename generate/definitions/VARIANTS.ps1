@@ -1,5 +1,5 @@
 # Docker image variants' definitions
-$VARIANTS_VERSION = "1.0.1a"
+$VARIANTS_VERSION = "1.0.1"
 $VARIANTS = @(
     @{
         tag = 'geoip'
