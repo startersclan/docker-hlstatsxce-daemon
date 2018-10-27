@@ -284,14 +284,14 @@ build-geoip-geoip2-alpine:
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
  
-build-cron:
+build-cron-alpine:
   stage: build
   only:
     - master
     - api
   variables:
-    VARIANT_TAG: "cron"
-    VARIANT_TAG_WITH_VERSION: "cron-v1.0.1a"
+    VARIANT_TAG: "cron-alpine"
+    VARIANT_TAG_WITH_VERSION: "cron-alpine-v1.0.1a"
     VARIANT_BUILD_DIR: "variants/alpine/cron"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'

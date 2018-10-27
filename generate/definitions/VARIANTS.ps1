@@ -26,7 +26,7 @@ $VARIANTS = @(
         distro = 'alpine'
     }
     @{
-        tag = 'cron'
+        tag = 'cron-alpine'
         distro = 'alpine'
     }
 )
