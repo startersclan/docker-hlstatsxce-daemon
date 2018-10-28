@@ -15,7 +15,7 @@ build-cron:
     - api
   variables:
     VARIANT_TAG: "cron"
-    VARIANT_TAG_WITH_VERSION: "cron-v1.0.2a"
+    VARIANT_TAG_WITH_VERSION: "cron-v1.0.2"
     VARIANT_BUILD_DIR: "variants/ubuntu/cron"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -61,7 +61,7 @@ build-cron-emailsender:
     - api
   variables:
     VARIANT_TAG: "cron-emailsender"
-    VARIANT_TAG_WITH_VERSION: "cron-emailsender-v1.0.2a"
+    VARIANT_TAG_WITH_VERSION: "cron-emailsender-v1.0.2"
     VARIANT_BUILD_DIR: "variants/ubuntu/cron-emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -107,7 +107,7 @@ build-geoip:
     - api
   variables:
     VARIANT_TAG: "geoip"
-    VARIANT_TAG_WITH_VERSION: "geoip-v1.0.2a"
+    VARIANT_TAG_WITH_VERSION: "geoip-v1.0.2"
     VARIANT_BUILD_DIR: "variants/ubuntu/geoip"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -153,7 +153,7 @@ build-geoip-geoip2:
     - api
   variables:
     VARIANT_TAG: "geoip-geoip2"
-    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-v1.0.2a"
+    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-v1.0.2"
     VARIANT_BUILD_DIR: "variants/ubuntu/geoip-geoip2"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -199,7 +199,7 @@ build-geoip-geoip2-emailsender:
     - api
   variables:
     VARIANT_TAG: "geoip-geoip2-emailsender"
-    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-emailsender-v1.0.2a"
+    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-emailsender-v1.0.2"
     VARIANT_BUILD_DIR: "variants/ubuntu/geoip-geoip2-emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -245,7 +245,7 @@ build-cron-alpine:
     - api
   variables:
     VARIANT_TAG: "cron-alpine"
-    VARIANT_TAG_WITH_VERSION: "cron-alpine-v1.0.2a"
+    VARIANT_TAG_WITH_VERSION: "cron-alpine-v1.0.2"
     VARIANT_BUILD_DIR: "variants/alpine/cron"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -291,7 +291,7 @@ build-cron-emailsender-alpine:
     - api
   variables:
     VARIANT_TAG: "cron-emailsender-alpine"
-    VARIANT_TAG_WITH_VERSION: "cron-emailsender-alpine-v1.0.2a"
+    VARIANT_TAG_WITH_VERSION: "cron-emailsender-alpine-v1.0.2"
     VARIANT_BUILD_DIR: "variants/alpine/cron-emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -337,7 +337,7 @@ build-geoip-alpine:
     - api
   variables:
     VARIANT_TAG: "geoip-alpine"
-    VARIANT_TAG_WITH_VERSION: "geoip-alpine-v1.0.2a"
+    VARIANT_TAG_WITH_VERSION: "geoip-alpine-v1.0.2"
     VARIANT_BUILD_DIR: "variants/alpine/geoip"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -383,7 +383,7 @@ build-geoip-geoip2-alpine:
     - api
   variables:
     VARIANT_TAG: "geoip-geoip2-alpine"
-    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-alpine-v1.0.2a"
+    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-alpine-v1.0.2"
     VARIANT_BUILD_DIR: "variants/alpine/geoip-geoip2"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -429,7 +429,7 @@ build-geoip-geoip2-emailsender-alpine:
     - api
   variables:
     VARIANT_TAG: "geoip-geoip2-emailsender-alpine"
-    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-emailsender-alpine-v1.0.2a"
+    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-emailsender-alpine-v1.0.2"
     VARIANT_BUILD_DIR: "variants/alpine/geoip-geoip2-emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
