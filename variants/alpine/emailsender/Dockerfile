@@ -18,8 +18,6 @@ RUN apk update \
         perl-dbd-mysql \
     && rm -rf /var/cache/apk/*
 
-
-
 # Install modules for perl-based email
 RUN apk update \
     && apk add --no-cache --virtual build-dependencies \
@@ -36,7 +34,7 @@ RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 27500/udp
 
-STOPSIGNAL SIGKILL
+STOPSIGNAL SIGINT
 
 WORKDIR /app
 

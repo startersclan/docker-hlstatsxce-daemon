@@ -62,7 +62,7 @@ RUN apk update \
     && apk del build-dependencies \
     && rm -rf /root/.cpan /root/.cpanminus /var/cache/apk/*
 
-# Install modules for perl GeoIP
+# Install modules for perl-based email
 RUN apk update \
     && apk add --no-cache --virtual build-dependencies \
         build-base \

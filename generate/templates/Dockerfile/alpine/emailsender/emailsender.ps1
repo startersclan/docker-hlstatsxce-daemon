@@ -1,5 +1,5 @@
 @'
-# Install modules for perl GeoIP
+# Install modules for perl-based email
 RUN apk update \
     && apk add --no-cache --virtual build-dependencies \
         build-base \

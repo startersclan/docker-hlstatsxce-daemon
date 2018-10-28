@@ -10,6 +10,10 @@ $VARIANTS = @(
         distro = 'ubuntu'
     }
     @{
+        tag = 'emailsender'
+        distro = 'ubuntu'
+    }
+    @{
         tag = 'geoip'
         distro = 'ubuntu'
     }
@@ -27,6 +31,10 @@ $VARIANTS = @(
     }
     @{
         tag = 'cron-emailsender-alpine'
+        distro = 'alpine'
+    }
+    @{
+        tag = 'emailsender-alpine'
         distro = 'alpine'
     }
     @{
