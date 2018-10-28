@@ -6,7 +6,8 @@ RUN apt-get update \
         libnet-ssleay-perl \
         libwww-perl \
         libemail-sender-perl \
-    #&& cpanm Email::Sender::Simple \
+    #&& cpanm \
+        #Email::Sender::Simple \
         #IO::Socket::SSL \
         #Net-SSLeay \
     && rm -rf /var/lib/apt/lists/* /root/.cpan/ /root/.cpanm/

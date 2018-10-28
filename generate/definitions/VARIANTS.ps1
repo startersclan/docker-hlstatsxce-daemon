@@ -1,6 +1,14 @@
 # Docker image variants' definitions
-$VARIANTS_VERSION = "1.0.1"
+$VARIANTS_VERSION = "1.0.2a"
 $VARIANTS = @(
+    @{
+        tag = 'cron'
+        distro = 'ubuntu'
+    }
+    @{
+        tag = 'cron-emailsender'
+        distro = 'ubuntu'
+    }
     @{
         tag = 'geoip'
         distro = 'ubuntu'
@@ -14,8 +22,12 @@ $VARIANTS = @(
         distro = 'ubuntu'
     }
     @{
-        tag = 'cron'
-        distro = 'ubuntu'
+        tag = 'cron-alpine'
+        distro = 'alpine'
+    }
+    @{
+        tag = 'cron-emailsender-alpine'
+        distro = 'alpine'
     }
     @{
         tag = 'geoip-alpine'
@@ -26,7 +38,7 @@ $VARIANTS = @(
         distro = 'alpine'
     }
     @{
-        tag = 'cron-alpine'
+        tag = 'geoip-geoip2-emailsender-alpine'
         distro = 'alpine'
     }
 )
