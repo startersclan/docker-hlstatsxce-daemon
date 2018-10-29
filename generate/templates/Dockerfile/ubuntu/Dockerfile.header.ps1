@@ -13,7 +13,7 @@ RUN find /app -type d -exec chmod 750 {} \; \
 # Download the GeoIP binary
 RUN cd /app/GeoLiteCity \
     && apt-get update && apt-get install -y wget \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
     && ./install_binary.sh \
     && chmod 666 GeoLiteCity.dat \
     && rm -f GeoLiteCity.dat.gz \

@@ -56,7 +56,7 @@ build-cron:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
-
+ 
 build-cron-emailsender:
   stage: build
   only:
@@ -105,7 +105,7 @@ build-cron-emailsender:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
-
+ 
 build-emailsender:
   stage: build
   only:
@@ -154,7 +154,7 @@ build-emailsender:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
-
+ 
 build-geoip:
   stage: build
   only:
@@ -203,7 +203,7 @@ build-geoip:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
-
+ 
 build-geoip-geoip2:
   stage: build
   only:
@@ -252,7 +252,7 @@ build-geoip-geoip2:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
-
+ 
 build-geoip-geoip2-emailsender:
   stage: build
   only:
@@ -301,7 +301,7 @@ build-geoip-geoip2-emailsender:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
-
+ 
 build-cron-alpine:
   stage: build
   only:
@@ -350,7 +350,7 @@ build-cron-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
-
+ 
 build-cron-emailsender-alpine:
   stage: build
   only:
@@ -399,7 +399,7 @@ build-cron-emailsender-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
-
+ 
 build-emailsender-alpine:
   stage: build
   only:
@@ -448,7 +448,7 @@ build-emailsender-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
-
+ 
 build-geoip-alpine:
   stage: build
   only:
@@ -497,7 +497,7 @@ build-geoip-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
-
+ 
 build-geoip-geoip2-alpine:
   stage: build
   only:
@@ -546,7 +546,7 @@ build-geoip-geoip2-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
-
+ 
 build-geoip-geoip2-emailsender-alpine:
   stage: build
   only:
