@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.6
 
 COPY hlstatsx-community-edition/scripts /app
 
@@ -10,8 +10,7 @@ RUN find /app -type d -exec chmod 750 {} \; \
     && find /app -type f -name 'run_*' -exec chmod 750 {} \;
 
 # Download the GeoIP binary
-RUN apk update && apk add --no-cache wget \
-    && rm -rf /var/cache/apk/* \
+RUN apk add --no-cache wget \
     && cd /app/GeoLiteCity \
     && ls -l \
     && ./install_binary.sh \
