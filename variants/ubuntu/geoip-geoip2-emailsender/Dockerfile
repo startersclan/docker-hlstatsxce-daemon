@@ -77,18 +77,19 @@ RUN apt-get update \
         build-essential \
         cpanminus \
     && apt-get update && apt-get install -y \
-        libio-socket-ssl-perl \
         libnet-ssleay-perl \
-        libwww-perl \
-        libdatetime-perl \
+        #libio-socket-ssl-perl \
+        #libwww-perl \
+        #libdatetime-perl \
     && cpanm \
-        GeoIP2 \
         MaxMind::DB::Reader \
+        GeoIP2 \
 # Install maxmind DB::Reader::XS (faster than MaxMind::DB::Reader)
 # See: https://github.com/maxmind/libmaxminddb
     && apt-get update && apt-get install -y \
         software-properties-common \
     && add-apt-repository -y ppa:maxmind/ppa \
+    && apt-get update \
     && apt-get install -y \
         libmaxminddb0 \
         libmaxminddb-dev \
@@ -96,7 +97,8 @@ RUN apt-get update \
     && cpanm \
         MaxMind::DB::Reader::XS \
     && apt-get purge --auto-remove -y \
-        build-essential  \
+        build-essential \
+        software-properties-common \
     && rm -rf /var/lib/apt/lists/* /root/.cpan/ /root/.cpanm/
 
 # Install modules for perl-based email
