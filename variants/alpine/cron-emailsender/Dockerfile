@@ -13,6 +13,7 @@ RUN find /app -type d -exec chmod 750 {} \; \
 RUN apk update && apk add --no-cache wget \
     && rm -rf /var/cache/apk/* \
     && cd /app/GeoLiteCity \
+    && ls -l \
     && ./install_binary.sh \
     && chmod 666 GeoLiteCity.dat \
     && rm -f GeoLiteCity.dat.gz \
