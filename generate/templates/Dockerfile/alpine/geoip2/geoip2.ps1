@@ -30,7 +30,7 @@ RUN apk update \
     #     libmaxminddb \
     #     libmaxminddb-dev \
     # && cpanm \
-         MaxMind::DB::Reader::XS \
+    #     MaxMind::DB::Reader::XS \
     && apk del build-dependencies \
     && rm -rf /root/.cpan /root/.cpanminus /var/cache/apk/*
 '@

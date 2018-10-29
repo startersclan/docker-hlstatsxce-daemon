@@ -1,5 +1,5 @@
 # Docker image variants' definitions
-$VARIANTS_VERSION = "1.0.3a"
+$VARIANTS_VERSION = "1.0.3"
 $VARIANTS = @(
     @{
         tag = 'cron'
