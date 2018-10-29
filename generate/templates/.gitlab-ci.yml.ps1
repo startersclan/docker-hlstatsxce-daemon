@@ -37,11 +37,13 @@ build-$( $_['tag'] ):
     - date '+%Y-%m-%d %H:%M:%S %z'
 $( $_['submodules'].GetEnumerator() | % {
 @"
+    - apk update && apk add git
     - git submodule add "$( $_.Value )" "`$VARIANT_BUILD_DIR/$( $_.Name )"
-
+    - ls -l "`$VARIANT_BUILD_DIR/$( $_.Name )"
 "@
 })
 "@ + @'
+
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"

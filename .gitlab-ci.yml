@@ -28,7 +28,9 @@ build-cron:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -75,7 +77,9 @@ build-cron-emailsender:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -122,7 +126,9 @@ build-emailsender:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -169,7 +175,9 @@ build-geoip:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -216,7 +224,9 @@ build-geoip-geoip2:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -263,7 +273,9 @@ build-geoip-geoip2-emailsender:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -310,7 +322,9 @@ build-cron-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -357,7 +371,9 @@ build-cron-emailsender-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -404,7 +420,9 @@ build-emailsender-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -451,7 +469,9 @@ build-geoip-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -498,7 +518,9 @@ build-geoip-geoip2-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -545,7 +567,9 @@ build-geoip-geoip2-emailsender-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
