@@ -10,9 +10,9 @@ RUN find /app -type d -exec chmod 750 {} \; \
     && find /app -type f -name 'run_*' -exec chmod 750 {} \;
 
 # Download the GeoIP binary
-RUN cd /app/GeoLiteCity \
-    && apt-get update && apt-get install -y wget \
+RUN apt-get update && apt-get install -y wget \
     && rm -rf /var/lib/apt/lists/* \
+    && cd /app/GeoLiteCity \
     && ./install_binary.sh \
     && chmod 666 GeoLiteCity.dat \
     && rm -f GeoLiteCity.dat.gz \
@@ -44,7 +44,6 @@ ENV PERL_MM_USE_DEFAULT 1
 # Install perl
 RUN apt-get update \
     && apt-get install -y \
-        apt-utils \
         perl \
     && rm -rf /var/lib/apt/lists/*
 

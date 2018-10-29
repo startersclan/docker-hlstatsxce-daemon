@@ -10,9 +10,9 @@ RUN find /app -type d -exec chmod 750 {} \; \
     && find /app -type f -name 'run_*' -exec chmod 750 {} \;
 
 # Download the GeoIP binary
-RUN cd /app/GeoLiteCity \
-    && apk update && apk add --no-cache wget \
+RUN apk update && apk add --no-cache wget \
     && rm -rf /var/cache/apk/* \
+    && cd /app/GeoLiteCity \
     && ./install_binary.sh \
     && chmod 666 GeoLiteCity.dat \
     && rm -f GeoLiteCity.dat.gz \
