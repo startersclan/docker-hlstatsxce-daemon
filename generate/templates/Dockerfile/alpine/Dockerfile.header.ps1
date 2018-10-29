@@ -11,7 +11,7 @@ RUN find /app -type d -exec chmod 750 {} \; \
     && find /app -type f -name 'run_*' -exec chmod 750 {} \;
 
 # Download the GeoIP binary
-RUN apk add --no-cache wget \
+RUN apk add --no-cache ca-certificates wget \
     && cd /app/GeoLiteCity \
     && ls -l \
     && ./install_binary.sh \
