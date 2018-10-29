@@ -28,7 +28,7 @@ build-cron:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
-    - apk update && apk add git wget
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
@@ -56,7 +56,7 @@ build-cron:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-cron-emailsender:
   stage: build
   only:
@@ -77,7 +77,7 @@ build-cron-emailsender:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
-    - apk update && apk add git wget
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
@@ -105,7 +105,7 @@ build-cron-emailsender:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-emailsender:
   stage: build
   only:
@@ -126,7 +126,7 @@ build-emailsender:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
-    - apk update && apk add git wget
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
@@ -154,7 +154,7 @@ build-emailsender:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip:
   stage: build
   only:
@@ -175,7 +175,7 @@ build-geoip:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
-    - apk update && apk add git wget
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
@@ -203,7 +203,7 @@ build-geoip:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip-geoip2:
   stage: build
   only:
@@ -224,7 +224,7 @@ build-geoip-geoip2:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
-    - apk update && apk add git wget
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
@@ -252,7 +252,7 @@ build-geoip-geoip2:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip-geoip2-emailsender:
   stage: build
   only:
@@ -273,7 +273,7 @@ build-geoip-geoip2-emailsender:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
-    - apk update && apk add git wget
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
@@ -301,7 +301,7 @@ build-geoip-geoip2-emailsender:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-cron-alpine:
   stage: build
   only:
@@ -322,7 +322,7 @@ build-cron-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
-    - apk update && apk add git wget
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
@@ -350,7 +350,7 @@ build-cron-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-cron-emailsender-alpine:
   stage: build
   only:
@@ -371,7 +371,7 @@ build-cron-emailsender-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
-    - apk update && apk add git wget
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
@@ -399,7 +399,7 @@ build-cron-emailsender-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-emailsender-alpine:
   stage: build
   only:
@@ -420,7 +420,7 @@ build-emailsender-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
-    - apk update && apk add git wget
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
@@ -448,7 +448,7 @@ build-emailsender-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip-alpine:
   stage: build
   only:
@@ -469,7 +469,7 @@ build-geoip-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
-    - apk update && apk add git wget
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
@@ -497,7 +497,7 @@ build-geoip-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip-geoip2-alpine:
   stage: build
   only:
@@ -518,7 +518,7 @@ build-geoip-geoip2-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
-    - apk update && apk add git wget
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
@@ -546,7 +546,7 @@ build-geoip-geoip2-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip-geoip2-emailsender-alpine:
   stage: build
   only:
@@ -567,7 +567,7 @@ build-geoip-geoip2-emailsender-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
-    - apk update && apk add git wget
+    - apk update && apk add git
     - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build

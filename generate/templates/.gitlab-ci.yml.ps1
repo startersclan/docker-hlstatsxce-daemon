@@ -37,7 +37,7 @@ build-$( $_['tag'] ):
     - date '+%Y-%m-%d %H:%M:%S %z'
 $( $_['submodules'].GetEnumerator() | % {
 @"
-    - apk update && apk add git wget
+    - apk update && apk add git
     - git submodule add "$( $_.Value )" "`$VARIANT_BUILD_DIR/$( $_.Name )"
     - ls -l "`$VARIANT_BUILD_DIR/$( $_.Name )"
 "@
