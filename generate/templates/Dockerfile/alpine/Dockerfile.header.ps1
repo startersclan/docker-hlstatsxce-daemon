@@ -14,7 +14,7 @@ RUN find /app -type d -exec chmod 750 {} \; \
 RUN apk add --no-cache ca-certificates wget \
     && cd /app/GeoLiteCity \
     && ls -l \
-    && ./install_binary.sh \
+    && sh ./install_binary.sh \
     && chmod 666 GeoLiteCity.dat \
     && rm -f GeoLiteCity.dat.gz \
     && ls -l
