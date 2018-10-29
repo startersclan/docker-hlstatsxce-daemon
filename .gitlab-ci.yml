@@ -15,7 +15,7 @@ build-cron:
     - api
   variables:
     VARIANT_TAG: "cron"
-    VARIANT_TAG_WITH_VERSION: "cron-v1.0.2"
+    VARIANT_TAG_WITH_VERSION: "cron-v1.0.3a"
     VARIANT_BUILD_DIR: "variants/ubuntu/cron"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -28,6 +28,7 @@ build-cron:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -61,7 +62,7 @@ build-cron-emailsender:
     - api
   variables:
     VARIANT_TAG: "cron-emailsender"
-    VARIANT_TAG_WITH_VERSION: "cron-emailsender-v1.0.2"
+    VARIANT_TAG_WITH_VERSION: "cron-emailsender-v1.0.3a"
     VARIANT_BUILD_DIR: "variants/ubuntu/cron-emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -74,6 +75,7 @@ build-cron-emailsender:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -107,7 +109,7 @@ build-emailsender:
     - api
   variables:
     VARIANT_TAG: "emailsender"
-    VARIANT_TAG_WITH_VERSION: "emailsender-v1.0.2"
+    VARIANT_TAG_WITH_VERSION: "emailsender-v1.0.3a"
     VARIANT_BUILD_DIR: "variants/ubuntu/emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -120,6 +122,7 @@ build-emailsender:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -153,7 +156,7 @@ build-geoip:
     - api
   variables:
     VARIANT_TAG: "geoip"
-    VARIANT_TAG_WITH_VERSION: "geoip-v1.0.2"
+    VARIANT_TAG_WITH_VERSION: "geoip-v1.0.3a"
     VARIANT_BUILD_DIR: "variants/ubuntu/geoip"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -166,6 +169,7 @@ build-geoip:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -199,7 +203,7 @@ build-geoip-geoip2:
     - api
   variables:
     VARIANT_TAG: "geoip-geoip2"
-    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-v1.0.2"
+    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-v1.0.3a"
     VARIANT_BUILD_DIR: "variants/ubuntu/geoip-geoip2"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -212,6 +216,7 @@ build-geoip-geoip2:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -245,7 +250,7 @@ build-geoip-geoip2-emailsender:
     - api
   variables:
     VARIANT_TAG: "geoip-geoip2-emailsender"
-    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-emailsender-v1.0.2"
+    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-emailsender-v1.0.3a"
     VARIANT_BUILD_DIR: "variants/ubuntu/geoip-geoip2-emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -258,6 +263,7 @@ build-geoip-geoip2-emailsender:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -291,7 +297,7 @@ build-cron-alpine:
     - api
   variables:
     VARIANT_TAG: "cron-alpine"
-    VARIANT_TAG_WITH_VERSION: "cron-alpine-v1.0.2"
+    VARIANT_TAG_WITH_VERSION: "cron-alpine-v1.0.3a"
     VARIANT_BUILD_DIR: "variants/alpine/cron"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -304,6 +310,7 @@ build-cron-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -337,7 +344,7 @@ build-cron-emailsender-alpine:
     - api
   variables:
     VARIANT_TAG: "cron-emailsender-alpine"
-    VARIANT_TAG_WITH_VERSION: "cron-emailsender-alpine-v1.0.2"
+    VARIANT_TAG_WITH_VERSION: "cron-emailsender-alpine-v1.0.3a"
     VARIANT_BUILD_DIR: "variants/alpine/cron-emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -350,6 +357,7 @@ build-cron-emailsender-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -383,7 +391,7 @@ build-emailsender-alpine:
     - api
   variables:
     VARIANT_TAG: "emailsender-alpine"
-    VARIANT_TAG_WITH_VERSION: "emailsender-alpine-v1.0.2"
+    VARIANT_TAG_WITH_VERSION: "emailsender-alpine-v1.0.3a"
     VARIANT_BUILD_DIR: "variants/alpine/emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -396,6 +404,7 @@ build-emailsender-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -429,7 +438,7 @@ build-geoip-alpine:
     - api
   variables:
     VARIANT_TAG: "geoip-alpine"
-    VARIANT_TAG_WITH_VERSION: "geoip-alpine-v1.0.2"
+    VARIANT_TAG_WITH_VERSION: "geoip-alpine-v1.0.3a"
     VARIANT_BUILD_DIR: "variants/alpine/geoip"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -442,6 +451,7 @@ build-geoip-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -475,7 +485,7 @@ build-geoip-geoip2-alpine:
     - api
   variables:
     VARIANT_TAG: "geoip-geoip2-alpine"
-    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-alpine-v1.0.2"
+    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-alpine-v1.0.3a"
     VARIANT_BUILD_DIR: "variants/alpine/geoip-geoip2"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -488,6 +498,7 @@ build-geoip-geoip2-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
@@ -521,7 +532,7 @@ build-geoip-geoip2-emailsender-alpine:
     - api
   variables:
     VARIANT_TAG: "geoip-geoip2-emailsender-alpine"
-    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-emailsender-alpine-v1.0.2"
+    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-emailsender-alpine-v1.0.3a"
     VARIANT_BUILD_DIR: "variants/alpine/geoip-geoip2-emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -534,6 +545,7 @@ build-geoip-geoip2-emailsender-alpine:
 
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"

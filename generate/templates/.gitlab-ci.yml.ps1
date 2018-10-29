@@ -31,8 +31,17 @@ build-$( $_['tag'] ):
     # Login to GitLab registry
     - echo "${CI_REGISTRY_PASSWORD}" | docker login -u "${CI_REGISTRY_USER}" --password-stdin "${CI_REGISTRY}"
 
+'@ + @"
+
   script:
     - date '+%Y-%m-%d %H:%M:%S %z'
+$( $_['submodules'].GetEnumerator() | % {
+@"
+    - git submodule add "$( $_.Value )" "`$VARIANT_BUILD_DIR/$( $_.Name )"
+
+"@
+})
+"@ + @'
     - docker build
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
       -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"

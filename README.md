@@ -1,18 +1,21 @@
 # hlstatsxce-perl
+
 Docker image for the HLStatsX:CE perl daemon.
 
 ## Variants
 
 Each variant contains additional perl modules.
 
+These below variants use `Ubuntu:16.04`. Variants with suffix `-alpine` use the `Alpine:3.8`
+
 | Name | Perl Modules |
 |:-------:|:---------:|
-| `geoip` | `DBI`<br>`DBD::mysql`<br>`Geo::IP::PurePerl`
-| `:geoip-geoip2` | `MaxMind::DB::Reader` and dependencies<br> `MaxMind::DB::Reader::XS` and dependencies
-| `:geoip-geoip2-emailsender` | `MaxMind::DB::Reader` and dependencies<br> `MaxMind::DB::Reader::XS` and dependencies<br> `Email::Sender::Simple` and dependencies
-| `:alpine-geoip` | Same as `:geoip`, but using `alpine`
-| `:alpine-geoip-geoip2` | Same as `:geoip2`, but using `alpine`
+| `:cron` | Bare
+| `:geoip` | `DBI`<br>`DBD::mysql`<br>`Geo::IP::PurePerl`
+| `:geoip2` | `MaxMind::DB::Reader` and dependencies<br> `MaxMind::DB::Reader::XS` and dependencies
+| `:emailsender` | `Email::Sender::Simple` and dependencies
 
+NOTE: Chained tags E.g. `:geoip-geoip2-emailsender` contain the `:geoip`, `:geoip2`, and ':emailsender` Perl modules.
 
 ## Steps
 
@@ -20,14 +23,13 @@ Each variant contains additional perl modules.
 2. Run the container. If no errors are shown, all should be good.
 
 
-
 ## Example
 
-```
+```sh
 docker run -d \
     -v /path/to/hlxce/scripts:/app \
     -v /path/to/hlxce/scripts/hlstats.conf:/app/hlstats.conf \
-    wonderous/hlstatsxce-perl
+    leojonathanoh/hlstatsxce-perl:geoip
 ```
 
 
@@ -54,6 +56,7 @@ These environment variables are optional. Use them only if:
 | `DEBUG_NONE` | N.A. | disables debugging output | `--nodebug`
 
 ### Warning: If using `CONFIG_FILE`
+
 There is a bug in `hlstats.pl` that does not allow the passing of `--configfile=<configfile>` properly. To fix that, find the line in `hlstats.pl` on line `1821`:
 
 ```perl
@@ -70,7 +73,7 @@ Save the file. That should fix hlstats.pl's `--configfile` argument issue.
 
 #### Example (with environment variables):
 
-```
+```sh
 docker run -d \
     -e MODE=Normal \
     -e DB_HOST=db \
@@ -84,7 +87,7 @@ docker run -d \
 
 #### Example (Swarm Mode with Docker Secrets):
 
-```
+```sh
 docker service create --name hlstatsxce-daemon \
     -e MODE=Normal \
     -e DB_HOST=db \
@@ -105,11 +108,9 @@ The entrypoint script takes care of expanding the environment variables `DB_NAME
 ## FAQ
 
 #### How to use GeoIP2 with the perl daemon?
+
  - As of `hlxce 1.6.19`, the perl daemon scripts has no support for GeoIP2. It was written only for GeoIP. You will have to change a bit of the code yourself to use the GeoIP2 API.
 
 #### How long will this Docker Image be supported?
- - As long as the repository is not marked deprecated, which should not happen.
 
-#### Why is the source code of the perl daemon not included in the image?
- - It well could be. But for something with few updates, it would be easier to use the image as the environment, and mount the perl scripts on top of it.
- - Also, the source code of `hlxce` is a tight bundle including all the files for the various stacks (gameserver, web frontend, perl backend). To separate out the components would be great, but would require the community does so.
+ - As long as the repository is not marked deprecated, which should not happen.

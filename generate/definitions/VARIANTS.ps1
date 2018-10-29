@@ -1,5 +1,5 @@
 # Docker image variants' definitions
-$VARIANTS_VERSION = "1.0.2"
+$VARIANTS_VERSION = "1.0.3a"
 $VARIANTS = @(
     @{
         tag = 'cron'
@@ -54,6 +54,9 @@ $VARIANTS = @(
 # Docker image variants' definitions (shared)
 $VARIANTS_SHARED = @{
     version = $VARIANTS_VERSION
+    submodules = @{
+        'hlstatsx-community-edition' = 'https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git'
+    }
     buildContextFiles = @{
         templates = @{
             'Dockerfile' = @{
