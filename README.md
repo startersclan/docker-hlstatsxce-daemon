@@ -10,8 +10,8 @@ These below variants use `Ubuntu:16.04`. Variants with suffix `-alpine` use the 
 
 | Name | Perl Modules |
 |:-------:|:---------:|
-| `:cron` | Bare
-| `:geoip` | `DBI`<br>`DBD::mysql`<br>`Geo::IP::PurePerl`
+| `:cron` | `DBI`<br>`DBD::mysql`
+| `:geoip` | `Geo::IP::PurePerl` and dependencies
 | `:geoip2` | `MaxMind::DB::Reader` and dependencies<br> `MaxMind::DB::Reader::XS` and dependencies
 | `:emailsender` | `Email::Sender::Simple` and dependencies
 
