@@ -64,14 +64,20 @@ RUN apt-get update \
 # Install modules for perl-based email
 RUN apt-get update \
     && apt-get install -y \
-        libio-socket-ssl-perl \
         libnet-ssleay-perl \
-        libwww-perl \
-        libemail-sender-perl \
-    #&& cpanm \
-        #Email::Sender::Simple \
-        #IO::Socket::SSL \
-        #Net-SSLeay \
+        libio-socket-ssl-perl \
+        #libwww-perl \
+        #libemail-sender-perl \
+    && apt-get install -y \
+        build-essential \
+        cpanminus \
+    && cpanm \
+        MIME::Base64 \
+        Authen::SASL \
+    && cpanm \
+        Email::Sender::Simple \
+    && apt-get purge --auto-remove -y \
+        build-essential \
     && rm -rf /var/lib/apt/lists/* /root/.cpan/ /root/.cpanm/
 
 COPY ./docker-entrypoint.sh /
