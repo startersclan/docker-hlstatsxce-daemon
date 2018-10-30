@@ -43,6 +43,7 @@ RUN apk update \
         perl-app-cpanminus \
     && apk add --no-cache \
         perl-net-ssleay \
+        perl-io-socket-ssl \
     # Email::Sender::Simple requires these dependencies
     && cpanm \
         MIME::Base64 \
