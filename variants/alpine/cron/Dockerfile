@@ -36,7 +36,11 @@ RUN apk update \
         perl-dbd-mysql \
     && rm -rf /var/cache/apk/*
 
-
+# Install basic tools for cron
+RUN apk add --no-cache \
+        curl \
+        wget \
+        openssl
 
 COPY ./docker-entrypoint.sh /
 

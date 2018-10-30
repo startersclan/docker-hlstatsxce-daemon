@@ -59,7 +59,13 @@ RUN apt-get update \
         libdbd-mysql-perl \
     && rm -rf /var/lib/apt/lists/*
 
-
+# Install basic tools for cron
+RUN apt-get update \
+    && apt-get install -y \
+        curl \
+        wget \
+        openssl \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install modules for perl-based email
 RUN apt-get update \
