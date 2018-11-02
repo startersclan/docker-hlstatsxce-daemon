@@ -91,6 +91,14 @@ RUN apt-get update \
         libdbd-mysql-perl \
     && rm -rf /var/lib/apt/lists/*
 
+# Install basic tools for cron
+RUN apt-get update \
+    && apt-get install -y \
+        curl \
+        wget \
+        openssl \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install modules for perl GeoIP
 RUN apt-get update \
     && apt-get install -y \
@@ -158,7 +166,7 @@ RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 27500/udp
 
-STOPSIGNAL SIGINT
+STOPSIGNAL SIGKILL
 
 WORKDIR /app
 

@@ -67,6 +67,12 @@ RUN apk update \
         perl-dbd-mysql \
     && rm -rf /var/cache/apk/*
 
+# Install basic tools for cron
+RUN apk add --no-cache \
+        curl \
+        wget \
+        openssl
+
 # Install modules for perl GeoIP
 RUN apk update \
     && apk add --no-cache --virtual build-dependencies \
@@ -112,13 +118,30 @@ RUN apk update \
     && apk del build-dependencies \
     && rm -rf /root/.cpan /root/.cpanminus /var/cache/apk/*
 
+# Install modules for perl-based email (SMTPS)
+RUN apk update \
+    && apk add --no-cache --virtual build-dependencies \
+        build-base \
+        perl-app-cpanminus \
+    && apk add --no-cache \
+        perl-net-ssleay \
+        perl-io-socket-ssl \
+    # Email::Sender::Simple requires these dependencies
+    && cpanm \
+        MIME::Base64 \
+        Authen::SASL \
+    && cpanm \
+        Email::Sender::Simple \
+    && apk del build-dependencies \
+    && rm -rf /root/.cpan /root/.cpanminus /var/cache/apk/*
+
 COPY ./docker-entrypoint.sh /
 
 RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 27500/udp
 
-STOPSIGNAL SIGINT
+STOPSIGNAL SIGKILL
 
 WORKDIR /app
 

@@ -18,6 +18,37 @@ RUN apk add --no-cache ca-certificates wget \
     && rm -f GeoLiteCity.dat.gz \
     && ls -l
 
+# Download the GeoIP2 binary
+RUN apk add --no-cache ca-certificates wget \
+    && cd /app/GeoLiteCity \
+    && ls -l; \
+    \
+    echo "Downloading a copy of GeoLite2City..."; \
+    URL="http://geolite.maxmind.com/download/geoip/database/"; \
+    FILE="GeoLite2-City.tar.gz"; \
+    wget -N -q "$URL$FILE"; \
+    if [ $? = 0 ]; then \
+        tar -tvf "$FILE"; \
+        echo "Uncompressing database"; \
+        MMDB_PATH=$( tar -tvf "$FILE" | grep '.mmdb' | awk '{print $6}' ); \
+        MMDB_FOLDER=$( dirname $MMDB_PATH ); \
+        MMDB=$( basename "$MMDB_PATH" ); \
+        echo "MMDB_PATH: $MMDB_PATH"; \
+        echo "MMDB_FOLDER: $MMDB_FOLDER"; \
+        echo "MMDB: $MMDB"; \
+        tar -zxvf "$FILE" "$MMDB_PATH"; \
+        mv "$MMDB_PATH" "$MMDB"; \
+        chmod 666 *.mmdb; \
+        echo "Cleaning up"; \
+        rm -rf $( echo $MMDB_FOLDER | sed "s/.+$MMDB//" ); \
+        rm -rf $FILE; \
+        ls -l; \
+    fi; \
+    if [ ! -f GeoLite2-City.mmdb ]; then \
+        echo "Could not download GeoIP2 db from: $URL$FILE"; \
+        exit 1; \
+    fi;
+
 # Install perl
 RUN apk add --no-cache \
     wget \

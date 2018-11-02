@@ -18,6 +18,8 @@ RUN apk add --no-cache ca-certificates wget \
     && rm -f GeoLiteCity.dat.gz \
     && ls -l
 
+
+
 # Install perl
 RUN apk add --no-cache \
     wget \

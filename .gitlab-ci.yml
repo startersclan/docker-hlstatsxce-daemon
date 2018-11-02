@@ -15,7 +15,7 @@ build-cron:
     - api
   variables:
     VARIANT_TAG: "cron"
-    VARIANT_TAG_WITH_VERSION: "cron-v1.0.3"
+    VARIANT_TAG_WITH_VERSION: "cron-v1.0.4a"
     VARIANT_BUILD_DIR: "variants/ubuntu/cron"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -56,7 +56,7 @@ build-cron:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-cron-emailsender:
   stage: build
   only:
@@ -64,7 +64,7 @@ build-cron-emailsender:
     - api
   variables:
     VARIANT_TAG: "cron-emailsender"
-    VARIANT_TAG_WITH_VERSION: "cron-emailsender-v1.0.3"
+    VARIANT_TAG_WITH_VERSION: "cron-emailsender-v1.0.4a"
     VARIANT_BUILD_DIR: "variants/ubuntu/cron-emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -105,7 +105,154 @@ build-cron-emailsender:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
+build-cron-geoip:
+  stage: build
+  only:
+    - master
+    - api
+  variables:
+    VARIANT_TAG: "cron-geoip"
+    VARIANT_TAG_WITH_VERSION: "cron-geoip-v1.0.4a"
+    VARIANT_BUILD_DIR: "variants/ubuntu/cron-geoip"
+  before_script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Login to Docker Hub registry
+    - echo "${DOCKERHUB_REGISTRY_PASSWORD}" | docker login -u "${DOCKERHUB_REGISTRY_USER}" --password-stdin
+
+    # Login to GitLab registry
+    - echo "${CI_REGISTRY_PASSWORD}" | docker login -u "${CI_REGISTRY_USER}" --password-stdin "${CI_REGISTRY}"
+
+  script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - docker build
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+      "${VARIANT_BUILD_DIR}"
+
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Push to Docker Hub registry. E.g. 'namespace/my-project:tag'
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
+
+    # Push to GitLab registry. E.g. 'registry.gitlab.com/namespace/my-project:tag
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+
+  after_script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Log out of Docker Hub registry
+    - docker logout
+
+    # Log out of GitLab registry
+    - docker logout "${CI_REGISTRY}"
+
+build-cron-geoip-geoip2:
+  stage: build
+  only:
+    - master
+    - api
+  variables:
+    VARIANT_TAG: "cron-geoip-geoip2"
+    VARIANT_TAG_WITH_VERSION: "cron-geoip-geoip2-v1.0.4a"
+    VARIANT_BUILD_DIR: "variants/ubuntu/cron-geoip-geoip2"
+  before_script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Login to Docker Hub registry
+    - echo "${DOCKERHUB_REGISTRY_PASSWORD}" | docker login -u "${DOCKERHUB_REGISTRY_USER}" --password-stdin
+
+    # Login to GitLab registry
+    - echo "${CI_REGISTRY_PASSWORD}" | docker login -u "${CI_REGISTRY_USER}" --password-stdin "${CI_REGISTRY}"
+
+  script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - docker build
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+      "${VARIANT_BUILD_DIR}"
+
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Push to Docker Hub registry. E.g. 'namespace/my-project:tag'
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
+
+    # Push to GitLab registry. E.g. 'registry.gitlab.com/namespace/my-project:tag
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+
+  after_script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Log out of Docker Hub registry
+    - docker logout
+
+    # Log out of GitLab registry
+    - docker logout "${CI_REGISTRY}"
+
+build-cron-geoip-geoip2-emailsender:
+  stage: build
+  only:
+    - master
+    - api
+  variables:
+    VARIANT_TAG: "cron-geoip-geoip2-emailsender"
+    VARIANT_TAG_WITH_VERSION: "cron-geoip-geoip2-emailsender-v1.0.4a"
+    VARIANT_BUILD_DIR: "variants/ubuntu/cron-geoip-geoip2-emailsender"
+  before_script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Login to Docker Hub registry
+    - echo "${DOCKERHUB_REGISTRY_PASSWORD}" | docker login -u "${DOCKERHUB_REGISTRY_USER}" --password-stdin
+
+    # Login to GitLab registry
+    - echo "${CI_REGISTRY_PASSWORD}" | docker login -u "${CI_REGISTRY_USER}" --password-stdin "${CI_REGISTRY}"
+
+  script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - docker build
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+      "${VARIANT_BUILD_DIR}"
+
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Push to Docker Hub registry. E.g. 'namespace/my-project:tag'
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
+
+    # Push to GitLab registry. E.g. 'registry.gitlab.com/namespace/my-project:tag
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+
+  after_script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Log out of Docker Hub registry
+    - docker logout
+
+    # Log out of GitLab registry
+    - docker logout "${CI_REGISTRY}"
+
 build-emailsender:
   stage: build
   only:
@@ -113,7 +260,7 @@ build-emailsender:
     - api
   variables:
     VARIANT_TAG: "emailsender"
-    VARIANT_TAG_WITH_VERSION: "emailsender-v1.0.3"
+    VARIANT_TAG_WITH_VERSION: "emailsender-v1.0.4a"
     VARIANT_BUILD_DIR: "variants/ubuntu/emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -154,7 +301,7 @@ build-emailsender:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip:
   stage: build
   only:
@@ -162,7 +309,7 @@ build-geoip:
     - api
   variables:
     VARIANT_TAG: "geoip"
-    VARIANT_TAG_WITH_VERSION: "geoip-v1.0.3"
+    VARIANT_TAG_WITH_VERSION: "geoip-v1.0.4a"
     VARIANT_BUILD_DIR: "variants/ubuntu/geoip"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -203,7 +350,7 @@ build-geoip:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip-geoip2:
   stage: build
   only:
@@ -211,7 +358,7 @@ build-geoip-geoip2:
     - api
   variables:
     VARIANT_TAG: "geoip-geoip2"
-    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-v1.0.3"
+    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-v1.0.4a"
     VARIANT_BUILD_DIR: "variants/ubuntu/geoip-geoip2"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -252,7 +399,7 @@ build-geoip-geoip2:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip-geoip2-emailsender:
   stage: build
   only:
@@ -260,7 +407,7 @@ build-geoip-geoip2-emailsender:
     - api
   variables:
     VARIANT_TAG: "geoip-geoip2-emailsender"
-    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-emailsender-v1.0.3"
+    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-emailsender-v1.0.4a"
     VARIANT_BUILD_DIR: "variants/ubuntu/geoip-geoip2-emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -301,7 +448,7 @@ build-geoip-geoip2-emailsender:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-cron-alpine:
   stage: build
   only:
@@ -309,7 +456,7 @@ build-cron-alpine:
     - api
   variables:
     VARIANT_TAG: "cron-alpine"
-    VARIANT_TAG_WITH_VERSION: "cron-alpine-v1.0.3"
+    VARIANT_TAG_WITH_VERSION: "cron-alpine-v1.0.4a"
     VARIANT_BUILD_DIR: "variants/alpine/cron"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -350,7 +497,7 @@ build-cron-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-cron-emailsender-alpine:
   stage: build
   only:
@@ -358,7 +505,7 @@ build-cron-emailsender-alpine:
     - api
   variables:
     VARIANT_TAG: "cron-emailsender-alpine"
-    VARIANT_TAG_WITH_VERSION: "cron-emailsender-alpine-v1.0.3"
+    VARIANT_TAG_WITH_VERSION: "cron-emailsender-alpine-v1.0.4a"
     VARIANT_BUILD_DIR: "variants/alpine/cron-emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -399,7 +546,154 @@ build-cron-emailsender-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
+build-cron-geoip-alpine:
+  stage: build
+  only:
+    - master
+    - api
+  variables:
+    VARIANT_TAG: "cron-geoip-alpine"
+    VARIANT_TAG_WITH_VERSION: "cron-geoip-alpine-v1.0.4a"
+    VARIANT_BUILD_DIR: "variants/alpine/cron-geoip"
+  before_script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Login to Docker Hub registry
+    - echo "${DOCKERHUB_REGISTRY_PASSWORD}" | docker login -u "${DOCKERHUB_REGISTRY_USER}" --password-stdin
+
+    # Login to GitLab registry
+    - echo "${CI_REGISTRY_PASSWORD}" | docker login -u "${CI_REGISTRY_USER}" --password-stdin "${CI_REGISTRY}"
+
+  script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - docker build
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+      "${VARIANT_BUILD_DIR}"
+
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Push to Docker Hub registry. E.g. 'namespace/my-project:tag'
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
+
+    # Push to GitLab registry. E.g. 'registry.gitlab.com/namespace/my-project:tag
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+
+  after_script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Log out of Docker Hub registry
+    - docker logout
+
+    # Log out of GitLab registry
+    - docker logout "${CI_REGISTRY}"
+
+build-cron-geoip-geoip2-alpine:
+  stage: build
+  only:
+    - master
+    - api
+  variables:
+    VARIANT_TAG: "cron-geoip-geoip2-alpine"
+    VARIANT_TAG_WITH_VERSION: "cron-geoip-geoip2-alpine-v1.0.4a"
+    VARIANT_BUILD_DIR: "variants/alpine/cron-geoip-geoip2"
+  before_script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Login to Docker Hub registry
+    - echo "${DOCKERHUB_REGISTRY_PASSWORD}" | docker login -u "${DOCKERHUB_REGISTRY_USER}" --password-stdin
+
+    # Login to GitLab registry
+    - echo "${CI_REGISTRY_PASSWORD}" | docker login -u "${CI_REGISTRY_USER}" --password-stdin "${CI_REGISTRY}"
+
+  script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - docker build
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+      "${VARIANT_BUILD_DIR}"
+
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Push to Docker Hub registry. E.g. 'namespace/my-project:tag'
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
+
+    # Push to GitLab registry. E.g. 'registry.gitlab.com/namespace/my-project:tag
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+
+  after_script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Log out of Docker Hub registry
+    - docker logout
+
+    # Log out of GitLab registry
+    - docker logout "${CI_REGISTRY}"
+
+build-cron-geoip-geoip2-emailsender-alpine:
+  stage: build
+  only:
+    - master
+    - api
+  variables:
+    VARIANT_TAG: "cron-geoip-geoip2-emailsender-alpine"
+    VARIANT_TAG_WITH_VERSION: "cron-geoip-geoip2-emailsender-alpine-v1.0.4a"
+    VARIANT_BUILD_DIR: "variants/alpine/cron-geoip-geoip2-emailsender"
+  before_script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Login to Docker Hub registry
+    - echo "${DOCKERHUB_REGISTRY_PASSWORD}" | docker login -u "${DOCKERHUB_REGISTRY_USER}" --password-stdin
+
+    # Login to GitLab registry
+    - echo "${CI_REGISTRY_PASSWORD}" | docker login -u "${CI_REGISTRY_USER}" --password-stdin "${CI_REGISTRY}"
+
+  script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+    - apk update && apk add git
+    - git submodule add "https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git" "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - ls -l "$VARIANT_BUILD_DIR/hlstatsx-community-edition"
+    - docker build
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+      -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+      -t "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+      "${VARIANT_BUILD_DIR}"
+
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Push to Docker Hub registry. E.g. 'namespace/my-project:tag'
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
+    - docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
+
+    # Push to GitLab registry. E.g. 'registry.gitlab.com/namespace/my-project:tag
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG}"
+    - docker push "${CI_REGISTRY_IMAGE}:${VARIANT_TAG_WITH_VERSION}"
+
+  after_script:
+    - date '+%Y-%m-%d %H:%M:%S %z'
+
+    # Log out of Docker Hub registry
+    - docker logout
+
+    # Log out of GitLab registry
+    - docker logout "${CI_REGISTRY}"
+
 build-emailsender-alpine:
   stage: build
   only:
@@ -407,7 +701,7 @@ build-emailsender-alpine:
     - api
   variables:
     VARIANT_TAG: "emailsender-alpine"
-    VARIANT_TAG_WITH_VERSION: "emailsender-alpine-v1.0.3"
+    VARIANT_TAG_WITH_VERSION: "emailsender-alpine-v1.0.4a"
     VARIANT_BUILD_DIR: "variants/alpine/emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -448,7 +742,7 @@ build-emailsender-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip-alpine:
   stage: build
   only:
@@ -456,7 +750,7 @@ build-geoip-alpine:
     - api
   variables:
     VARIANT_TAG: "geoip-alpine"
-    VARIANT_TAG_WITH_VERSION: "geoip-alpine-v1.0.3"
+    VARIANT_TAG_WITH_VERSION: "geoip-alpine-v1.0.4a"
     VARIANT_BUILD_DIR: "variants/alpine/geoip"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -497,7 +791,7 @@ build-geoip-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip-geoip2-alpine:
   stage: build
   only:
@@ -505,7 +799,7 @@ build-geoip-geoip2-alpine:
     - api
   variables:
     VARIANT_TAG: "geoip-geoip2-alpine"
-    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-alpine-v1.0.3"
+    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-alpine-v1.0.4a"
     VARIANT_BUILD_DIR: "variants/alpine/geoip-geoip2"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'
@@ -546,7 +840,7 @@ build-geoip-geoip2-alpine:
 
     # Log out of GitLab registry
     - docker logout "${CI_REGISTRY}"
- 
+
 build-geoip-geoip2-emailsender-alpine:
   stage: build
   only:
@@ -554,7 +848,7 @@ build-geoip-geoip2-emailsender-alpine:
     - api
   variables:
     VARIANT_TAG: "geoip-geoip2-emailsender-alpine"
-    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-emailsender-alpine-v1.0.3"
+    VARIANT_TAG_WITH_VERSION: "geoip-geoip2-emailsender-alpine-v1.0.4a"
     VARIANT_BUILD_DIR: "variants/alpine/geoip-geoip2-emailsender"
   before_script:
     - date '+%Y-%m-%d %H:%M:%S %z'

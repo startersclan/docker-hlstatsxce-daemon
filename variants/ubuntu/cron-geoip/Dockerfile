@@ -19,37 +19,7 @@ RUN apt-get update && apt-get install -y ca-certificates wget \
     && rm -f GeoLiteCity.dat.gz \
     && ls -l
 
-# Download the GeoIP2 binary
-RUN apt-get update && apt-get install -y ca-certificates wget \
-    && rm -rf /var/lib/apt/lists/* \
-    && cd /app/GeoLiteCity \
-    && ls -l; \
-    \
-    echo "Downloading a copy of GeoLite2City..."; \
-    URL="http://geolite.maxmind.com/download/geoip/database/"; \
-    FILE="GeoLite2-City.tar.gz"; \
-    wget -N -q "$URL$FILE"; \
-    if [ $? = 0 ]; then \
-        tar -tvf "$FILE"; \
-        echo "Uncompressing database"; \
-        MMDB_PATH=$( tar -tvf "$FILE" | grep '.mmdb' | awk '{print $6}' ); \
-        MMDB_FOLDER=$( dirname $MMDB_PATH ); \
-        MMDB=$( basename "$MMDB_PATH" ); \
-        echo "MMDB_PATH: $MMDB_PATH"; \
-        echo "MMDB_FOLDER: $MMDB_FOLDER"; \
-        echo "MMDB: $MMDB"; \
-        tar -zxvf "$FILE" "$MMDB_PATH"; \
-        mv "$MMDB_PATH" "$MMDB"; \
-        chmod 666 *.mmdb; \
-        echo "Cleaning up"; \
-        rm -rf $( echo $MMDB_FOLDER | sed "s/.+$MMDB//" ); \
-        rm -rf $FILE; \
-        ls -l; \
-    fi; \
-    if [ ! -f GeoLite2-City.mmdb ]; then \
-        echo "Could not download GeoIP2 db from: $URL$FILE"; \
-        exit 1; \
-    fi;
+
 
 #
 # Export these environment variables
@@ -91,6 +61,14 @@ RUN apt-get update \
         libdbd-mysql-perl \
     && rm -rf /var/lib/apt/lists/*
 
+# Install basic tools for cron
+RUN apt-get update \
+    && apt-get install -y \
+        curl \
+        wget \
+        openssl \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install modules for perl GeoIP
 RUN apt-get update \
     && apt-get install -y \
@@ -103,43 +81,13 @@ RUN apt-get update \
         cpanminus \
     && rm -rf /var/lib/apt/lists/* /root/.cpan/ /root/.cpanm/
 
-# Install modules for perl GeoIP2
-RUN apt-get update \
-    && apt-get install -y \
-        build-essential \
-        cpanminus \
-    && apt-get update && apt-get install -y \
-        libnet-ssleay-perl \
-        #libio-socket-ssl-perl \
-        #libwww-perl \
-        #libdatetime-perl \
-    && cpanm \
-        MaxMind::DB::Reader \
-        GeoIP2 \
-# Install maxmind DB::Reader::XS (faster than MaxMind::DB::Reader)
-# See: https://github.com/maxmind/libmaxminddb
-    && apt-get update && apt-get install -y \
-        software-properties-common \
-    && add-apt-repository -y ppa:maxmind/ppa \
-    && apt-get update \
-    && apt-get install -y \
-        libmaxminddb0 \
-        libmaxminddb-dev \
-        mmdb-bin \
-    && cpanm \
-        MaxMind::DB::Reader::XS \
-    && apt-get purge --auto-remove -y \
-        build-essential \
-        software-properties-common \
-    && rm -rf /var/lib/apt/lists/* /root/.cpan/ /root/.cpanm/
-
 COPY ./docker-entrypoint.sh /
 
 RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 27500/udp
 
-STOPSIGNAL SIGINT
+STOPSIGNAL SIGKILL
 
 WORKDIR /app
 

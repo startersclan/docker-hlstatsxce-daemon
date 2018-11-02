@@ -19,6 +19,8 @@ RUN apt-get update && apt-get install -y ca-certificates wget \
     && rm -f GeoLiteCity.dat.gz \
     && ls -l
 
+
+
 #
 # Export these environment variables
 #

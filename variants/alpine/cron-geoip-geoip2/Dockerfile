@@ -1,4 +1,3 @@
-@"
 FROM alpine:3.8
 
 COPY hlstatsx-community-edition/scripts /app
@@ -10,8 +9,6 @@ RUN find /app -type d -exec chmod 750 {} \; \
     && find /app -type f -name '*.pl' -exec chmod 750 {} \; \
     && find /app -type f -name 'run_*' -exec chmod 750 {} \;
 
-$( if ( 'geoip' -in $VARIANT['components'] ) {
-@'
 # Download the GeoIP binary
 RUN apk add --no-cache ca-certificates wget \
     && cd /app/GeoLiteCity \
@@ -20,11 +17,7 @@ RUN apk add --no-cache ca-certificates wget \
     && chmod 666 GeoLiteCity.dat \
     && rm -f GeoLiteCity.dat.gz \
     && ls -l
-'@
-})
 
-$( if ( 'geoip2' -in $VARIANT['components'] ) {
-@'
 # Download the GeoIP2 binary
 RUN apk add --no-cache ca-certificates wget \
     && cd /app/GeoLiteCity \
@@ -55,8 +48,6 @@ RUN apk add --no-cache ca-certificates wget \
         echo "Could not download GeoIP2 db from: $URL$FILE"; \
         exit 1; \
     fi;
-'@
-})
 
 # Install perl
 RUN apk add --no-cache \
@@ -75,4 +66,67 @@ RUN apk update \
         perl-dbi \
         perl-dbd-mysql \
     && rm -rf /var/cache/apk/*
-"@
+
+# Install basic tools for cron
+RUN apk add --no-cache \
+        curl \
+        wget \
+        openssl
+
+# Install modules for perl GeoIP
+RUN apk update \
+    && apk add --no-cache --virtual build-dependencies \
+        build-base \
+        perl-app-cpanminus \
+    && cpanm \
+        Geo::IP::PurePerl \
+    && apk del build-dependencies \
+    && rm -rf /root/.cpan /root/.cpanminus /var/cache/apk/*
+
+# Install modules for perl GeoIP2
+# 11 dependencies missing for GeoIP2:
+#   - 11 dependencies missing (Data::Validate::IP,LWP::Protocol::https,List::SomeUtils,MaxMind::DB::Metadata,MaxMind::DB::Reader,Moo,Moo::Role,Params::Validate,Path::Class,Throwable::Error,namespace::clean);
+RUN apk update \
+    && apk add --no-cache --virtual build-dependencies \
+        build-base \
+        perl-app-cpanminus \
+    && apk add --no-cache \
+        perl-datetime \
+        perl-path-class \
+        perl-net-ssleay \
+        #perl-libwww \
+        #perl-lwp-protocol-https \
+        #perl-netaddr-ip \
+        #perl-list-someutils \
+        #perl-params-validate \
+        #perl-namespace-clean \
+        #perl-list-allutils \
+        #perl-moo \
+        #perl-net-ip \
+    && cpanm \
+        MaxMind::DB::Reader \
+        GeoIP2 \
+# Install maxmind DB::Reader::XS (faster than MaxMind::DB::Reader)
+# See: https://github.com/maxmind/libmaxminddb
+# NOTE: Not working atm, tests fail at MAXMIND's Net::Works::Network
+#
+    # && apk add --no-cache \
+    #     libmaxminddb \
+    #     libmaxminddb-dev \
+    # && cpanm \
+    #     MaxMind::DB::Reader::XS \
+    && apk del build-dependencies \
+    && rm -rf /root/.cpan /root/.cpanminus /var/cache/apk/*
+
+COPY ./docker-entrypoint.sh /
+
+RUN chmod +x /docker-entrypoint.sh
+
+EXPOSE 27500/udp
+
+STOPSIGNAL SIGKILL
+
+WORKDIR /app
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["perl", "./hlstats.pl"]
