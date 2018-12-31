@@ -1,9 +1,12 @@
 FROM ubuntu:16.04
 
-COPY hlstatsx-community-edition/scripts /app
-
-# Set permissions
-RUN find /app -type d -exec chmod 750 {} \; \
+# Get hlstatsxce perl daemon scripts and set permissions
+RUN apt-get update \
+    && apt-get install git -y \
+    && git submodule add https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git hlstatsx-community-edition \
+    && apt-get purge --auto-remove git \
+    && mv hlstatsx-community-edition/scripts /app \
+    && find /app -type d -exec chmod 750 {} \; \
     && find /app -type f -exec chmod 640 {} \; \
     && find /app -type f -name '*.sh' -exec chmod 750 {} \; \
     && find /app -type f -name '*.pl' -exec chmod 750 {} \; \
