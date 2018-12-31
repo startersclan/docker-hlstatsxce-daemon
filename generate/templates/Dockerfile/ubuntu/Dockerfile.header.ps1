@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install git -y \
     && find /app -type f -name '*.pl' -exec chmod 750 {} \; \
     && find /app -type f -name 'run_*' -exec chmod 750 {} \; \
     && rm -rf /hlstatsx-community-edition \
-    && apt-get purge --auto-remove git
+    && apt-get purge --auto-remove -y git
+    && rm -rf /var/lib/apt/lists/*
 
 $( if ( 'geoip' -in $VARIANT['components'] ) {
 @'
