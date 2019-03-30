@@ -1,14 +1,17 @@
 @"
 FROM alpine:3.8
 
-COPY hlstatsx-community-edition/scripts /app
-
-# Set permissions
-RUN find /app -type d -exec chmod 750 {} \; \
+# Get hlstatsxce perl daemon scripts and set permissions
+RUN apk add --no-cache git \
+    && git clone https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git /hlstatsx-community-edition \
+    && mv /hlstatsx-community-edition/scripts /app \
+    && find /app -type d -exec chmod 750 {} \; \
     && find /app -type f -exec chmod 640 {} \; \
     && find /app -type f -name '*.sh' -exec chmod 750 {} \; \
     && find /app -type f -name '*.pl' -exec chmod 750 {} \; \
-    && find /app -type f -name 'run_*' -exec chmod 750 {} \;
+    && find /app -type f -name 'run_*' -exec chmod 750 {} \; \
+    && rm -rf /hlstatsx-community-edition \
+    && apk del git
 
 $( if ( 'geoip' -in $VARIANT['components'] ) {
 @'

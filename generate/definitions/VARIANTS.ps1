@@ -81,9 +81,6 @@ $VARIANTS = @(
 # Docker image variants' definitions (shared)
 $VARIANTS_SHARED = @{
     version = $VARIANTS_VERSION
-    submodules = @{
-        'hlstatsx-community-edition' = 'https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git'
-    }
     buildContextFiles = @{
         templates = @{
             'Dockerfile' = @{
