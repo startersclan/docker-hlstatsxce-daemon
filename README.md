@@ -1,5 +1,7 @@
 # hlstatsxce-perl
 
+[![pipeline status](https://gitlab.com/leojonathanoh/hlstatsxce-perl/badges/master/pipeline.svg)](https://gitlab.com/leojonathanoh/hlstatsxce-perl/commits/master)
+
 Docker image for the [HLStatsX:CE]((https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/downloads/)) perl daemon.
 
 ## Variants
