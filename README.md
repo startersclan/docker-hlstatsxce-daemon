@@ -49,7 +49,6 @@ docker service create --name hlstatsxce-daemon \
     --secret secret_db_name \
     --secret secret_db_user \
     --secret secret_db_password \
-    -v /path/to/hlxce/scripts:/app \
     leojonathanoh/hlstatsxce-perl:geoip
 ```
 
