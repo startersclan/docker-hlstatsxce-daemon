@@ -2,7 +2,7 @@
 
 [![pipeline status](https://gitlab.com/leojonathanoh/hlstatsxce-perl/badges/dev/pipeline.svg)](https://gitlab.com/leojonathanoh/hlstatsxce-perl/commits/dev)
 
-Docker image for the [HLStatsX:CE]((https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/downloads/)) perl daemon.
+Docker image for the [HLStatsX:CE](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/) perl daemon.
 
 ## Variants
 
