@@ -1,6 +1,6 @@
-# hlstatsxce-perl
+# docker-hlstatsxce-daemon
 
-[![pipeline status](https://gitlab.com/leojonathanoh/hlstatsxce-perl/badges/dev/pipeline.svg)](https://gitlab.com/leojonathanoh/hlstatsxce-perl/commits/dev)
+[![pipeline status](https://gitlab.com/leojonathanoh/docker-hlstatsxce-daemon/badges/dev/pipeline.svg)](https://gitlab.com/leojonathanoh/docker-hlstatsxce-daemon/commits/dev)
 
 Docker image for the [HLStatsX:CE](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/) perl daemon.
 
@@ -28,12 +28,12 @@ docker run -d \
     -e DB_USER=hlstatsxce
     -e DB_PASSWORD=hlstatsxce
     -e DEBUG_LOW=1
-    leojonathanoh/hlstatsxce-perl:geoip
+    leojonathanoh/docker-hlstatsxce-daemon:geoip
 
 # Alternatively, if you prefer to use a config file instead of environment variables
 docker run -d \
     -v /path/to/hlxce/scripts/hlstats.conf:/app/hlstats.conf \
-    leojonathanoh/hlstatsxce-perl:geoip
+    leojonathanoh/docker-hlstatsxce-daemon:geoip
 ```
 
 ## Example (Swarm Mode with Docker Secrets):
@@ -49,7 +49,7 @@ docker service create --name hlstatsxce-daemon \
     --secret secret_db_name \
     --secret secret_db_user \
     --secret secret_db_password \
-    leojonathanoh/hlstatsxce-perl:geoip
+    leojonathanoh/docker-hlstatsxce-daemon:geoip
 ```
 
 The entrypoint script takes care of expanding the environment variables `DB_NAME`, `DB_USER`, and `DB_PASSWORD` from the respective secret files `/run/secrets/secret_db_name`, `/run/secrets/secret_db_user`, and `/run/secrets/secret_db_password`. This is done by using the syntax `ENVVARIABLE=DOCKER-SECRET:docker_secret_name` (note the colon).
