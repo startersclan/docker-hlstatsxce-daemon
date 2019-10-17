@@ -19,7 +19,6 @@ RUN apt-get update && apt-get install -y ca-certificates wget \
     && cd /app/GeoLiteCity \
     && wget -qO- https://github.com/startersclan/GeoLiteCity-data/raw/c14d99c42446f586e3ca9c89fe13714474921d65/GeoLiteCity.dat > GeoLiteCity.dat \
     && chmod 666 GeoLiteCity.dat \
-    && rm -f GeoLiteCity.dat.gz \
     && ls -l
 
 
