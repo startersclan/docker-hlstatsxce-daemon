@@ -14,12 +14,25 @@ RUN apk add --no-cache git \
     && apk del git
 
 $( if ( 'geoip' -in $VARIANT['components'] ) {
+# @'
+# # Download the GeoIP binary
+# RUN apt-get update && apt-get install -y ca-certificates wget \
+#     && rm -rf /var/lib/apt/lists/* \
+#     && cd /app/GeoLiteCity \
+#     && ls -l \
+#     && ./install_binary.sh \
+#     && chmod 666 GeoLiteCity.dat \
+#     && rm -f GeoLiteCity.dat.gz \
+#     && ls -l
+# '@
+#
 @'
-# Download the GeoIP binary
-RUN apk add --no-cache ca-certificates wget \
+# Download the GeoIP binary. Maxmind discontinued distributing the GeoLite Legacy databases. See: https://support.maxmind.com/geolite-legacy-discontinuation-notice/
+# So let's download it from our fork of GeoLiteCity.dat
+RUN apt-get update && apt-get install -y ca-certificates wget \
+    && rm -rf /var/lib/apt/lists/* \
     && cd /app/GeoLiteCity \
-    && ls -l \
-    && sh ./install_binary.sh \
+    && wget -qO- https://github.com/startersclan/GeoLiteCity-data/raw/c14d99c42446f586e3ca9c89fe13714474921d65/GeoLiteCity.dat > GeoLiteCity.dat \
     && chmod 666 GeoLiteCity.dat \
     && rm -f GeoLiteCity.dat.gz \
     && ls -l
