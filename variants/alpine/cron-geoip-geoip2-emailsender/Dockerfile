@@ -3,6 +3,7 @@ FROM alpine:3.8
 # Get hlstatsxce perl daemon scripts and set permissions
 RUN apk add --no-cache git \
     && git clone https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git /hlstatsx-community-edition \
+    && git checkout 11cac08de8c01b7a07897562596e59b7f0f86230 \
     && mv /hlstatsx-community-edition/scripts /app \
     && find /app -type d -exec chmod 750 {} \; \
     && find /app -type f -exec chmod 640 {} \; \
@@ -14,7 +15,7 @@ RUN apk add --no-cache git \
 
 # Download the GeoIP binary. Maxmind discontinued distributing the GeoLite Legacy databases. See: https://support.maxmind.com/geolite-legacy-discontinuation-notice/
 # So let's download it from our fork of GeoLiteCity.dat
-RUN apt-get update && apt-get install -y ca-certificates wget \
+RUN apk add --no-cache ca-certificates wget \
     && rm -rf /var/lib/apt/lists/* \
     && cd /app/GeoLiteCity \
     && wget -qO- https://github.com/startersclan/GeoLiteCity-data/raw/c14d99c42446f586e3ca9c89fe13714474921d65/GeoLiteCity.dat > GeoLiteCity.dat \

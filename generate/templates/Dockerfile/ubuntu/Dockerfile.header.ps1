@@ -3,8 +3,9 @@ FROM ubuntu:16.04
 
 # Get hlstatsxce perl daemon scripts and set permissions
 RUN apt-get update && apt-get install git -y \
-    && git clone https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git /hlstatsx-community-edition \
-    && mv hlstatsx-community-edition/scripts /app \
+    && git clone $( $PASS_VARIABLES['hlstatsxce_git_url'] ) /hlstatsx-community-edition \
+    && git checkout $( $PASS_VARIABLES['hlstatsxce_git_hash'] ) \
+    && mv /hlstatsx-community-edition/scripts /app \
     && find /app -type d -exec chmod 750 {} \; \
     && find /app -type f -exec chmod 640 {} \; \
     && find /app -type f -name '*.sh' -exec chmod 750 {} \; \
@@ -27,16 +28,16 @@ $( if ( 'geoip' -in $VARIANT['components'] ) {
 #     && ls -l
 # '@
 #
-@'
+@"
 # Download the GeoIP binary. Maxmind discontinued distributing the GeoLite Legacy databases. See: https://support.maxmind.com/geolite-legacy-discontinuation-notice/
 # So let's download it from our fork of GeoLiteCity.dat
 RUN apt-get update && apt-get install -y ca-certificates wget \
     && rm -rf /var/lib/apt/lists/* \
     && cd /app/GeoLiteCity \
-    && wget -qO- https://github.com/startersclan/GeoLiteCity-data/raw/c14d99c42446f586e3ca9c89fe13714474921d65/GeoLiteCity.dat > GeoLiteCity.dat \
+    && wget -qO- $( $PASS_VARIABLES['goelitecity_url'] ) > GeoLiteCity.dat \
     && chmod 666 GeoLiteCity.dat \
     && ls -l
-'@
+"@
 })
 
 $( if ( 'geoip2' -in $VARIANT['components'] ) {
