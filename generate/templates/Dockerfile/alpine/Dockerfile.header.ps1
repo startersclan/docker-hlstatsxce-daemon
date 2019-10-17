@@ -4,6 +4,7 @@ FROM alpine:3.8
 # Get hlstatsxce perl daemon scripts and set permissions
 RUN apk add --no-cache git \
     && git clone $( $PASS_VARIABLES['hlstatsxce_git_url'] ) /hlstatsx-community-edition \
+    && cd /hlstatsx-community-edition \
     && git checkout $( $PASS_VARIABLES['hlstatsxce_git_hash'] ) \
     && mv /hlstatsx-community-edition/scripts /app \
     && find /app -type d -exec chmod 750 {} \; \
