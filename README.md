@@ -1,6 +1,6 @@
 # docker-hlstatsxce-daemon
 
-[![pipeline status](https://gitlab.com/leojonathanoh/docker-hlstatsxce-daemon/badges/dev/pipeline.svg)](https://gitlab.com/leojonathanoh/docker-hlstatsxce-daemon/commits/dev)
+[![pipeline status](https://gitlab.com/startersclan/docker-hlstatsxce-daemon/badges/dev/pipeline.svg)](https://gitlab.com/startersclan/docker-hlstatsxce-daemon/commits/dev)
 
 Docker image for the [HLStatsX:CE](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/) perl daemon.
 
