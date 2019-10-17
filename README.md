@@ -57,7 +57,9 @@ The entrypoint script takes care of expanding the environment variables `DB_NAME
 ## Environment variables (optional)
 
 These environment variables are optional. Use them only if:
+
 1. not using the config file `./hlstats.conf`
+
 2. using the config file `./hlstats.conf` in same directory as `hlstats.pl`, but want to override the config file's settings.
 
 | Name | Default value (as in `hlstats.pl`) | Description | Corresponds to `hlstats.pl` argument |
@@ -92,13 +94,12 @@ setOptionsConf(%copts);
 
 Save the file. That should fix hlstats.pl's `--configfile` argument issue.
 
-
 ## FAQ
 
 ### How to use GeoIP2 with the perl daemon?
 
- - As of [`HLStatsX:CE 1.6.19`](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/downloads/), the perl daemon scripts uses [GeoIP](https://metacpan.org/pod/Geo::IP::PurePerl), and not [GeoIP2](https://metacpan.org/pod/GeoIP2). You will have to change a bit of the code yourself to use the [GeoIP2 API](https://metacpan.org/release/GeoIP2).
+- As of [`HLStatsX:CE 1.6.19`](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/downloads/), the perl daemon scripts uses [GeoIP](https://metacpan.org/pod/Geo::IP::PurePerl), and not [GeoIP2](https://metacpan.org/pod/GeoIP2). You will have to change a bit of the code yourself to use the [GeoIP2 API](https://metacpan.org/release/GeoIP2).
 
 ### How long will this Docker Image be supported?
 
- - As long as the repository is not marked deprecated, which should not happen.
+- As long as the repository is not marked deprecated, which should not happen.
