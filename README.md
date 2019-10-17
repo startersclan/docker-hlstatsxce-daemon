@@ -1,6 +1,9 @@
 # docker-hlstatsxce-daemon
 
-[![pipeline status](https://gitlab.com/startersclan/docker-hlstatsxce-daemon/badges/dev/pipeline.svg)](https://gitlab.com/startersclan/docker-hlstatsxce-daemon/commits/dev)
+[![gitlab-ci](https://img.shields.io/gitlab/pipeline/startersclan/docker-hlstatsxce-daemon/dev)](https://gitlab.com/startersclan/docker-hlstatsxce-daemon/commits/dev)
+[![github-tag](https://img.shields.io/github/tag/startersclan/docker-hlstatsxce-daemon)](https://github.com/startersclan/docker-hlstatsxce-daemon/releases/)
+[![docker-image-size](https://img.shields.io/microbadger/image-size/startersclan/docker-hlstatsxce-daemon/latest)](https://hub.docker.com/r/startersclan/docker-hlstatsxce-daemon)
+[![docker-image-layers](https://img.shields.io/microbadger/layers/startersclan/docker-hlstatsxce-daemon/latest)](https://hub.docker.com/r/startersclan/docker-hlstatsxce-daemon)
 
 Docker image for the [HLStatsX:CE](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/) perl daemon.
 
