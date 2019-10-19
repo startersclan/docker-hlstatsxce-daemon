@@ -37,21 +37,18 @@ RUN apk add --no-cache \
 #
 
 # Install DB perl modules through packages
-RUN apk update \
-    && apk add --no-cache \
+RUN apk add --no-cache \
         perl-dbi \
-        perl-dbd-mysql \
-    && rm -rf /var/cache/apk/*
+        perl-dbd-mysql
 
 # Install modules for perl GeoIP
-RUN apk update \
-    && apk add --no-cache --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
         build-base \
         perl-app-cpanminus \
     && cpanm \
         Geo::IP::PurePerl \
     && apk del build-dependencies \
-    && rm -rf /root/.cpan /root/.cpanminus /var/cache/apk/*
+    && rm -rf /root/.cpan /root/.cpanminus
 
 COPY ./docker-entrypoint.sh /
 

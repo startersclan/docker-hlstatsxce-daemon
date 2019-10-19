@@ -66,27 +66,23 @@ RUN apk add --no-cache \
 #
 
 # Install DB perl modules through packages
-RUN apk update \
-    && apk add --no-cache \
+RUN apk add --no-cache \
         perl-dbi \
-        perl-dbd-mysql \
-    && rm -rf /var/cache/apk/*
+        perl-dbd-mysql
 
 # Install modules for perl GeoIP
-RUN apk update \
-    && apk add --no-cache --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
         build-base \
         perl-app-cpanminus \
     && cpanm \
         Geo::IP::PurePerl \
     && apk del build-dependencies \
-    && rm -rf /root/.cpan /root/.cpanminus /var/cache/apk/*
+    && rm -rf /root/.cpan /root/.cpanminus
 
 # Install modules for perl GeoIP2
 # 11 dependencies missing for GeoIP2:
 #   - 11 dependencies missing (Data::Validate::IP,LWP::Protocol::https,List::SomeUtils,MaxMind::DB::Metadata,MaxMind::DB::Reader,Moo,Moo::Role,Params::Validate,Path::Class,Throwable::Error,namespace::clean);
-RUN apk update \
-    && apk add --no-cache --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
         build-base \
         perl-app-cpanminus \
     #&& apk add --no-cache \
@@ -115,11 +111,10 @@ RUN apk update \
     # && cpanm \
     #     MaxMind::DB::Reader::XS \
     && apk del build-dependencies \
-    && rm -rf /root/.cpan /root/.cpanminus /var/cache/apk/*
+    && rm -rf /root/.cpan /root/.cpanminus
 
 # Install modules for perl-based email (SMTPS)
-RUN apk update \
-    && apk add --no-cache --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
         build-base \
         perl-app-cpanminus \
     && apk add --no-cache \
@@ -132,7 +127,7 @@ RUN apk update \
     && cpanm \
         Email::Sender::Simple \
     && apk del build-dependencies \
-    && rm -rf /root/.cpan /root/.cpanminus /var/cache/apk/*
+    && rm -rf /root/.cpan /root/.cpanminus
 
 COPY ./docker-entrypoint.sh /
 

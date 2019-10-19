@@ -85,9 +85,7 @@ RUN apk add --no-cache \
 #
 
 # Install DB perl modules through packages
-RUN apk update \
-    && apk add --no-cache \
+RUN apk add --no-cache \
         perl-dbi \
-        perl-dbd-mysql \
-    && rm -rf /var/cache/apk/*
+        perl-dbd-mysql
 "@
