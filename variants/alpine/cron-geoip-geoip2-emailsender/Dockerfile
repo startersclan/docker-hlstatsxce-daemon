@@ -95,10 +95,10 @@ RUN apk update \
     && apk add --no-cache --virtual build-dependencies \
         build-base \
         perl-app-cpanminus \
-    && apk add --no-cache \
-        perl-datetime \
-        perl-path-class \
-        perl-net-ssleay \
+    #&& apk add --no-cache \
+        #perl-datetime \
+        #perl-path-class \
+        #perl-net-ssleay \
         #perl-libwww \
         #perl-lwp-protocol-https \
         #perl-netaddr-ip \
