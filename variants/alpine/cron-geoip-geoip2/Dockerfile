@@ -94,7 +94,7 @@ RUN apk add --no-cache --virtual build-dependencies \
     #&& apk add --no-cache \
         #perl-datetime \
         #perl-path-class \
-        #perl-net-ssleay \
+        perl-net-ssleay \
         #perl-libwww \
         #perl-lwp-protocol-https \
         #perl-netaddr-ip \
