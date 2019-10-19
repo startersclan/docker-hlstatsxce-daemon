@@ -18,7 +18,7 @@ RUN apk add --no-cache --virtual build-dependencies \
         #perl-list-allutils \
         #perl-moo \
         #perl-net-ip \
-    && cpanm \
+    && cpanm --verbose \
         MaxMind::DB::Reader \
         GeoIP2 \
 # Install maxmind DB::Reader::XS (faster than MaxMind::DB::Reader)
