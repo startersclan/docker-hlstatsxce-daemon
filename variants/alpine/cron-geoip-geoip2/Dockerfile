@@ -104,7 +104,10 @@ RUN apk add --no-cache --virtual build-dependencies \
         #perl-list-allutils \
         #perl-moo \
         #perl-net-ip \
-    && cpanm --verbose \
+    # Workaround the fact that HTTP::Daemon@6.0.6 unit tests fail, probably due to ipv6 tests - let's use an older version
+    && cpanm \
+        HTTP::Daemon@6.01 \
+    && cpanm \
         MaxMind::DB::Reader \
         GeoIP2 \
 # Install maxmind DB::Reader::XS (faster than MaxMind::DB::Reader)
