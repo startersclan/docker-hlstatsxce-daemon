@@ -3,6 +3,8 @@ FROM alpine:3.8
 # Get hlstatsxce perl daemon scripts and set permissions
 RUN apk add --no-cache git \
     && git clone https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git /hlstatsx-community-edition \
+    && cd /hlstatsx-community-edition \
+    && git checkout 11cac08de8c01b7a07897562596e59b7f0f86230 \
     && mv /hlstatsx-community-edition/scripts /app \
     && find /app -type d -exec chmod 750 {} \; \
     && find /app -type f -exec chmod 640 {} \; \
@@ -28,11 +30,9 @@ RUN apk add --no-cache \
 #
 
 # Install DB perl modules through packages
-RUN apk update \
-    && apk add --no-cache \
+RUN apk add --no-cache \
         perl-dbi \
-        perl-dbd-mysql \
-    && rm -rf /var/cache/apk/*
+        perl-dbd-mysql
 
 # Install basic tools for cron
 RUN apk add --no-cache \

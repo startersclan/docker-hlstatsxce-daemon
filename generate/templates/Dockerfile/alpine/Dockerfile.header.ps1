@@ -3,7 +3,9 @@ FROM alpine:3.8
 
 # Get hlstatsxce perl daemon scripts and set permissions
 RUN apk add --no-cache git \
-    && git clone https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git /hlstatsx-community-edition \
+    && git clone $( $PASS_VARIABLES['hlstatsxce_git_url'] ) /hlstatsx-community-edition \
+    && cd /hlstatsx-community-edition \
+    && git checkout $( $PASS_VARIABLES['hlstatsxce_git_hash'] ) \
     && mv /hlstatsx-community-edition/scripts /app \
     && find /app -type d -exec chmod 750 {} \; \
     && find /app -type f -exec chmod 640 {} \; \
@@ -14,16 +16,26 @@ RUN apk add --no-cache git \
     && apk del git
 
 $( if ( 'geoip' -in $VARIANT['components'] ) {
-@'
-# Download the GeoIP binary
+# @'
+# # Download the GeoIP binary
+# RUN apk add --no-cache ca-certificates wget \
+#     && cd /app/GeoLiteCity \
+#     && ls -l \
+#     && sh ./install_binary.sh \
+#     && chmod 666 GeoLiteCity.dat \
+#     && rm -f GeoLiteCity.dat.gz \
+#     && ls -l
+# '@
+@"
+# Download the GeoIP binary. Maxmind discontinued distributing the GeoLite Legacy databases. See: https://support.maxmind.com/geolite-legacy-discontinuation-notice/
+# So let's download it from our fork of GeoLiteCity.dat
 RUN apk add --no-cache ca-certificates wget \
+    && rm -rf /var/lib/apt/lists/* \
     && cd /app/GeoLiteCity \
-    && ls -l \
-    && sh ./install_binary.sh \
+    && wget -qO- $( $PASS_VARIABLES['goelitecity_url'] ) > GeoLiteCity.dat \
     && chmod 666 GeoLiteCity.dat \
-    && rm -f GeoLiteCity.dat.gz \
     && ls -l
-'@
+"@
 })
 
 $( if ( 'geoip2' -in $VARIANT['components'] ) {
@@ -73,9 +85,7 @@ RUN apk add --no-cache \
 #
 
 # Install DB perl modules through packages
-RUN apk update \
-    && apk add --no-cache \
+RUN apk add --no-cache \
         perl-dbi \
-        perl-dbd-mysql \
-    && rm -rf /var/cache/apk/*
+        perl-dbd-mysql
 "@

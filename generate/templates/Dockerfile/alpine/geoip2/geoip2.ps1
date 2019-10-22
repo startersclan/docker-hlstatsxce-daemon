@@ -2,13 +2,12 @@
 # Install modules for perl GeoIP2
 # 11 dependencies missing for GeoIP2:
 #   - 11 dependencies missing (Data::Validate::IP,LWP::Protocol::https,List::SomeUtils,MaxMind::DB::Metadata,MaxMind::DB::Reader,Moo,Moo::Role,Params::Validate,Path::Class,Throwable::Error,namespace::clean);
-RUN apk update \
-    && apk add --no-cache --virtual build-dependencies \
+RUN apk add --no-cache --virtual build-dependencies \
         build-base \
         perl-app-cpanminus \
-    && apk add --no-cache \
-        perl-datetime \
-        perl-path-class \
+    #&& apk add --no-cache \
+        #perl-datetime \
+        #perl-path-class \
         perl-net-ssleay \
         #perl-libwww \
         #perl-lwp-protocol-https \
@@ -19,6 +18,9 @@ RUN apk update \
         #perl-list-allutils \
         #perl-moo \
         #perl-net-ip \
+    # Workaround the fact that HTTP::Daemon@6.0.6 unit tests fail, probably due to ipv6 tests - let's use an older version
+    && cpanm \
+        HTTP::Daemon@6.01 \
     && cpanm \
         MaxMind::DB::Reader \
         GeoIP2 \
@@ -32,5 +34,5 @@ RUN apk update \
     # && cpanm \
     #     MaxMind::DB::Reader::XS \
     && apk del build-dependencies \
-    && rm -rf /root/.cpan /root/.cpanminus /var/cache/apk/*
+    && rm -rf /root/.cpan /root/.cpanminus
 '@

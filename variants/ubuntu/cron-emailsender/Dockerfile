@@ -3,7 +3,9 @@ FROM ubuntu:16.04
 # Get hlstatsxce perl daemon scripts and set permissions
 RUN apt-get update && apt-get install git -y \
     && git clone https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git /hlstatsx-community-edition \
-    && mv hlstatsx-community-edition/scripts /app \
+    && cd /hlstatsx-community-edition \
+    && git checkout 11cac08de8c01b7a07897562596e59b7f0f86230 \
+    && mv /hlstatsx-community-edition/scripts /app \
     && find /app -type d -exec chmod 750 {} \; \
     && find /app -type f -exec chmod 640 {} \; \
     && find /app -type f -name '*.sh' -exec chmod 750 {} \; \
