@@ -57,6 +57,8 @@ env_secrets_expand
 
 ###############################################################################
 
+# Generate the full command line
+
 # Note: As of hlxce 1.6.19, hlstats.pl's --configfile argument does not take effect.
 # To fix this, find this line in hlstats.pl:
 #    if ($configfile && -r $configfile) {
@@ -64,19 +66,35 @@ env_secrets_expand
 #   setOptionsConf(%copts);
 # That should fix hlstats.pl's --configfile argument issue.
 [ ! -z "${CONFIG_FILE}" ] && set "$@" "--configfile=${CONFIG_FILE}"
+
+if [ ! -z "${LOG_LEVEL}" ]; then
+    if [ "${LOG_LEVEL}" = '0' ]; then
+        set "$@" "-n"
+    elif [ "${LOG_LEVEL}" = '1' ]; then
+        :
+    elif [ "${LOG_LEVEL}" = '2' ]; then
+        set "$@" "-d"
+    else
+        :
+    fi
+fi
 [ ! -z "${MODE}" ] && set "$@" "--db-host=${MODE}"
+[ ! -z "${LISTEN_IP}" ] && set "$@" "--ip=${LISTEN_IP}"
+[ ! -z "${LISTEN_PORT}" ] && set "$@" "--ip=${LISTEN_PORT}"
 [ ! -z "${DB_HOST}" ] && set "$@" "--db-host=${DB_HOST}"
 [ ! -z "${DB_NAME}" ] && set "$@" "--db-name=${DB_NAME}"
 [ ! -z "${DB_USER}" ] && set "$@" "--db-username=${DB_USER}"
 [ ! -z "${DB_PASSWORD}" ] && set "$@" "--db-password=${DB_PASSWORD}"
-[ ! -z "${STDIN}" ] && set "$@" "--stdin"
+[ "${DNS_RESOLVE_IP}" = 'false' ] && set "$@" "--nodns-resolveip"
+[ ! -z "${DNS_RESOLVE_IP_TIMEOUT}" ] && set "$@" "--dns-timeout=${DNS_RESOLVE_IP_TIMEOUT}"
+[ ! -z "${LISTEN_IP}" ] && set "$@" "--db-password=${LISTEN_IP}"
+[ ! -z "${LISTEN_PORT}" ] && set "$@" "--db-password=${LISTEN_PORT}"
+[ "${RCON}" = 'false' ] && set "$@" "--norcon"
+[ "${STDIN}" = 'true' ] && set "$@" "--stdin"
 [ ! -z "${STDIN_SERVER_IP}" ] && set "$@" "--server-ip=${STDIN_SERVER_IP}"
 [ ! -z "${STDIN_SERVER_PORT}" ] && set "$@" "--server-port=${STDIN_SERVER_PORT}"
-[ ! -z "${USE_DAEMON_TIMESTAMP}" ] && set "$@" "--notimestamp"
-#[ ! -z "${EVENT_QUEUE_SIZE}" ] && set "$@" "--event-queue-size=${EVENT_QUEUE_SIZE}"
-[ ! -z "${DEBUG_LOW}" ] && set "$@" "-d"
-[ ! -z "${DEBUG_HIGH}" ] && set "$@" "-dd"
-[ ! -z "${DEBUG_NONE}" ] && set "$@" "-nn"
+[ "${USE_LOG_TIMESTAMP}" = 'true' ] && set "$@" "--timestamp"
+# [ ! -z "${EVENT_QUEUE_SIZE}" ] && set "$@" "--event-queue-size=${EVENT_QUEUE_SIZE}"
 
 if [ ! -z "${ECHO_ENVIRONMENT}" ]; then
     output "Environment: \n$( env )"
