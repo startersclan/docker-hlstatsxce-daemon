@@ -88,7 +88,7 @@ In general, it is better to use environment variables than a config file, becaus
 | `USE_LOG_TIMESTAMP` | `"false"` for UDP; `"true"` for `STDIN` | Use the timestamp in the log data, instead of the current time on the daemon, when recording events | `-t, --timestamp`
 <!-- | `EVENT_QUEUE_SIZE` | `"10"` | Event buffer size before flushing to the db (recommend 100+ for STDIN) | `--event-queue-size` -->
 
-## Configuration via configuration file and database options
+### Configuration via configuration file and database options
 
 When a file `./hlstats.conf` is in the same folder as `hlstats.pl` (which by default, it is), whenever the daemon is started or reloaded, [configuration options](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/src/11cac08de8c01b7a07897562596e59b7f0f86230/scripts/hlstats.pl#lines-1755) are [read](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/src/11cac08de8c01b7a07897562596e59b7f0f86230/scripts/hlstats.pl#lines-1882) from the [database table `hlstats_options`](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/src/11cac08de8c01b7a07897562596e59b7f0f86230/sql/install.sql#lines-3901) which will override [those specified on the command line](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/src/11cac08de8c01b7a07897562596e59b7f0f86230/scripts/hlstats.pl#lines-1829) (the environment variables simply generate a command line). Therefore, be very aware the following setting environment variables does not mean that configuration is actually used by the daemon.
 
