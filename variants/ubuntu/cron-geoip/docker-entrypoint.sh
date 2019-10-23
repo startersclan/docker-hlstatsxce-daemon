@@ -76,6 +76,8 @@ fi
 # That should fix hlstats.pl's --configfile argument issue.
 [ ! -z "${CONFIG_FILE}" ] && set "$@" "--configfile=${CONFIG_FILE}"
 [ ! -z "${MODE}" ] && set "$@" "--db-host=${MODE}"
+[ ! -z "${LISTEN_IP}" ] && set "$@" "--ip=${LISTEN_IP}"
+[ ! -z "${LISTEN_PORT}" ] && set "$@" "--ip=${LISTEN_PORT}"
 [ ! -z "${DB_HOST}" ] && set "$@" "--db-host=${DB_HOST}"
 [ ! -z "${DB_NAME}" ] && set "$@" "--db-name=${DB_NAME}"
 [ ! -z "${DB_USER}" ] && set "$@" "--db-username=${DB_USER}"
