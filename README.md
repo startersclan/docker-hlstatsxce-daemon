@@ -11,7 +11,7 @@ Docker image for the [HLStatsX:CE](https://bitbucket.org/Maverick_of_UC/hlstatsx
 
 Each variant contains additional perl modules.
 
-These below variants use `Ubuntu:16.04`. Variants with suffix `-alpine` use the `Alpine:3.8`
+These below variants use `Ubuntu:16.04`. Variants with suffix `-alpine` use the `alpine:3.8`
 
 | Name | Perl Modules |
 |:-------:|:---------:|
@@ -67,6 +67,7 @@ These environment variables are optional. Use them only if:
 
 | Name | Default value (as in `hlstats.pl`) | Description | Corresponds to `hlstats.pl` argument |
 |:-------:|:---------:|:---------:|:---------:|
+| `LOG_LEVEL` | `0/1/2` | Eable debugging output | 0 - `--nodebug`<br /> 1 - `-d, --debug`<br />  2 - `-dd, --debug --debug`
 | `CONFIG_FILE` | `./hlstats.conf` | Path to config file. May be absolute or relative | `-c,--configfile`
 | `MODE` | `Normal` | Player tracking mode (`Normal`, `LAN` or `NameTrack`) | `-m, --mode`
 | `DB_HOST` | `localhost` | Database IP or hostname, in format `<ip>` or `<hostname>`. Port may be omitted, in which case it is `27500` by default. To use a custom port, use format `<ip>:<port>` or `<hostname>:<port>` specifed. | `--db-host`
@@ -77,9 +78,6 @@ These environment variables are optional. Use them only if:
 | `STDIN_SERVER_IP` | `""` | Data source IP address. Only required for `STDIN` | `--server-ip`
 | `STDIN_SERVER_PORT` | `27015` | Data source port. Only required for `STDIN` | `--server-port`
 | `USE_DAEMON_TIMESTAMP` | `false` for UDP; `true` for `STDIN` | Port the daemon will run on | `-t, --timestamp`
-| `DEBUG_LOW` | `true` | Eable debugging output | `-d, --debug`
-| `DEBUG_HIGH` | N.A. | Enable debugging output (verbose) | `-dd, --debug --debug`
-| `DEBUG_NONE` | N.A. | Disable debugging output | `--nodebug`
 
 ## Warning: If using `CONFIG_FILE`
 

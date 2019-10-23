@@ -58,6 +58,17 @@ env_secrets_expand
 
 ###############################################################################
 
+# Generate the full command line
+
+if [ ! -z "${LOG_LEVEL}" ]; then
+    if [ "${LOG_LEVEL}" = '0' ]; then
+        set "$@" "-n"
+    elif [ "${LOG_LEVEL}" = '1' ]; then
+        :
+    elif [ "${LOG_LEVEL}" = '2' ]; then
+        set "$@" "-d"
+    fi
+fi
 # Note: As of hlxce 1.6.19, hlstats.pl's --configfile argument does not take effect.
 # To fix this, find this line in hlstats.pl:
 #    if ($configfile && -r $configfile) {
@@ -75,9 +86,6 @@ env_secrets_expand
 [ ! -z "${STDIN_SERVER_PORT}" ] && set "$@" "--server-port=${STDIN_SERVER_PORT}"
 [ ! -z "${USE_DAEMON_TIMESTAMP}" ] && set "$@" "--notimestamp"
 #[ ! -z "${EVENT_QUEUE_SIZE}" ] && set "$@" "--event-queue-size=${EVENT_QUEUE_SIZE}"
-[ ! -z "${DEBUG_LOW}" ] && set "$@" "-d"
-[ ! -z "${DEBUG_HIGH}" ] && set "$@" "-dd"
-[ ! -z "${DEBUG_NONE}" ] && set "$@" "-nn"
 
 if [ ! -z "${ECHO_ENVIRONMENT}" ]; then
     output "Environment: \n$( env )"
