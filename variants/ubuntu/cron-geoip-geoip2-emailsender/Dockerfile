@@ -24,16 +24,17 @@ RUN apt-get update && apt-get install -y ca-certificates wget \
     && chmod 666 GeoLiteCity.dat \
     && ls -l
 
-# Download the GeoIP2 binary
-RUN apt-get update && apt-get install -y ca-certificates wget \
-    && rm -rf /var/lib/apt/lists/* \
+# Download the GeoIP2 binary. Maxmind discontinued distributing the GeoLite2 databases publicly, so a license key is needed. See: https://blog.maxmind.com/2019/12/18/significant-changes-to-accessing-and-using-geolite2-databases/
+# In order to obtain the secret MAXMIND_LICENSE_KEY, we assume we have a sidecar secrets-server which will serve the secret MAXMIND_LICENSE_KEY at: http://localhost:8000/MAXMIND_LICENSE_KEY
+RUN apt-get update && apt-get install -y ca-certificates curl \
     && cd /app/GeoLiteCity \
     && ls -l; \
     \
     echo "Downloading a copy of GeoLite2City..."; \
-    URL="http://geolite.maxmind.com/download/geoip/database/"; \
-    FILE="GeoLite2-City.tar.gz"; \
-    wget -N -q "$URL$FILE"; \
+    URL="https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$( curl -s http://localhost:8000/MAXMIND_LICENSE_KEY )&suffix=tar.gz"; \
+    FILE=$( curl -sI "$URL" | grep -i 'content-disposition' | sed 's/.*filename=//i' | tr -d '\r\n' ); \
+    echo "FILE: $FILE"; \
+    curl -so "$FILE" "$URL"; \
     if [ $? = 0 ]; then \
         tar -tvf "$FILE"; \
         echo "Uncompressing database"; \
@@ -51,8 +52,10 @@ RUN apt-get update && apt-get install -y ca-certificates wget \
         rm -rf $FILE; \
         ls -l; \
     fi; \
+    apt-get purge --auto-remove -y curl \
+    && rm -rf /var/lib/apt/lists/*; \
     if [ ! -f GeoLite2-City.mmdb ]; then \
-        echo "Could not download GeoIP2 db from: $URL$FILE"; \
+        echo "Could not download GeoIP2 db"; \
         exit 1; \
     fi;
 
