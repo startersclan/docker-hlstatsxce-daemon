@@ -90,7 +90,7 @@ $VARIANTS_SHARED = @{
                         variables = @{
                             hlstatsxce_git_url = 'https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git'
                             hlstatsxce_git_hash = '11cac08de8c01b7a07897562596e59b7f0f86230'
-                            goelitecity_url = 'https://github.com/startersclan/GeoLiteCity-data/raw/c14d99c42446f586e3ca9c89fe13714474921d65/GeoLiteCity.dat'
+                            geolitecity_url = 'https://github.com/startersclan/GeoLiteCity-data/raw/c14d99c42446f586e3ca9c89fe13714474921d65/GeoLiteCity.dat'
                         }
                     }
                 )
