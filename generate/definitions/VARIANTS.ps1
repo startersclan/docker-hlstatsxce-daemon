@@ -65,6 +65,7 @@ $VARIANTS = @(
     }
     @{
         tag = 'geoip-alpine'
+        tag_as_latest = $true
         distro = 'alpine'
     }
     @{
