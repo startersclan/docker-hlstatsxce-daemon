@@ -48,6 +48,7 @@ $( $VARIANTS | % {
     - name: Build and push image
       env:
         DOCKERHUB_REGISTRY_USER: ${{ secrets.DOCKERHUB_REGISTRY_USER }}
+        MAXMIND_LICENSE_KEY: ${{ secrets.MAXMIND_LICENSE_KEY }}
       run: |
         set -e
 
@@ -57,7 +58,13 @@ $( $VARIANTS | % {
         # Get 'ref-name' from 'refs/heads/ref-name'
         VARIANT_TAG_WITH_VERSION=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
 
+        # Start a secrets-server with out secrets
+        mkdir -p ~/secrets && chmod 750 ~/secrets
+        touch ~/secrets/MAXMIND_LICENSE_KEY && chmod 600 ~/secrets/MAXMIND_LICENSE_KEY && echo -n "$MAXMIND_LICENSE_KEY" > ~/secrets/MAXMIND_LICENSE_KEY
+        docker run -d --name=secrets-server --rm --volume ~/secrets:/secrets busybox httpd -f -p 8000 -h /secrets
+
         docker build \
+          --network=container:secrets-server \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest" \
@@ -66,7 +73,9 @@ $( $VARIANTS | % {
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
     - name: Clean-up
-      run: docker logout
+      run: |
+        docker logout
+        rm -rf ~/secrets
       if: always()
 '@
 })
