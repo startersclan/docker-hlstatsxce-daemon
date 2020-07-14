@@ -72,9 +72,9 @@ if [ ! -z "${LOG_LEVEL}" ]; then
     if [ "${LOG_LEVEL}" = '0' ]; then
         set "$@" "-n"
     elif [ "${LOG_LEVEL}" = '1' ]; then
-        :
-    elif [ "${LOG_LEVEL}" = '2' ]; then
         set "$@" "-d"
+    elif [ "${LOG_LEVEL}" = '2' ]; then
+        set "$@" "-dd"
     else
         :
     fi
