@@ -71,7 +71,7 @@ In general, it is better to use environment variables than a config file, becaus
 | Name | Default value (as in `hlstats.pl`) | Description | Corresponds to `hlstats.pl` argument |
 |:-------:|:---------:|:---------:|:---------:|
 | `CONFIG_FILE` | `"./hlstats.conf"` | Path to config file. May be absolute or relative | `-c,--configfile`
-| `LOG_LEVEL` | `"1"` | Log level for debugging | 0 - `-n, --nodebug`<br /> 1 - Default <br />  2 - `-d, --debug`
+| `LOG_LEVEL` | `"1"` | Log level for debugging | 0 - `-n, --nodebug`<br /> 1 - `-d, --debug` <br />  2 - `-dd, --debug --debug`
 | `MODE` | `"Normal"` | Player tracking mode (`Normal`, `LAN` or `NameTrack`) | `-m, --mode`
 | `DB_HOST` | `"localhost"` | Database IP or hostname, in format `<ip>` or `<hostname>`. Port may be omitted, in which case it is `27500` by default. To use a custom port, use format `<ip>:<port>` or `<hostname>:<port>` specifed. | `--db-host`
 | `DB_NAME` | `"hlstats"` | Database name | `--db-name`
