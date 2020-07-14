@@ -35,7 +35,7 @@ $( if ( 'geoip' -in $VARIANT['components'] ) {
 RUN apt-get update && apt-get install -y ca-certificates wget \
     && rm -rf /var/lib/apt/lists/* \
     && cd /app/GeoLiteCity \
-    && wget -qO- $( $PASS_VARIABLES['goelitecity_url'] ) > GeoLiteCity.dat \
+    && wget -qO- $( $PASS_VARIABLES['geolitecity_url'] ) > GeoLiteCity.dat \
     && chmod 666 GeoLiteCity.dat \
     && ls -l
 "@
