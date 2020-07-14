@@ -1,6 +1,7 @@
 # Files' definition
 $FILES = @(
-    '.github/workflows/build.yml'
+    '.github/workflows/ci-branches.yml'
+    '.github/workflows/ci-tags.yml'
     # '.gitlab-ci.yml'
     #'README.md'
 )

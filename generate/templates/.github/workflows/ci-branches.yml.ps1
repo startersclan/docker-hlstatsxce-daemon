@@ -1,15 +1,13 @@
 @'
-name: build
+name: ci-branches
 
 on:
   push:
     branches:
     - '**'
-    tags:
-    - '**'
-  pull_request:
-    branches:
-    - '**'
+  # pull_request:
+  #  branches:
+  #  - '**'
 
 jobs:
 '@
@@ -56,7 +54,12 @@ $( $VARIANTS | % {
         CI_PROJECT_NAME=$( echo "${GITHUB_REPOSITORY}" | rev | cut -d '/' -f 1 | rev )
 
         # Get 'ref-name' from 'refs/heads/ref-name'
-        VARIANT_TAG_WITH_VERSION=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
+        SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
+
+        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
+        VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
         # Start a secrets-server with out secrets
         mkdir -p ~/secrets && chmod 750 ~/secrets
@@ -66,12 +69,30 @@ $( $VARIANTS | % {
         docker build \
           --network=container:secrets-server \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
+
+'@
+if ( $_['tag_as_latest'] ) {
+@'
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest" \
+
+'@
+}
+@'
           "${VARIANT_BUILD_DIR}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_VERSION}"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
+
+'@
+if ( $_['tag_as_latest'] ) {
+@'
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
+
+'@
+}
+@'
     - name: Clean-up
       run: |
         docker logout
