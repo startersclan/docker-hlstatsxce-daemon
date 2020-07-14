@@ -88,11 +88,26 @@ In general, it is better to use environment variables than a config file, becaus
 | `USE_LOG_TIMESTAMP` | `"false"` for UDP; `"true"` for `STDIN` | Use the timestamp in the log data, instead of the current time on the daemon, when recording events | `-t, --timestamp`
 <!-- | `EVENT_QUEUE_SIZE` | `"10"` | Event buffer size before flushing to the db (recommend 100+ for STDIN) | `--event-queue-size` -->
 
-### Configuration via configuration file and database options
+### Configuration via configuration file / command line parameters / database options
 
-When a file `./hlstats.conf` is in the same folder as `hlstats.pl` (which by default, it is), whenever the daemon is started or reloaded, [configuration options](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/src/11cac08de8c01b7a07897562596e59b7f0f86230/scripts/hlstats.pl#lines-1755) are [read](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/src/11cac08de8c01b7a07897562596e59b7f0f86230/scripts/hlstats.pl#lines-1882) from the [database table `hlstats_options`](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/src/11cac08de8c01b7a07897562596e59b7f0f86230/sql/install.sql#lines-3901) which will [override those specified on the command line](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/src/11cac08de8c01b7a07897562596e59b7f0f86230/scripts/hlstats.pl#lines-1829) (the environment variables simply generate a command line). Therefore, be very aware that setting environment variables does not mean that configuration is actually used by the daemon.
+Configuration options are applied the following order. Later options override the earlier options.
 
-Looking at the [`install.sql`](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/src/11cac08de8c01b7a07897562596e59b7f0f86230/sql/install.sql#lines-3901), you notice some database configuration options that may override the above environment variables:
+1. Default config file `./hlstats.conf` if it exists.
+    - See [code](https://github.com/startersclan/hlstatsx-community-edition/blob/965453909e1d28aed3abfca7f93b6c1b27a7f75d/scripts/hlstats.pl#L1739-L1784)
+
+2. Command line parameters (Also applies to environment variables above which simply generate a command line).
+    - See [code](https://github.com/startersclan/hlstatsx-community-edition/blob/965453909e1d28aed3abfca7f93b6c1b27a7f75d/scripts/hlstats.pl#L1792-L1829)
+
+3. (N.A. since bugged) Custom config file specified by command line parameter `--configfile`.
+    - Doesn't work because of a bug explained [here](#warning-if-using-config_file)
+
+4. Database configuration from `hlstats_options` table.
+
+    - See [directives](https://github.com/startersclan/hlstatsx-community-edition/blob/965453909e1d28aed3abfca7f93b6c1b27a7f75d/scripts/hlstats.pl#L1755-L1781)
+
+    - See [code](https://github.com/startersclan/hlstatsx-community-edition/blob/965453909e1d28aed3abfca7f93b6c1b27a7f75d/scripts/hlstats.pl#L1882)
+
+The following database configuration options override config file or command line parameter configuration. Looking in [`install.sql`](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/src/11cac08de8c01b7a07897562596e59b7f0f86230/sql/install.sql#lines-3901):
 
 - `--dns-resolveip` is enabled since parameter `DNSResolveIP` value is `1`
 - `--dns-timeout` is `3` since parameter `DNSTimeout` value is `3`
@@ -102,7 +117,7 @@ Looking at the [`install.sql`](https://bitbucket.org/Maverick_of_UC/hlstatsx-com
 
 ### Warning: If using `CONFIG_FILE`
 
-There is a bug in `hlstats.pl` that does not allow the passing of `--configfile=<configfile>` properly. To fix that, find the line in [`hlstats.pl`](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/src/11cac08de8c01b7a07897562596e59b7f0f86230/scripts/hlstats.pl#lines-1821) on line `1821`:
+There is a bug in `hlstats.pl` that does not apply the command line parameter `--configfile=<configfile>` properly as configuration. To fix that, find the line in [`hlstats.pl`](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/src/11cac08de8c01b7a07897562596e59b7f0f86230/scripts/hlstats.pl#lines-1821) on line `1821`:
 
 ```perl
 if ($configfile && -r $configfile) {
