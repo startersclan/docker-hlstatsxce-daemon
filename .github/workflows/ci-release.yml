@@ -1,19 +1,18 @@
-name: ci-branches
+name: ci-release
 
 on:
   push:
     branches:
+    - release
+    tags:
     - '**'
-  # pull_request:
-  #  branches:
-  #  - '**'
 
 jobs:
   build-cron:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron
-      # VARIANT_TAG_WITH_VERSION: cron-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/cron
     steps:
     - uses: actions/checkout@v1
@@ -67,7 +66,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -75,7 +74,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-emailsender
-      # VARIANT_TAG_WITH_VERSION: cron-emailsender-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-emailsender-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/cron-emailsender
     steps:
     - uses: actions/checkout@v1
@@ -129,7 +128,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -137,7 +136,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-geoip
-      # VARIANT_TAG_WITH_VERSION: cron-geoip-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-geoip-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/cron-geoip
     steps:
     - uses: actions/checkout@v1
@@ -191,7 +190,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -199,7 +198,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-geoip-geoip2
-      # VARIANT_TAG_WITH_VERSION: cron-geoip-geoip2-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-geoip-geoip2-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/cron-geoip-geoip2
     steps:
     - uses: actions/checkout@v1
@@ -253,7 +252,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -261,7 +260,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-geoip-geoip2-emailsender
-      # VARIANT_TAG_WITH_VERSION: cron-geoip-geoip2-emailsender-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-geoip-geoip2-emailsender-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/cron-geoip-geoip2-emailsender
     steps:
     - uses: actions/checkout@v1
@@ -315,7 +314,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -323,7 +322,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: emailsender
-      # VARIANT_TAG_WITH_VERSION: emailsender-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: emailsender-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/emailsender
     steps:
     - uses: actions/checkout@v1
@@ -377,7 +376,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -385,7 +384,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: geoip
-      # VARIANT_TAG_WITH_VERSION: geoip-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: geoip-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/geoip
     steps:
     - uses: actions/checkout@v1
@@ -439,7 +438,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -447,7 +446,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: geoip-geoip2
-      # VARIANT_TAG_WITH_VERSION: geoip-geoip2-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: geoip-geoip2-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/geoip-geoip2
     steps:
     - uses: actions/checkout@v1
@@ -501,7 +500,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -509,7 +508,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: geoip-geoip2-emailsender
-      # VARIANT_TAG_WITH_VERSION: geoip-geoip2-emailsender-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: geoip-geoip2-emailsender-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/geoip-geoip2-emailsender
     steps:
     - uses: actions/checkout@v1
@@ -563,7 +562,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -571,7 +570,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-alpine
-      # VARIANT_TAG_WITH_VERSION: cron-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/cron
     steps:
     - uses: actions/checkout@v1
@@ -625,7 +624,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -633,7 +632,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-emailsender-alpine
-      # VARIANT_TAG_WITH_VERSION: cron-emailsender-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-emailsender-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/cron-emailsender
     steps:
     - uses: actions/checkout@v1
@@ -687,7 +686,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -695,7 +694,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-geoip-alpine
-      # VARIANT_TAG_WITH_VERSION: cron-geoip-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-geoip-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/cron-geoip
     steps:
     - uses: actions/checkout@v1
@@ -749,7 +748,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -757,7 +756,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-geoip-geoip2-alpine
-      # VARIANT_TAG_WITH_VERSION: cron-geoip-geoip2-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-geoip-geoip2-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/cron-geoip-geoip2
     steps:
     - uses: actions/checkout@v1
@@ -811,7 +810,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -819,7 +818,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-geoip-geoip2-emailsender-alpine
-      # VARIANT_TAG_WITH_VERSION: cron-geoip-geoip2-emailsender-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-geoip-geoip2-emailsender-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/cron-geoip-geoip2-emailsender
     steps:
     - uses: actions/checkout@v1
@@ -873,7 +872,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -881,7 +880,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: emailsender-alpine
-      # VARIANT_TAG_WITH_VERSION: emailsender-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: emailsender-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/emailsender
     steps:
     - uses: actions/checkout@v1
@@ -935,7 +934,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -943,7 +942,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: geoip-alpine
-      # VARIANT_TAG_WITH_VERSION: geoip-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: geoip-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/geoip
     steps:
     - uses: actions/checkout@v1
@@ -999,7 +998,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -1007,7 +1006,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: geoip-geoip2-alpine
-      # VARIANT_TAG_WITH_VERSION: geoip-geoip2-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: geoip-geoip2-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/geoip-geoip2
     steps:
     - uses: actions/checkout@v1
@@ -1061,7 +1060,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()
@@ -1069,7 +1068,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: geoip-geoip2-emailsender-alpine
-      # VARIANT_TAG_WITH_VERSION: geoip-geoip2-emailsender-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: geoip-geoip2-emailsender-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/geoip-geoip2-emailsender
     steps:
     - uses: actions/checkout@v1
@@ -1123,7 +1122,7 @@ jobs:
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()

@@ -1,16 +1,19 @@
-name: ci-tags
+name: ci-master-pr
 
 on:
   push:
-    tags:
-    - '**'
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
 
 jobs:
   build-cron:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron
-      # VARIANT_TAG_WITH_VERSION: cron-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/cron
     steps:
     - uses: actions/checkout@v1
@@ -45,7 +48,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -56,11 +59,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -72,7 +73,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-emailsender
-      # VARIANT_TAG_WITH_VERSION: cron-emailsender-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-emailsender-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/cron-emailsender
     steps:
     - uses: actions/checkout@v1
@@ -107,7 +108,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -118,11 +119,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -134,7 +133,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-geoip
-      # VARIANT_TAG_WITH_VERSION: cron-geoip-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-geoip-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/cron-geoip
     steps:
     - uses: actions/checkout@v1
@@ -169,7 +168,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -180,11 +179,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -196,7 +193,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-geoip-geoip2
-      # VARIANT_TAG_WITH_VERSION: cron-geoip-geoip2-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-geoip-geoip2-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/cron-geoip-geoip2
     steps:
     - uses: actions/checkout@v1
@@ -231,7 +228,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -242,11 +239,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -258,7 +253,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-geoip-geoip2-emailsender
-      # VARIANT_TAG_WITH_VERSION: cron-geoip-geoip2-emailsender-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-geoip-geoip2-emailsender-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/cron-geoip-geoip2-emailsender
     steps:
     - uses: actions/checkout@v1
@@ -293,7 +288,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -304,11 +299,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -320,7 +313,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: emailsender
-      # VARIANT_TAG_WITH_VERSION: emailsender-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: emailsender-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/emailsender
     steps:
     - uses: actions/checkout@v1
@@ -355,7 +348,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -366,11 +359,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -382,7 +373,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: geoip
-      # VARIANT_TAG_WITH_VERSION: geoip-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: geoip-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/geoip
     steps:
     - uses: actions/checkout@v1
@@ -417,7 +408,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -428,11 +419,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -444,7 +433,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: geoip-geoip2
-      # VARIANT_TAG_WITH_VERSION: geoip-geoip2-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: geoip-geoip2-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/geoip-geoip2
     steps:
     - uses: actions/checkout@v1
@@ -479,7 +468,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -490,11 +479,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -506,7 +493,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: geoip-geoip2-emailsender
-      # VARIANT_TAG_WITH_VERSION: geoip-geoip2-emailsender-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: geoip-geoip2-emailsender-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/ubuntu/geoip-geoip2-emailsender
     steps:
     - uses: actions/checkout@v1
@@ -541,7 +528,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -552,11 +539,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -568,7 +553,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-alpine
-      # VARIANT_TAG_WITH_VERSION: cron-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/cron
     steps:
     - uses: actions/checkout@v1
@@ -603,7 +588,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -614,11 +599,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -630,7 +613,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-emailsender-alpine
-      # VARIANT_TAG_WITH_VERSION: cron-emailsender-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-emailsender-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/cron-emailsender
     steps:
     - uses: actions/checkout@v1
@@ -665,7 +648,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -676,11 +659,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -692,7 +673,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-geoip-alpine
-      # VARIANT_TAG_WITH_VERSION: cron-geoip-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-geoip-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/cron-geoip
     steps:
     - uses: actions/checkout@v1
@@ -727,7 +708,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -738,11 +719,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -754,7 +733,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-geoip-geoip2-alpine
-      # VARIANT_TAG_WITH_VERSION: cron-geoip-geoip2-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-geoip-geoip2-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/cron-geoip-geoip2
     steps:
     - uses: actions/checkout@v1
@@ -789,7 +768,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -800,11 +779,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -816,7 +793,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: cron-geoip-geoip2-emailsender-alpine
-      # VARIANT_TAG_WITH_VERSION: cron-geoip-geoip2-emailsender-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: cron-geoip-geoip2-emailsender-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/cron-geoip-geoip2-emailsender
     steps:
     - uses: actions/checkout@v1
@@ -851,7 +828,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -862,11 +839,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -878,7 +853,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: emailsender-alpine
-      # VARIANT_TAG_WITH_VERSION: emailsender-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: emailsender-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/emailsender
     steps:
     - uses: actions/checkout@v1
@@ -913,7 +888,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -924,11 +899,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -940,7 +913,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: geoip-alpine
-      # VARIANT_TAG_WITH_VERSION: geoip-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: geoip-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/geoip
     steps:
     - uses: actions/checkout@v1
@@ -975,7 +948,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -986,11 +959,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -1002,7 +973,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: geoip-geoip2-alpine
-      # VARIANT_TAG_WITH_VERSION: geoip-geoip2-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: geoip-geoip2-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/geoip-geoip2
     steps:
     - uses: actions/checkout@v1
@@ -1037,7 +1008,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -1048,11 +1019,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
@@ -1064,7 +1033,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: geoip-geoip2-emailsender-alpine
-      # VARIANT_TAG_WITH_VERSION: geoip-geoip2-emailsender-alpine-${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: geoip-geoip2-emailsender-alpine-${GITHUB_REF}
       VARIANT_BUILD_DIR: variants/alpine/geoip-geoip2-emailsender
     steps:
     - uses: actions/checkout@v1
@@ -1099,7 +1068,7 @@ jobs:
         REF=$( echo "${GITHUB_REF}" | rev | cut -d '/' -f 1 | rev )
         SHA_SHORT=$( echo "${GITHUB_SHA}" | cut -c1-7 )
 
-        # Generate the final tags. E.g. 'release-v1.0.0-alpine' and 'release-b29758a-v1.0.0-alpine'
+        # Generate the final tags. E.g. 'master-v1.0.0-alpine' and 'master-b29758a-v1.0.0-alpine'
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
@@ -1110,11 +1079,9 @@ jobs:
 
         docker build \
           --network=container:secrets-server \
-          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
-        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
     - name: Clean-up
