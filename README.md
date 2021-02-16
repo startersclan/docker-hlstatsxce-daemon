@@ -6,22 +6,43 @@
 
 Dockerized [HLStatsX:CE](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/) perl daemon.
 
-## Variants
+## Tags
 
-Each variant contains additional perl modules.
+| Tag | Dockerfile Build Context |
+|:-------:|:---------:|
+| `:cron` | [View](variants/cron ) |
+| `:cron-emailsender` | [View](variants/cron-emailsender ) |
+| `:cron-geoip` | [View](variants/cron-geoip ) |
+| `:cron-geoip-geoip2` | [View](variants/cron-geoip-geoip2 ) |
+| `:cron-geoip-geoip2-emailsender` | [View](variants/cron-geoip-geoip2-emailsender ) |
+| `:emailsender` | [View](variants/emailsender ) |
+| `:geoip` | [View](variants/geoip ) |
+| `:geoip-geoip2` | [View](variants/geoip-geoip2 ) |
+| `:geoip-geoip2-emailsender` | [View](variants/geoip-geoip2-emailsender ) |
+| `:cron-alpine` | [View](variants/cron-alpine ) |
+| `:cron-emailsender-alpine` | [View](variants/cron-emailsender-alpine ) |
+| `:cron-geoip-alpine` | [View](variants/cron-geoip-alpine ) |
+| `:cron-geoip-geoip2-alpine` | [View](variants/cron-geoip-geoip2-alpine ) |
+| `:cron-geoip-geoip2-emailsender-alpine` | [View](variants/cron-geoip-geoip2-emailsender-alpine ) |
+| `:emailsender-alpine` | [View](variants/emailsender-alpine ) |
+| `:geoip-alpine`, `:latest` | [View](variants/geoip-alpine ) |
+| `:geoip-geoip2-alpine` | [View](variants/geoip-geoip2-alpine ) |
+| `:geoip-geoip2-emailsender-alpine` | [View](variants/geoip-geoip2-emailsender-alpine ) |
 
-These below variants use `Ubuntu:16.04`. Variants with suffix `-alpine` use the `alpine:3.8`
+Variants are based on ``ubuntu:16.04`` or ``alpine:3.8``. All variants include ``DBI`` and ``DBD::mysql`` perl modules.
+
+Variants may contain one or more additional Perl modules. E.g. `:geoip-geoip2-emailsender` contains the `:geoip`, `:geoip2`, and `:emailsender` Perl modules.
 
 | Name | Perl Modules |
 |:-------:|:---------:|
-| `:cron` | `DBI`<br>`DBD::mysql`
-| `:geoip` | `Geo::IP::PurePerl` and dependencies
-| `:geoip2` | `MaxMind::DB::Reader` and dependencies<br> `MaxMind::DB::Reader::XS` and dependencies
-| `:emailsender` | `Email::Sender::Simple` and dependencies
+| `cron` | `-`
+| `geoip` | `Geo::IP::PurePerl`
+| `geoip2` | `MaxMind::DB::Reader`<br> `MaxMind::DB::Reader::XS`
+| `emailsender` | `Email::Sender::Simple`
 
-NOTE: Chained tags E.g. `:geoip-geoip2-emailsender` contain the `:geoip`, `:geoip2`, and `:emailsender` Perl modules.
+## Usage
 
-## Docker
+### Example
 
 ```sh
 docker run -d \
@@ -39,7 +60,7 @@ docker run -d \
     startersclan/docker-hlstatsxce-daemon:geoip
 ```
 
-## Example (Swarm Mode with Docker Secrets):
+### Example (Swarm Mode with Docker Secrets):
 
 ```sh
 docker service create --name hlstatsxce-daemon \
@@ -57,15 +78,15 @@ docker service create --name hlstatsxce-daemon \
 
 The entrypoint script takes care of expanding the environment variables `DB_NAME`, `DB_USER`, and `DB_PASSWORD` from the respective secret files `/run/secrets/secret_db_name`, `/run/secrets/secret_db_user`, and `/run/secrets/secret_db_password`. This is done by using the syntax `ENVVARIABLE=DOCKER-SECRET:docker_secret_name` (note the colon).
 
-## Environment variables
+## Configuration
 
-Environment variables are optional. Use them only if:
+### Environment variables
+
+In general, it is better to use environment variables than a config file, because it offers more configuration options. Use them only if:
 
 1. not using a config file
 
 2. using the config file `./hlstats.conf` in same directory as `hlstats.pl`, but want to override the config file's settings.
-
-In general, it is better to use environment variables than a config file, because it offers more configuration options.
 
 | Name | Default value (as in `hlstats.pl`) | Description | Corresponds to `hlstats.pl` argument |
 |:-------:|:---------:|:---------:|:---------:|
@@ -87,7 +108,7 @@ In general, it is better to use environment variables than a config file, becaus
 | `USE_LOG_TIMESTAMP` | `"false"` for UDP; `"true"` for `STDIN` | Use the timestamp in the log data, instead of the current time on the daemon, when recording events | `-t, --timestamp`
 <!-- | `EVENT_QUEUE_SIZE` | `"10"` | Event buffer size before flushing to the db (recommend 100+ for STDIN) | `--event-queue-size` -->
 
-### Configuration via configuration file / command line parameters / database options
+### Configuration file, Command line parameters, and Database options
 
 Configuration options are applied the following order. Later options override the earlier options.
 
@@ -114,7 +135,7 @@ The following database configuration options override config file or command lin
 - `--rcon` is enabled since parameter `Rcon` value is `1`
 - `--timestamp` is disabled since parameter `UseTimestamp` value is `0`
 
-### Warning: If using `CONFIG_FILE`
+### Warning: If using `CONFIG_FILE` or `--configfile`
 
 There is a bug in `hlstats.pl` that does not apply the command line parameter `--configfile=<configfile>` properly as configuration. To fix that, find the line in [`hlstats.pl`](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/src/11cac08de8c01b7a07897562596e59b7f0f86230/scripts/hlstats.pl#lines-1821) on line `1821`:
 
