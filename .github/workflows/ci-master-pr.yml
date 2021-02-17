@@ -14,7 +14,7 @@ jobs:
     env:
       VARIANT_TAG: cron
       # VARIANT_TAG_WITH_REF: cron-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/ubuntu/cron
+      VARIANT_BUILD_DIR: variants/cron
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -74,7 +74,7 @@ jobs:
     env:
       VARIANT_TAG: cron-emailsender
       # VARIANT_TAG_WITH_REF: cron-emailsender-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/ubuntu/cron-emailsender
+      VARIANT_BUILD_DIR: variants/cron-emailsender
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -134,7 +134,7 @@ jobs:
     env:
       VARIANT_TAG: cron-geoip
       # VARIANT_TAG_WITH_REF: cron-geoip-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/ubuntu/cron-geoip
+      VARIANT_BUILD_DIR: variants/cron-geoip
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -194,7 +194,7 @@ jobs:
     env:
       VARIANT_TAG: cron-geoip-geoip2
       # VARIANT_TAG_WITH_REF: cron-geoip-geoip2-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/ubuntu/cron-geoip-geoip2
+      VARIANT_BUILD_DIR: variants/cron-geoip-geoip2
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -254,7 +254,7 @@ jobs:
     env:
       VARIANT_TAG: cron-geoip-geoip2-emailsender
       # VARIANT_TAG_WITH_REF: cron-geoip-geoip2-emailsender-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/ubuntu/cron-geoip-geoip2-emailsender
+      VARIANT_BUILD_DIR: variants/cron-geoip-geoip2-emailsender
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -314,7 +314,7 @@ jobs:
     env:
       VARIANT_TAG: emailsender
       # VARIANT_TAG_WITH_REF: emailsender-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/ubuntu/emailsender
+      VARIANT_BUILD_DIR: variants/emailsender
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -374,7 +374,7 @@ jobs:
     env:
       VARIANT_TAG: geoip
       # VARIANT_TAG_WITH_REF: geoip-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/ubuntu/geoip
+      VARIANT_BUILD_DIR: variants/geoip
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -434,7 +434,7 @@ jobs:
     env:
       VARIANT_TAG: geoip-geoip2
       # VARIANT_TAG_WITH_REF: geoip-geoip2-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/ubuntu/geoip-geoip2
+      VARIANT_BUILD_DIR: variants/geoip-geoip2
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -494,7 +494,7 @@ jobs:
     env:
       VARIANT_TAG: geoip-geoip2-emailsender
       # VARIANT_TAG_WITH_REF: geoip-geoip2-emailsender-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/ubuntu/geoip-geoip2-emailsender
+      VARIANT_BUILD_DIR: variants/geoip-geoip2-emailsender
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -554,7 +554,7 @@ jobs:
     env:
       VARIANT_TAG: cron-alpine
       # VARIANT_TAG_WITH_REF: cron-alpine-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/alpine/cron
+      VARIANT_BUILD_DIR: variants/cron-alpine
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -614,7 +614,7 @@ jobs:
     env:
       VARIANT_TAG: cron-emailsender-alpine
       # VARIANT_TAG_WITH_REF: cron-emailsender-alpine-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/alpine/cron-emailsender
+      VARIANT_BUILD_DIR: variants/cron-emailsender-alpine
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -674,7 +674,7 @@ jobs:
     env:
       VARIANT_TAG: cron-geoip-alpine
       # VARIANT_TAG_WITH_REF: cron-geoip-alpine-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/alpine/cron-geoip
+      VARIANT_BUILD_DIR: variants/cron-geoip-alpine
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -734,7 +734,7 @@ jobs:
     env:
       VARIANT_TAG: cron-geoip-geoip2-alpine
       # VARIANT_TAG_WITH_REF: cron-geoip-geoip2-alpine-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/alpine/cron-geoip-geoip2
+      VARIANT_BUILD_DIR: variants/cron-geoip-geoip2-alpine
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -794,7 +794,7 @@ jobs:
     env:
       VARIANT_TAG: cron-geoip-geoip2-emailsender-alpine
       # VARIANT_TAG_WITH_REF: cron-geoip-geoip2-emailsender-alpine-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/alpine/cron-geoip-geoip2-emailsender
+      VARIANT_BUILD_DIR: variants/cron-geoip-geoip2-emailsender-alpine
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -854,7 +854,7 @@ jobs:
     env:
       VARIANT_TAG: emailsender-alpine
       # VARIANT_TAG_WITH_REF: emailsender-alpine-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/alpine/emailsender
+      VARIANT_BUILD_DIR: variants/emailsender-alpine
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -914,7 +914,7 @@ jobs:
     env:
       VARIANT_TAG: geoip-alpine
       # VARIANT_TAG_WITH_REF: geoip-alpine-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/alpine/geoip
+      VARIANT_BUILD_DIR: variants/geoip-alpine
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -974,7 +974,7 @@ jobs:
     env:
       VARIANT_TAG: geoip-geoip2-alpine
       # VARIANT_TAG_WITH_REF: geoip-geoip2-alpine-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/alpine/geoip-geoip2
+      VARIANT_BUILD_DIR: variants/geoip-geoip2-alpine
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -1034,7 +1034,7 @@ jobs:
     env:
       VARIANT_TAG: geoip-geoip2-emailsender-alpine
       # VARIANT_TAG_WITH_REF: geoip-geoip2-emailsender-alpine-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/alpine/geoip-geoip2-emailsender
+      VARIANT_BUILD_DIR: variants/geoip-geoip2-emailsender-alpine
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
