@@ -19,7 +19,7 @@ Dockerized [HLStatsX:CE](https://bitbucket.org/Maverick_of_UC/hlstatsx-community
 | `:v1.6.19-geoip-geoip2-alpine-3.8` | [View](variants/v1.6.19-geoip-geoip2-alpine-3.8 ) |
 | `:v1.6.19-geoip-geoip2-emailsender-alpine-3.8` | [View](variants/v1.6.19-geoip-geoip2-emailsender-alpine-3.8 ) |
 
-Variants are based on ``ubuntu:16.04`` or ``alpine:3.8``. All variants include ``DBI`` and ``DBD::mysql`` perl modules.
+Variants are based on `ubuntu:16.04` or `alpine:3.8`. All variants include `DBI` and `DBD::mysql` perl modules.
 
 Variants may contain one or more additional Perl modules. E.g. `:geoip-geoip2-emailsender` contains the `:geoip`, `:geoip2`, and `:emailsender` Perl modules.
 
@@ -42,12 +42,12 @@ docker run -d \
     -e DB_NAME=hlstatsxce \
     -e DB_USER=hlstatsxce \
     -e DB_PASSWORD=hlstatsxce \
-    startersclan/docker-hlstatsxce-daemon:geoip
+    startersclan/docker-hlstatsxce-daemon:v1.6.19-geoip-alpine-3.8
 
 # Alternatively, if you prefer to use a config file instead of environment variables
 docker run -d \
     -v /path/to/hlxce/scripts/hlstats.conf:/app/hlstats.conf \
-    startersclan/docker-hlstatsxce-daemon:geoip
+    startersclan/docker-hlstatsxce-daemon:v1.6.19-geoip-alpine-3.8
 ```
 
 ### Example (Swarm Mode with Docker Secrets):
@@ -63,7 +63,7 @@ docker service create --name hlstatsxce-daemon \
     --secret secret_db_name \
     --secret secret_db_user \
     --secret secret_db_password \
-    startersclan/docker-hlstatsxce-daemon:geoip
+    startersclan/docker-hlstatsxce-daemon:v1.6.19-geoip-alpine-3.8
 ```
 
 The entrypoint script takes care of expanding the environment variables `DB_NAME`, `DB_USER`, and `DB_PASSWORD` from the respective secret files `/run/secrets/secret_db_name`, `/run/secrets/secret_db_user`, and `/run/secrets/secret_db_password`. This is done by using the syntax `ENVVARIABLE=DOCKER-SECRET:docker_secret_name` (note the colon).

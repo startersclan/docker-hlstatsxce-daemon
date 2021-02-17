@@ -28,7 +28,7 @@ $(
 )
 
 "@ + @'
-Variants are based on ``ubuntu:16.04`` or ``alpine:3.8``. All variants include ``DBI`` and ``DBD::mysql`` perl modules.
+Variants are based on `ubuntu:16.04` or `alpine:3.8`. All variants include `DBI` and `DBD::mysql` perl modules.
 
 Variants may contain one or more additional Perl modules. E.g. `:geoip-geoip2-emailsender` contains the `:geoip`, `:geoip2`, and `:emailsender` Perl modules.
 
@@ -41,9 +41,11 @@ Variants may contain one or more additional Perl modules. E.g. `:geoip-geoip2-em
 
 ## Usage
 
+
+'@ + @"
 ### Example
 
-```sh
+``````sh
 docker run -d \
     -e LOG_LEVEL=1 \
     -e MODE=Normal \
@@ -51,17 +53,17 @@ docker run -d \
     -e DB_NAME=hlstatsxce \
     -e DB_USER=hlstatsxce \
     -e DB_PASSWORD=hlstatsxce \
-    startersclan/docker-hlstatsxce-daemon:geoip
+    startersclan/docker-hlstatsxce-daemon:$( $VARIANTS | ? { $_['tag_as_latest'] } | Select -First 1 | % { $_['tag'] } )
 
 # Alternatively, if you prefer to use a config file instead of environment variables
 docker run -d \
     -v /path/to/hlxce/scripts/hlstats.conf:/app/hlstats.conf \
-    startersclan/docker-hlstatsxce-daemon:geoip
-```
+    startersclan/docker-hlstatsxce-daemon:$( $VARIANTS | ? { $_['tag_as_latest'] } | Select -First 1 | % { $_['tag'] } )
+``````
 
 ### Example (Swarm Mode with Docker Secrets):
 
-```sh
+``````sh
 docker service create --name hlstatsxce-daemon \
     -e LOG_LEVEL=1 \
     -e MODE=Normal \
@@ -72,11 +74,13 @@ docker service create --name hlstatsxce-daemon \
     --secret secret_db_name \
     --secret secret_db_user \
     --secret secret_db_password \
-    startersclan/docker-hlstatsxce-daemon:geoip
-```
+    startersclan/docker-hlstatsxce-daemon:$( $VARIANTS | ? { $_['tag_as_latest'] } | Select -First 1 | % { $_['tag'] } )
+``````
 
-The entrypoint script takes care of expanding the environment variables `DB_NAME`, `DB_USER`, and `DB_PASSWORD` from the respective secret files `/run/secrets/secret_db_name`, `/run/secrets/secret_db_user`, and `/run/secrets/secret_db_password`. This is done by using the syntax `ENVVARIABLE=DOCKER-SECRET:docker_secret_name` (note the colon).
+The entrypoint script takes care of expanding the environment variables ``DB_NAME``, ``DB_USER``, and ``DB_PASSWORD`` from the respective secret files ``/run/secrets/secret_db_name``, ``/run/secrets/secret_db_user``, and ``/run/secrets/secret_db_password``. This is done by using the syntax ``ENVVARIABLE=DOCKER-SECRET:docker_secret_name`` (note the colon).
 
+
+"@ + @'
 ## Configuration
 
 ### Environment variables
