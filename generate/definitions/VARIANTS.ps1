@@ -1,13 +1,13 @@
+$local:PACKAGE_VERSIONS_GITHASH = @{
+    'v1.6.19' = '11cac08de8c01b7a07897562596e59b7f0f86230'
+}
 $local:VARIANTS_DISTROS = @(
     'ubuntu:16.04'
     'alpine:3.8'
 )
-$local:PACKAGE_VERSIONS_GITHASH = @{
-    'v1.6.19' = '11cac08de8c01b7a07897562596e59b7f0f86230'
-}
 $local:VARIANTS_MATRIX = @(
-    foreach ($d in $local:VARIANTS_DISTROS) {
-        foreach ($pv in @($local:PACKAGE_VERSIONS_GITHASH.Keys)) {
+    foreach ($pv in @($local:PACKAGE_VERSIONS_GITHASH.Keys)) {
+        foreach ($d in $local:VARIANTS_DISTROS) {
             @{
                 package_version = $pv
                 package_githash = $local:PACKAGE_VERSIONS_GITHASH[$pv]
