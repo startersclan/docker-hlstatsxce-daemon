@@ -1,80 +1,55 @@
+$local:VARIANTS_DISTROS = @(
+    'ubuntu:16.04'
+    'alpine:3.8'
+)
+$local:VARIANTS_MATRIX = @(
+    foreach ($d in $local:VARIANTS_DISTROS) {
+        @{
+            # package_version = 'v1.6.19'
+            distro = $d.Split(':')[0]
+            distro_version = $d.Split(':')[1]
+            subvariants = @(
+                # @{ components = @() }
+                @{ components = @( 'cron' ) }
+                @{ components = @( 'cron', 'emailsender' ) }
+                @{ components = @( 'cron', 'geoip' ) }
+                @{ components = @( 'cron', 'geoip', 'geoip2' ) }
+                @{ components = @( 'cron', 'geoip', 'geoip2', 'emailsender' ) }
+                @{ components = @( 'emailsender' ) }
+                @{ components = @( 'geoip' ); tag_as_latest = if ($d -match 'alpine') { $true } else { $false } }
+                @{ components = @( 'geoip', 'geoip2' ) }
+                @{ components = @( 'geoip', 'geoip2', 'emailsender' ) }
+            )
+        }
+    }
+)
 # Docker image variants' definitions
 $VARIANTS = @(
-    # Ubuntu
-    @{
-        tag = 'cron'
-        distro = 'ubuntu'
-    }
-    @{
-        tag = 'cron-emailsender'
-        distro = 'ubuntu'
-    }
-    @{
-        tag = 'cron-geoip'
-        distro = 'ubuntu'
-    }
-    @{
-        tag = 'cron-geoip-geoip2'
-        distro = 'ubuntu'
-    }
-    @{
-        tag = 'cron-geoip-geoip2-emailsender'
-        distro = 'ubuntu'
-    }
-    @{
-        tag = 'emailsender'
-        distro = 'ubuntu'
-    }
-    @{
-        tag = 'geoip'
-        distro = 'ubuntu'
-    }
-    @{
-        tag = 'geoip-geoip2'
-        distro = 'ubuntu'
-    }
-    @{
-        tag = 'geoip-geoip2-emailsender'
-        distro = 'ubuntu'
-    }
-
-    # Alpine
-    @{
-        tag = 'cron-alpine'
-        distro = 'alpine'
-    }
-    @{
-        tag = 'cron-emailsender-alpine'
-        distro = 'alpine'
-    }
-    @{
-        tag = 'cron-geoip-alpine'
-        distro = 'alpine'
-    }
-    @{
-        tag = 'cron-geoip-geoip2-alpine'
-        distro = 'alpine'
-    }
-    @{
-        tag = 'cron-geoip-geoip2-emailsender-alpine'
-        distro = 'alpine'
-    }
-    @{
-        tag = 'emailsender-alpine'
-        distro = 'alpine'
-    }
-    @{
-        tag = 'geoip-alpine'
-        tag_as_latest = $true
-        distro = 'alpine'
-    }
-    @{
-        tag = 'geoip-geoip2-alpine'
-        distro = 'alpine'
-    }
-    @{
-        tag = 'geoip-geoip2-emailsender-alpine'
-        distro = 'alpine'
+    foreach ($variant in $local:VARIANTS_MATRIX) {
+        foreach ($subVariant in $variant['subvariants']) {
+            @{
+                # Metadata object
+                _metadata = @{
+                    # package_version = $variant['package_version']
+                    distro = $variant['distro']
+                    distro_version = $variant['distro_version']
+                }
+                # Docker image tag. E.g. 'v2.3.0.0-alpine-3.6'
+                tag = @(
+                        # $variant['package_version']
+                        $subVariant['components'] | ? { $_ }
+                        if ($variant['distro'] -match 'alpine') { $variant['distro'] }
+                        # $variant['distro_version']
+                ) -join '-'
+                tag_as_latest = if ( $subVariant.Contains('tag_as_latest') ) {
+                                    $subVariant['tag_as_latest']
+                                } else {
+                                    $false
+                                }
+                components = $subVariant['components']
+                distro = $variant['distro']
+            }
+        }
     }
 )
 
