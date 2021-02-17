@@ -10,11 +10,6 @@ $local:VARIANTS_MATRIX = @(
             distro_version = $d.Split(':')[1]
             subvariants = @(
                 # @{ components = @() }
-                @{ components = @( 'cron' ) }
-                @{ components = @( 'cron', 'emailsender' ) }
-                @{ components = @( 'cron', 'geoip' ) }
-                @{ components = @( 'cron', 'geoip', 'geoip2' ) }
-                @{ components = @( 'cron', 'geoip', 'geoip2', 'emailsender' ) }
                 @{ components = @( 'emailsender' ) }
                 @{ components = @( 'geoip' ); tag_as_latest = if ($d -match 'alpine') { $true } else { $false } }
                 @{ components = @( 'geoip', 'geoip2' ) }

@@ -10,20 +10,10 @@ Dockerized [HLStatsX:CE](https://bitbucket.org/Maverick_of_UC/hlstatsx-community
 
 | Tag | Dockerfile Build Context |
 |:-------:|:---------:|
-| `:cron` | [View](variants/cron ) |
-| `:cron-emailsender` | [View](variants/cron-emailsender ) |
-| `:cron-geoip` | [View](variants/cron-geoip ) |
-| `:cron-geoip-geoip2` | [View](variants/cron-geoip-geoip2 ) |
-| `:cron-geoip-geoip2-emailsender` | [View](variants/cron-geoip-geoip2-emailsender ) |
 | `:emailsender` | [View](variants/emailsender ) |
 | `:geoip` | [View](variants/geoip ) |
 | `:geoip-geoip2` | [View](variants/geoip-geoip2 ) |
 | `:geoip-geoip2-emailsender` | [View](variants/geoip-geoip2-emailsender ) |
-| `:cron-alpine` | [View](variants/cron-alpine ) |
-| `:cron-emailsender-alpine` | [View](variants/cron-emailsender-alpine ) |
-| `:cron-geoip-alpine` | [View](variants/cron-geoip-alpine ) |
-| `:cron-geoip-geoip2-alpine` | [View](variants/cron-geoip-geoip2-alpine ) |
-| `:cron-geoip-geoip2-emailsender-alpine` | [View](variants/cron-geoip-geoip2-emailsender-alpine ) |
 | `:emailsender-alpine` | [View](variants/emailsender-alpine ) |
 | `:geoip-alpine`, `:latest` | [View](variants/geoip-alpine ) |
 | `:geoip-geoip2-alpine` | [View](variants/geoip-geoip2-alpine ) |
