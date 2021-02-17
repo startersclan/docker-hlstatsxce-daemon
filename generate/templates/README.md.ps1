@@ -30,11 +30,10 @@ $(
 "@ + @'
 Variants are based on `ubuntu:16.04` or `alpine:3.8`. All variants include `DBI` and `DBD::mysql` perl modules.
 
-Variants may contain one or more additional Perl modules. E.g. `:geoip-geoip2-emailsender` contains the `:geoip`, `:geoip2`, and `:emailsender` Perl modules.
+Variants may contain one or more additional Perl modules. E.g. `:geoip-geoip2-emailsender` contains the `geoip`, `geoip2`, and `emailsender` Perl modules.
 
-| Name | Perl Modules |
+| Tag component | Perl Modules |
 |:-------:|:---------:|
-| `cron` | `-`
 | `geoip` | `Geo::IP::PurePerl`
 | `geoip2` | `MaxMind::DB::Reader`<br> `MaxMind::DB::Reader::XS`
 | `emailsender` | `Email::Sender::Simple`
