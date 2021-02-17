@@ -5,7 +5,7 @@ $local:VARIANTS_DISTROS = @(
 $local:VARIANTS_MATRIX = @(
     foreach ($d in $local:VARIANTS_DISTROS) {
         @{
-            # package_version = 'v1.6.19'
+            package_version = 'v1.6.19'
             distro = $d.Split(':')[0]
             distro_version = $d.Split(':')[1]
             subvariants = @(
@@ -31,10 +31,10 @@ $VARIANTS = @(
                 }
                 # Docker image tag. E.g. 'v2.3.0.0-alpine-3.6'
                 tag = @(
-                        # $variant['package_version']
+                        $variant['package_version']
                         $subVariant['components'] | ? { $_ }
-                        if ($variant['distro'] -match 'alpine') { $variant['distro'] }
-                        # $variant['distro_version']
+                        $variant['distro']
+                        $variant['distro_version']
                 ) -join '-'
                 tag_as_latest = if ( $subVariant.Contains('tag_as_latest') ) {
                                     $subVariant['tag_as_latest']

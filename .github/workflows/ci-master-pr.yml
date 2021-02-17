@@ -9,12 +9,12 @@ on:
     - master
 
 jobs:
-  build-emailsender:
+  build-v1-6-19-emailsender-ubuntu-16-04:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: emailsender
-      # VARIANT_TAG_WITH_REF: emailsender-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/emailsender
+      VARIANT_TAG: v1.6.19-emailsender-ubuntu-16.04
+      # VARIANT_TAG_WITH_REF: v1.6.19-emailsender-ubuntu-16.04-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.6.19-emailsender-ubuntu-16.04
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -69,12 +69,12 @@ jobs:
         docker logout
         rm -rf ~/secrets
       if: always()
-  build-geoip:
+  build-v1-6-19-geoip-ubuntu-16-04:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: geoip
-      # VARIANT_TAG_WITH_REF: geoip-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/geoip
+      VARIANT_TAG: v1.6.19-geoip-ubuntu-16.04
+      # VARIANT_TAG_WITH_REF: v1.6.19-geoip-ubuntu-16.04-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.6.19-geoip-ubuntu-16.04
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -129,12 +129,12 @@ jobs:
         docker logout
         rm -rf ~/secrets
       if: always()
-  build-geoip-geoip2:
+  build-v1-6-19-geoip-geoip2-ubuntu-16-04:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: geoip-geoip2
-      # VARIANT_TAG_WITH_REF: geoip-geoip2-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/geoip-geoip2
+      VARIANT_TAG: v1.6.19-geoip-geoip2-ubuntu-16.04
+      # VARIANT_TAG_WITH_REF: v1.6.19-geoip-geoip2-ubuntu-16.04-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.6.19-geoip-geoip2-ubuntu-16.04
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -189,12 +189,12 @@ jobs:
         docker logout
         rm -rf ~/secrets
       if: always()
-  build-geoip-geoip2-emailsender:
+  build-v1-6-19-geoip-geoip2-emailsender-ubuntu-16-04:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: geoip-geoip2-emailsender
-      # VARIANT_TAG_WITH_REF: geoip-geoip2-emailsender-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/geoip-geoip2-emailsender
+      VARIANT_TAG: v1.6.19-geoip-geoip2-emailsender-ubuntu-16.04
+      # VARIANT_TAG_WITH_REF: v1.6.19-geoip-geoip2-emailsender-ubuntu-16.04-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.6.19-geoip-geoip2-emailsender-ubuntu-16.04
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -249,12 +249,12 @@ jobs:
         docker logout
         rm -rf ~/secrets
       if: always()
-  build-emailsender-alpine:
+  build-v1-6-19-emailsender-alpine-3-8:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: emailsender-alpine
-      # VARIANT_TAG_WITH_REF: emailsender-alpine-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/emailsender-alpine
+      VARIANT_TAG: v1.6.19-emailsender-alpine-3.8
+      # VARIANT_TAG_WITH_REF: v1.6.19-emailsender-alpine-3.8-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.6.19-emailsender-alpine-3.8
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -309,12 +309,12 @@ jobs:
         docker logout
         rm -rf ~/secrets
       if: always()
-  build-geoip-alpine:
+  build-v1-6-19-geoip-alpine-3-8:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: geoip-alpine
-      # VARIANT_TAG_WITH_REF: geoip-alpine-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/geoip-alpine
+      VARIANT_TAG: v1.6.19-geoip-alpine-3.8
+      # VARIANT_TAG_WITH_REF: v1.6.19-geoip-alpine-3.8-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.6.19-geoip-alpine-3.8
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -369,12 +369,12 @@ jobs:
         docker logout
         rm -rf ~/secrets
       if: always()
-  build-geoip-geoip2-alpine:
+  build-v1-6-19-geoip-geoip2-alpine-3-8:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: geoip-geoip2-alpine
-      # VARIANT_TAG_WITH_REF: geoip-geoip2-alpine-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/geoip-geoip2-alpine
+      VARIANT_TAG: v1.6.19-geoip-geoip2-alpine-3.8
+      # VARIANT_TAG_WITH_REF: v1.6.19-geoip-geoip2-alpine-3.8-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.6.19-geoip-geoip2-alpine-3.8
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
@@ -429,12 +429,12 @@ jobs:
         docker logout
         rm -rf ~/secrets
       if: always()
-  build-geoip-geoip2-emailsender-alpine:
+  build-v1-6-19-geoip-geoip2-emailsender-alpine-3-8:
     runs-on: ubuntu-18.04
     env:
-      VARIANT_TAG: geoip-geoip2-emailsender-alpine
-      # VARIANT_TAG_WITH_REF: geoip-geoip2-emailsender-alpine-${GITHUB_REF}
-      VARIANT_BUILD_DIR: variants/geoip-geoip2-emailsender-alpine
+      VARIANT_TAG: v1.6.19-geoip-geoip2-emailsender-alpine-3.8
+      # VARIANT_TAG_WITH_REF: v1.6.19-geoip-geoip2-emailsender-alpine-3.8-${GITHUB_REF}
+      VARIANT_BUILD_DIR: variants/v1.6.19-geoip-geoip2-emailsender-alpine-3.8
     steps:
     - uses: actions/checkout@v1
     - name: Display system info (linux)
