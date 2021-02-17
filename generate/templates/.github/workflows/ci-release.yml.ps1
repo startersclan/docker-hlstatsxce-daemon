@@ -1,8 +1,10 @@
 @'
-name: ci-tags
+name: ci-release
 
 on:
   push:
+    branches:
+    - release
     tags:
     - '**'
 
@@ -16,7 +18,7 @@ $( $VARIANTS | % {
     runs-on: ubuntu-18.04
     env:
       VARIANT_TAG: $( $_['tag'] )
-      # VARIANT_TAG_WITH_VERSION: $( $_['tag'] )-`${GITHUB_REF}
+      # VARIANT_TAG_WITH_REF: $( $_['tag'] )-`${GITHUB_REF}
       VARIANT_BUILD_DIR: $( $_['build_dir_rel'] )
 "@
 @'
@@ -68,12 +70,30 @@ $( $VARIANTS | % {
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
+
+'@
+if ( $_['tag_as_latest'] ) {
+@'
+          -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest" \
+
+'@
+}
+@'
           "${VARIANT_BUILD_DIR}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}"
         docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}"
+
+'@
+if ( $_['tag_as_latest'] ) {
+@'
+        docker push "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:latest"
+
+'@
+}
+@'
     - name: Clean-up
-      run: |
+      run:  |
         docker logout
         rm -rf ~/secrets
       if: always()

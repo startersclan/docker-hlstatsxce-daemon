@@ -1,3 +1,4 @@
+@"
 # docker-hlstatsxce-daemon
 
 [![github-actions](https://github.com/startersclan/docker-hlstatsxce-daemon/workflows/ci-master-pr/badge.svg)](https://github.com/startersclan/docker-hlstatsxce-daemon/actions)
@@ -10,15 +11,23 @@ Dockerized [HLStatsX:CE](https://bitbucket.org/Maverick_of_UC/hlstatsx-community
 
 | Tag | Dockerfile Build Context |
 |:-------:|:---------:|
-| `:v1.6.19-emailsender-ubuntu-16.04` | [View](variants/v1.6.19-emailsender-ubuntu-16.04 ) |
-| `:v1.6.19-geoip-ubuntu-16.04` | [View](variants/v1.6.19-geoip-ubuntu-16.04 ) |
-| `:v1.6.19-geoip-geoip2-ubuntu-16.04` | [View](variants/v1.6.19-geoip-geoip2-ubuntu-16.04 ) |
-| `:v1.6.19-geoip-geoip2-emailsender-ubuntu-16.04` | [View](variants/v1.6.19-geoip-geoip2-emailsender-ubuntu-16.04 ) |
-| `:v1.6.19-emailsender-alpine-3.8` | [View](variants/v1.6.19-emailsender-alpine-3.8 ) |
-| `:v1.6.19-geoip-alpine-3.8`, `:latest` | [View](variants/v1.6.19-geoip-alpine-3.8 ) |
-| `:v1.6.19-geoip-geoip2-alpine-3.8` | [View](variants/v1.6.19-geoip-geoip2-alpine-3.8 ) |
-| `:v1.6.19-geoip-geoip2-emailsender-alpine-3.8` | [View](variants/v1.6.19-geoip-geoip2-emailsender-alpine-3.8 ) |
+$(
+($VARIANTS | % {
+    if ( $_['tag_as_latest'] ) {
+@"
+| ``:$( $_['tag'] )``, ``:latest`` | [View](variants/$( $_['tag'] ) ) |
 
+"@
+    }else {
+@"
+| ``:$( $_['tag'] )`` | [View](variants/$( $_['tag'] ) ) |
+
+"@
+    }
+}) -join ''
+)
+
+"@ + @'
 Variants are based on `ubuntu:16.04` or `alpine:3.8`. All variants include `DBI` and `DBD::mysql` perl modules.
 
 Variants may contain one or more additional Perl modules. E.g. `:geoip-geoip2-emailsender` contains the `geoip`, `geoip2`, and `emailsender` Perl modules.
@@ -31,9 +40,11 @@ Variants may contain one or more additional Perl modules. E.g. `:geoip-geoip2-em
 
 ## Usage
 
+
+'@ + @"
 ### Example
 
-```sh
+``````sh
 docker run -d \
     -e LOG_LEVEL=1 \
     -e MODE=Normal \
@@ -41,17 +52,17 @@ docker run -d \
     -e DB_NAME=hlstatsxce \
     -e DB_USER=hlstatsxce \
     -e DB_PASSWORD=hlstatsxce \
-    startersclan/docker-hlstatsxce-daemon:v1.6.19-geoip-alpine-3.8
+    startersclan/docker-hlstatsxce-daemon:$( $VARIANTS | ? { $_['tag_as_latest'] } | Select -First 1 | % { $_['tag'] } )
 
 # Alternatively, if you prefer to use a config file instead of environment variables
 docker run -d \
     -v /path/to/hlxce/scripts/hlstats.conf:/app/hlstats.conf \
-    startersclan/docker-hlstatsxce-daemon:v1.6.19-geoip-alpine-3.8
-```
+    startersclan/docker-hlstatsxce-daemon:$( $VARIANTS | ? { $_['tag_as_latest'] } | Select -First 1 | % { $_['tag'] } )
+``````
 
 ### Example (Swarm Mode with Docker Secrets):
 
-```sh
+``````sh
 docker service create --name hlstatsxce-daemon \
     -e LOG_LEVEL=1 \
     -e MODE=Normal \
@@ -62,11 +73,13 @@ docker service create --name hlstatsxce-daemon \
     --secret secret_db_name \
     --secret secret_db_user \
     --secret secret_db_password \
-    startersclan/docker-hlstatsxce-daemon:v1.6.19-geoip-alpine-3.8
-```
+    startersclan/docker-hlstatsxce-daemon:$( $VARIANTS | ? { $_['tag_as_latest'] } | Select -First 1 | % { $_['tag'] } )
+``````
 
-The entrypoint script takes care of expanding the environment variables `DB_NAME`, `DB_USER`, and `DB_PASSWORD` from the respective secret files `/run/secrets/secret_db_name`, `/run/secrets/secret_db_user`, and `/run/secrets/secret_db_password`. This is done by using the syntax `ENVVARIABLE=DOCKER-SECRET:docker_secret_name` (note the colon).
+The entrypoint script takes care of expanding the environment variables ``DB_NAME``, ``DB_USER``, and ``DB_PASSWORD`` from the respective secret files ``/run/secrets/secret_db_name``, ``/run/secrets/secret_db_user``, and ``/run/secrets/secret_db_password``. This is done by using the syntax ``ENVVARIABLE=DOCKER-SECRET:docker_secret_name`` (note the colon).
 
+
+"@ + @'
 ## Configuration
 
 ### Environment variables
@@ -149,3 +162,5 @@ Save the file. That should fix hlstats.pl's `--configfile` argument issue.
 ### How long will this Docker Image be supported?
 
 - As long as the repository is not marked deprecated, which should not happen.
+
+'@
