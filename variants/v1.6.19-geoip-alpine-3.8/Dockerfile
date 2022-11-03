@@ -23,8 +23,6 @@ RUN apk add --no-cache ca-certificates wget \
     && chmod 666 GeoLiteCity.dat \
     && ls -l
 
-
-
 # Install perl
 RUN apk add --no-cache \
     wget \

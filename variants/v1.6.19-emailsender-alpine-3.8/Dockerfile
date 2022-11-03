@@ -14,10 +14,6 @@ RUN apk add --no-cache git \
     && rm -rf /hlstatsx-community-edition \
     && apk del git
 
-
-
-
-
 # Install perl
 RUN apk add --no-cache \
     wget \

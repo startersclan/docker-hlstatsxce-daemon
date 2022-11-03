@@ -15,10 +15,6 @@ RUN apt-get update && apt-get install git -y \
     && apt-get purge --auto-remove -y git \
     && rm -rf /var/lib/apt/lists/*
 
-
-
-
-
 #
 # Export these environment variables
 #
