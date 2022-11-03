@@ -3,7 +3,7 @@ FROM alpine:3.8
 
 # Get hlstatsxce perl daemon scripts and set permissions
 RUN apk add --no-cache git \
-    && git clone $( $PASS_VARIABLES['hlstatsxce_git_url'] ) /hlstatsx-community-edition \
+    && git clone https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition.git /hlstatsx-community-edition \
     && cd /hlstatsx-community-edition \
     && git checkout $( $PASS_VARIABLES['hlstatsxce_git_hash'] ) \
     && mv /hlstatsx-community-edition/scripts /app \
@@ -35,7 +35,7 @@ if ( 'geoip' -in $VARIANT['components'] ) {
 RUN apk add --no-cache ca-certificates wget \
     && rm -rf /var/lib/apt/lists/* \
     && cd /app/GeoLiteCity \
-    && wget -qO- $( $PASS_VARIABLES['geolitecity_url'] ) > GeoLiteCity.dat \
+    && wget -qO- https://github.com/startersclan/GeoLiteCity-data/raw/c14d99c42446f586e3ca9c89fe13714474921d65/GeoLiteCity.dat > GeoLiteCity.dat \
     && chmod 666 GeoLiteCity.dat \
     && ls -l
 
