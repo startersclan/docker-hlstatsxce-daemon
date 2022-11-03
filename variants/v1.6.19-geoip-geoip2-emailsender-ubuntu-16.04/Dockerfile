@@ -28,36 +28,12 @@ RUN apt-get update && apt-get install -y ca-certificates wget \
 # In order to obtain the secret MAXMIND_LICENSE_KEY, we assume we have a sidecar secrets-server which will serve the secret MAXMIND_LICENSE_KEY at: http://localhost:8000/MAXMIND_LICENSE_KEY
 RUN apt-get update && apt-get install -y ca-certificates curl \
     && cd /app/GeoLiteCity \
-    && ls -l; \
-    \
-    echo "Downloading a copy of GeoLite2City..."; \
-    URL="https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$( curl -s http://localhost:8000/MAXMIND_LICENSE_KEY )&suffix=tar.gz"; \
-    FILE=$( curl -sI "$URL" | grep -i 'content-disposition' | sed 's/.*filename=//i' | tr -d '\r\n' ); \
-    echo "FILE: $FILE"; \
-    curl -so "$FILE" "$URL"; \
-    if [ $? = 0 ]; then \
-        tar -tvf "$FILE"; \
-        echo "Uncompressing database"; \
-        MMDB_PATH=$( tar -tvf "$FILE" | grep '.mmdb' | awk '{print $6}' ); \
-        MMDB_FOLDER=$( dirname $MMDB_PATH ); \
-        MMDB=$( basename "$MMDB_PATH" ); \
-        echo "MMDB_PATH: $MMDB_PATH"; \
-        echo "MMDB_FOLDER: $MMDB_FOLDER"; \
-        echo "MMDB: $MMDB"; \
-        tar -zxvf "$FILE" "$MMDB_PATH"; \
-        mv "$MMDB_PATH" "$MMDB"; \
-        chmod 666 *.mmdb; \
-        echo "Cleaning up"; \
-        rm -rf $( echo $MMDB_FOLDER | sed "s/.+$MMDB//" ); \
-        rm -rf $FILE; \
-        ls -l; \
-    fi; \
-    apt-get purge --auto-remove -y curl \
-    && rm -rf /var/lib/apt/lists/*; \
-    if [ ! -f GeoLite2-City.mmdb ]; then \
-        echo "Could not download GeoIP2 db"; \
-        exit 1; \
-    fi;
+    && curl -sSLO https://cdn.jsdelivr.net/npm/geolite2-city@1.0.0/GeoLite2-City.mmdb.gz \
+    && gzip -d GeoLite2-City.mmdb.gz \
+    && chmod 666 GeoLite2-City.mmdb \
+    && ls -al \
+    && apt-get purge --auto-remove -y curl \
+    && rm -rf /var/lib/apt/lists/*
 
 #
 # Export these environment variables

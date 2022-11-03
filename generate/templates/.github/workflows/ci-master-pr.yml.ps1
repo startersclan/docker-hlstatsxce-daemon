@@ -61,13 +61,7 @@ $( $VARIANTS | % {
         VARIANT_TAG_WITH_REF="${REF}-${VARIANT_TAG}"
         VARIANT_TAG_WITH_REF_AND_SHA_SHORT="${REF}-${SHA_SHORT}-${VARIANT_TAG}"
 
-        # Start a secrets-server with out secrets
-        mkdir -p ~/secrets && chmod 750 ~/secrets
-        touch ~/secrets/MAXMIND_LICENSE_KEY && chmod 600 ~/secrets/MAXMIND_LICENSE_KEY && echo -n "$MAXMIND_LICENSE_KEY" > ~/secrets/MAXMIND_LICENSE_KEY
-        docker run -d --name=secrets-server --rm --volume ~/secrets:/secrets busybox httpd -f -p 8000 -h /secrets
-
         docker build \
-          --network=container:secrets-server \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF}" \
           -t "${DOCKERHUB_REGISTRY_USER}/${CI_PROJECT_NAME}:${VARIANT_TAG_WITH_REF_AND_SHA_SHORT}" \
           "${VARIANT_BUILD_DIR}"
