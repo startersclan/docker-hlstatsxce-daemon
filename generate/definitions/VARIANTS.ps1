@@ -34,6 +34,7 @@ $VARIANTS = @(
                     # package_version = $variant['package_version']
                     distro = $variant['distro']
                     distro_version = $variant['distro_version']
+                    platforms = 'linux/amd64'
                 }
                 # Docker image tag. E.g. 'v2.3.0.0-alpine-3.6'
                 tag = @(
@@ -87,6 +88,3 @@ $VARIANTS = @(
 # Docker image variants' definitions (shared)
 $VARIANTS_SHARED = @{
 }
-
-# Send definitions down the pipeline
-$VARIANTS
