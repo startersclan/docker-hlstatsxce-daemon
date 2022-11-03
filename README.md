@@ -1,7 +1,7 @@
 # docker-hlstatsxce-daemon
 
 [![github-actions](https://github.com/startersclan/docker-hlstatsxce-daemon/workflows/ci-master-pr/badge.svg)](https://github.com/startersclan/docker-hlstatsxce-daemon/actions)
-[![github-tag](https://img.shields.io/github/tag/startersclan/docker-hlstatsxce-daemon)](https://github.com/startersclan/docker-hlstatsxce-daemon/releases/)
+[![github-release](https://img.shields.io/github/v/release/startersclan/docker-hlstatsxce-daemon?style=flat-square)](https://github.com/startersclan/docker-hlstatsxce-daemon/releases/)
 [![docker-image-size](https://img.shields.io/docker/image-size/startersclan/docker-hlstatsxce-daemon/latest)](https://hub.docker.com/r/startersclan/docker-hlstatsxce-daemon)
 
 Dockerized [HLStatsX:CE](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/) perl daemon.
@@ -34,7 +34,7 @@ Variants may contain one or more additional Perl modules. E.g. `:geoip-geoip2-em
 ### Example
 
 ```sh
-docker run -d \
+docker run -it \
     -e LOG_LEVEL=1 \
     -e MODE=Normal \
     -e DB_HOST=db \
@@ -44,7 +44,7 @@ docker run -d \
     startersclan/docker-hlstatsxce-daemon:v1.6.19-geoip-alpine-3.8
 
 # Alternatively, if you prefer to use a config file instead of environment variables
-docker run -d \
+docker run -it \
     -v /path/to/hlxce/scripts/hlstats.conf:/app/hlstats.conf \
     startersclan/docker-hlstatsxce-daemon:v1.6.19-geoip-alpine-3.8
 ```
@@ -84,7 +84,7 @@ In general, it is better to use environment variables than a config file, becaus
 | `MODE` | `"Normal"` | Player tracking mode (`Normal`, `LAN` or `NameTrack`) | `-m, --mode`
 | `DB_HOST` | `"localhost"` | Database IP or hostname, in format `<ip>` or `<hostname>`. Port may be omitted, in which case it is `27500` by default. To use a custom port, use format `<ip>:<port>` or `<hostname>:<port>` specifed. | `--db-host`
 | `DB_NAME` | `"hlstats"` | Database name | `--db-name`
-| `DB_USER` | `""` | Database user | `--db-name`
+| `DB_USER` | `""` | Database user | `--db-user`
 | `DB_PASSWORD` | `""` | Database password | `--db-password`
 | `DNS_RESOLVE_IP` | `"true"` | Resolve player IP addresses to hostnames (requires working DNS) | `--dns-resolveip`
 | `DNS_RESOLVE_IP_TIMEOUT` | `"5"` | timeout DNS queries after SEC seconds | `--dns-timeout`
@@ -108,7 +108,7 @@ Configuration options are applied the following order. Later options override th
     - See [code](https://github.com/startersclan/hlstatsx-community-edition/blob/965453909e1d28aed3abfca7f93b6c1b27a7f75d/scripts/hlstats.pl#L1792-L1829)
 
 3. (N.A. since bugged) Custom config file specified by command line parameter `--configfile`.
-    - Doesn't work because of a bug explained [here](#warning-if-using-config_file)
+    - Doesn't work because of a bug explained [here](#warning-if-using-configfile-or---configfile)
 
 4. Database configuration from `hlstats_options` table.
 
@@ -116,7 +116,7 @@ Configuration options are applied the following order. Later options override th
 
     - See [code](https://github.com/startersclan/hlstatsx-community-edition/blob/965453909e1d28aed3abfca7f93b6c1b27a7f75d/scripts/hlstats.pl#L1882)
 
-The following database configuration options override config file or command line parameter configuration. Looking in [`install.sql`](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/src/11cac08de8c01b7a07897562596e59b7f0f86230/sql/install.sql#lines-3901):
+The following database configuration options override config file or command line parameter configuration. Looking in [`install.sql`](https://github.com/startersclan/hlstatsx-community-edition/blob/11cac08de8c01b7a07897562596e59b7f0f86230/sql/install.sql#L3901):
 
 - `--dns-resolveip` is enabled since parameter `DNSResolveIP` value is `1`
 - `--dns-timeout` is `3` since parameter `DNSTimeout` value is `3`
@@ -126,7 +126,7 @@ The following database configuration options override config file or command lin
 
 ### Warning: If using `CONFIG_FILE` or `--configfile`
 
-There is a bug in `hlstats.pl` that does not apply the command line parameter `--configfile=<configfile>` properly as configuration. To fix that, find the line in [`hlstats.pl`](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/src/11cac08de8c01b7a07897562596e59b7f0f86230/scripts/hlstats.pl#lines-1821) on line `1821`:
+There is a bug in `hlstats.pl` that does not apply the command line parameter `--configfile=<configfile>` properly as configuration. To fix that, find the line in [`hlstats.pl`](https://github.com/startersclan/hlstatsx-community-edition/blob/11cac08de8c01b7a07897562596e59b7f0f86230/scripts/hlstats.pl#L1821) on line `1821`:
 
 ```perl
 if ($configfile && -r $configfile) {
@@ -142,10 +142,30 @@ Save the file. That should fix hlstats.pl's `--configfile` argument issue.
 
 ## FAQ
 
-### How to use GeoIP2 with the perl daemon?
+### Q: Perl errors on startup?
 
-- As of [`HLStatsX:CE 1.6.19`](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/downloads/), the perl daemon scripts uses [GeoIP](https://metacpan.org/pod/Geo::IP::PurePerl), and not [GeoIP2](https://metacpan.org/pod/GeoIP2). You will have to change a bit of the code yourself to use the [GeoIP2 API](https://metacpan.org/release/GeoIP2).
+A: This docker image runs `perl5`, but [`HLStatsX:CE 1.6.19`](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition) might have been written for `perl4` or early `perl5` (not sure) and the project is no longer actively maintained. You will have to fix the compatibility errors, and rebuild a docker image based on this docker image.
 
-### How long will this Docker Image be supported?
+From experience (of the author of this repo), there are quite a number of these kinds of bugs that can cause the daemon the crash. You might end up as a Perl Monk after having fixed them. :)
 
-- As long as the repository is not marked deprecated, which should not happen.
+### Q: How to use GeoIP2 with the perl daemon?
+
+A: As of [`HLStatsX:CE 1.6.19`](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/downloads/), the perl daemon scripts uses [GeoIP](https://metacpan.org/pod/Geo::IP::PurePerl), and not [GeoIP2](https://metacpan.org/pod/GeoIP2). You will have to change a bit of the code yourself to use the [GeoIP2 API](https://metacpan.org/release/GeoIP2).
+
+### Q: How long will this Docker Image be supported?
+
+A: As long as the repository is not marked deprecated, which should not happen.
+
+## Development
+
+Requires Windows `powershell` or [`pwsh`](https://github.com/PowerShell/PowerShell).
+
+```powershell
+# Install Generate-DockerImageVariants module: https://github.com/theohbrothers/Generate-DockerImageVariants
+Install-Module -Name Generate-DockerImageVariants -Repository PSGallery -Scope CurrentUser -Force -Verbose
+
+# Edit ./generate templates
+
+# Generate the variants
+Generate-DockerImageVariants .
+```
