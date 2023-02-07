@@ -10,6 +10,27 @@ on:
     branches:
     - master
 jobs:
+  test-nogitdiff:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/powershell:7.2.2-alpine-3.14-20220318
+    steps:
+    - run: |
+        apk add --no-cache git
+    - uses: actions/checkout@v3
+    - name: Ignore git permissions
+      run: |
+        git config --global --add safe.directory "$( pwd )"
+    - name: Generate variants
+      run: |
+        pwsh -Command '
+        $ErrorActionPreference = "Stop"
+        Install-Module -Name Generate-DockerImageVariants -Force -Scope CurrentUser -Verbose
+        Generate-DockerImageVariants .
+        '
+    - name: Test - no git diff
+      run: |
+        git diff --exit-code
 
   build-v1-6-19-emailsender-ubuntu-16-04:
     runs-on: ubuntu-latest
@@ -1127,3 +1148,17 @@ jobs:
           tag: ${{ github.ref_name }} # E.g. 'master' or 'v1.2.3'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  update-dockerhub-description:
+    needs: [build-v1-6-19-emailsender-ubuntu-16-04, build-v1-6-19-geoip-ubuntu-16-04, build-v1-6-19-geoip-geoip2-ubuntu-16-04, build-v1-6-19-geoip-geoip2-emailsender-ubuntu-16-04, build-v1-6-19-emailsender-alpine-3-8, build-v1-6-19-geoip-alpine-3-8, build-v1-6-19-geoip-geoip2-alpine-3-8, build-v1-6-19-geoip-geoip2-emailsender-alpine-3-8]
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Docker Hub Description
+      uses: peter-evans/dockerhub-description@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_REGISTRY_USER }}
+        password: ${{ secrets.DOCKERHUB_REGISTRY_PASSWORD }}
+        repository: ${{ github.repository }}
+        short-description: ${{ github.event.repository.description }}
