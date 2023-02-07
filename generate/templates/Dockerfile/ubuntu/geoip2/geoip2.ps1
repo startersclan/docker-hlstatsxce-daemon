@@ -1,6 +1,7 @@
 @'
 # Install modules for perl GeoIP2
-RUN apt-get update \
+RUN set -eux \
+    && apt-get update \
     && apt-get install -y \
         build-essential \
         cpanminus \
@@ -11,6 +12,9 @@ RUN apt-get update \
         #libdatetime-perl \
     && cpanm \
         MaxMind::DB::Reader \
+        # Test-Without-Module-0.21 seems to fail tests randomly. See: https://metacpan.org/release/CORION/Test-Without-Module-0.21
+        Test::Without::Module@0.20 \
+    && cpanm \
         GeoIP2 \
 # Install maxmind DB::Reader::XS (faster than MaxMind::DB::Reader)
 # See: https://github.com/maxmind/libmaxminddb
