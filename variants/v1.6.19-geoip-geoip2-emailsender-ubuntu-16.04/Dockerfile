@@ -98,10 +98,11 @@ RUN set -eux \
         #libio-socket-ssl-perl \
         #libwww-perl \
         #libdatetime-perl \
+    # Install older version of Test::Without::Module, since Test::Without::Module@0.21 seems to fail tests randomly. See: https://metacpan.org/release/CORION/Test-Without-Module-0.21
+    && cpanm \
+        Test::Without::Module@0.20 \
     && cpanm \
         MaxMind::DB::Reader \
-        # Test-Without-Module-0.21 seems to fail tests randomly. See: https://metacpan.org/release/CORION/Test-Without-Module-0.21
-        Test::Without::Module@0.20 \
     && cpanm \
         GeoIP2 \
 # Install maxmind DB::Reader::XS (faster than MaxMind::DB::Reader)
