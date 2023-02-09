@@ -10,14 +10,14 @@ Dockerized [HLStatsX:CE](https://bitbucket.org/Maverick_of_UC/hlstatsx-community
 
 | Tag | Dockerfile Build Context |
 |:-------:|:---------:|
-| `:v1.6.19-emailsender-ubuntu-16.04` | [View](variants/v1.6.19-emailsender-ubuntu-16.04 ) |
-| `:v1.6.19-geoip-ubuntu-16.04` | [View](variants/v1.6.19-geoip-ubuntu-16.04 ) |
-| `:v1.6.19-geoip-geoip2-ubuntu-16.04` | [View](variants/v1.6.19-geoip-geoip2-ubuntu-16.04 ) |
-| `:v1.6.19-geoip-geoip2-emailsender-ubuntu-16.04` | [View](variants/v1.6.19-geoip-geoip2-emailsender-ubuntu-16.04 ) |
-| `:v1.6.19-emailsender-alpine-3.8` | [View](variants/v1.6.19-emailsender-alpine-3.8 ) |
-| `:v1.6.19-geoip-alpine-3.8`, `:latest` | [View](variants/v1.6.19-geoip-alpine-3.8 ) |
-| `:v1.6.19-geoip-geoip2-alpine-3.8` | [View](variants/v1.6.19-geoip-geoip2-alpine-3.8 ) |
-| `:v1.6.19-geoip-geoip2-emailsender-alpine-3.8` | [View](variants/v1.6.19-geoip-geoip2-emailsender-alpine-3.8 ) |
+| `:v1.6.19-emailsender-ubuntu-16.04` | [View](variants/v1.6.19-emailsender-ubuntu-16.04) |
+| `:v1.6.19-geoip-ubuntu-16.04` | [View](variants/v1.6.19-geoip-ubuntu-16.04) |
+| `:v1.6.19-geoip-geoip2-ubuntu-16.04` | [View](variants/v1.6.19-geoip-geoip2-ubuntu-16.04) |
+| `:v1.6.19-geoip-geoip2-emailsender-ubuntu-16.04` | [View](variants/v1.6.19-geoip-geoip2-emailsender-ubuntu-16.04) |
+| `:v1.6.19-emailsender-alpine-3.8` | [View](variants/v1.6.19-emailsender-alpine-3.8) |
+| `:v1.6.19-geoip-alpine-3.8`, `:latest` | [View](variants/v1.6.19-geoip-alpine-3.8) |
+| `:v1.6.19-geoip-geoip2-alpine-3.8` | [View](variants/v1.6.19-geoip-geoip2-alpine-3.8) |
+| `:v1.6.19-geoip-geoip2-emailsender-alpine-3.8` | [View](variants/v1.6.19-geoip-geoip2-emailsender-alpine-3.8) |
 
 Variants are based on `ubuntu:16.04` or `alpine:3.8`. All variants include `DBI` and `DBD::mysql` perl modules.
 
