@@ -50,6 +50,7 @@ Variants may contain one or more additional Perl modules. E.g. `:geoip-geoip2-em
 
 ``````sh
 docker run -it \
+    -p 27500:27500/udp \
     -e LOG_LEVEL=1 \
     -e MODE=Normal \
     -e DB_HOST=db \
@@ -64,10 +65,11 @@ docker run -it \
     startersclan/docker-hlstatsxce-daemon:$( $VARIANTS | ? { $_['tag_as_latest'] } | Select -First 1 | % { $_['tag'] } )
 ``````
 
-### Example (Swarm Mode with Docker Secrets):
+### Example (Swarm Mode with Docker Secrets)
 
 ``````sh
 docker service create --name hlstatsxce-daemon \
+    -p 27500:27500/udp \
     -e LOG_LEVEL=1 \
     -e MODE=Normal \
     -e DB_HOST=db \
@@ -166,6 +168,31 @@ Save the file. That should fix hlstats.pl's `--configfile` argument issue.
 A: This docker image runs `perl5`, but [`HLStatsX:CE 1.6.19`](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition) might have been written for `perl4` or early `perl5` (not sure) and the project is no longer actively maintained. You will have to fix the compatibility errors, and rebuild a docker image based on this docker image.
 
 From experience (of the author of this repo), there are quite a number of these kinds of bugs that can cause the daemon the crash. You might end up as a Perl Monk after having fixed them. :)
+
+### Q: Error `Unable to execute query: Illegal mix of collations` (or similar)?
+
+A: This error can happen when certain player names contain special characters (e.g. emoji or unicode).
+
+The fix is to convert all default collations in the DB tables to `utf8mb4_unicode_ci`.
+
+- If installing the first time, replace all instances of `DEFAULT CHARSET=utf8` with `DEFAULT CHARSET=utf8mb4` and `DEFAULT COLLATE=utf8` with `DEFAULT COLLATE=utf8mb4_unicode_ci` in [`HLStatsX:CE 1.6.19` `install.sql`](https://github.com/startersclan/hlstatsx-community-edition/blob/master/sql/install.sql), then install the DB using `install.sql`.
+- If DB is already installed, use [`ALTER`](https://dev.mysql.com/doc/refman/5.7/en/alter-table.html) to convert all `TEXT` table columns to `DEFAULT CHARSET=utf8mb4` and `DEFAULT COLLATE=utf8mb4_unicode_ci`. See [here](https://stackoverflow.com/a/50264108) for more information.
+
+Additionally, to ensure the daemon's character set matches the DB table's collation, use `default_character_set=utf8mb4` in the `mysqld` config file (e.g. `/etc/mysql/mysql.conf.d/mysqld.cnf`):
+
+```cnf
+[client]
+default_character_set=utf8mb4
+...
+
+[mysql]
+default_character_set=utf8mb4
+...
+
+[mysqldump]
+default_character_set=utf8mb4
+...
+```
 
 ### Q: How to use GeoIP2 with the perl daemon?
 
