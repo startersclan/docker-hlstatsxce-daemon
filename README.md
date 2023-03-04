@@ -152,14 +152,12 @@ From experience (of the author of this repo), there are quite a number of these 
 
 ### Q: Error `Unable to execute query: Illegal mix of collations` (or similar)?
 
-A: This error can happen when certain player names contain special characters (e.g. emoji or unicode).
+A: This error can happen when certain player names contain special characters (e.g. emoji or unicode). The fix is to convert all default collations in the DB tables to `utf8mb4_unicode_ci`, using the [`ALTER`](https://dev.mysql.com/doc/refman/5.7/en/alter-table.html) statement to convert all `TABLE` and their `TEXT` columns to `DEFAULT CHARSET=utf8mb4` and `DEFAULT COLLATE=utf8mb4_unicode_ci` (See [`install.sql`](https://github.com/startersclan/hlstatsx-community-edition/blob/master/sql/install.sql)). See [here](https://stackoverflow.com/a/50264108) for a detailed explanation. To fix:
 
-The fix is to convert all default collations in the DB tables to `utf8mb4_unicode_ci`.
+- If on `HLStatsX:CE 1.6.19`, copy this [`79.php`](https://github.com/startersclan/hlstatsx-community-edition/blob/master/web/updater/79.php) into the `./web/updater` folder, login to the `Admin Panel > Update DB` and upgrade the DB version to `79` and `HLStatsX:CE` version to `1.6.20`. The DB is now fixed.
+- Alternatively, copy this [tools_resetdbcollations.php](https://github.com/startersclan/hlstatsx-community-edition/blob/master/web/pages/admintasks/tools_resetdbcollations.php) and overwrite the existing `./web/pages/admintasks/tools_resetdbcollations.php`, login to the `Admin Panel > Reset All DB Collations to utf8mb4`, and run the fixes. The DB is now fixed.
 
-- If installing the first time, replace all instances of `DEFAULT CHARSET=utf8` with `DEFAULT CHARSET=utf8mb4` and `DEFAULT COLLATE=utf8` with `DEFAULT COLLATE=utf8mb4_unicode_ci` in [`HLStatsX:CE 1.6.19` `install.sql`](https://github.com/startersclan/hlstatsx-community-edition/blob/master/sql/install.sql), then install the DB using `install.sql`.
-- If DB is already installed, use [`ALTER`](https://dev.mysql.com/doc/refman/5.7/en/alter-table.html) to convert all `TEXT` table columns to `DEFAULT CHARSET=utf8mb4` and `DEFAULT COLLATE=utf8mb4_unicode_ci`. See [here](https://stackoverflow.com/a/50264108) for more information.
-
-Additionally, to ensure the daemon's character set matches the DB table's collation, use `default_character_set=utf8mb4` in the `mysqld` config file (e.g. `/etc/mysql/mysql.conf.d/mysqld.cnf`):
+Additionally, to ensure the daemon's character set matches the DB tables' collation, use `default_character_set=utf8mb4` in the `mysqld` config file (e.g. `/etc/mysql/mysql.conf.d/mysqld.cnf`):
 
 ```cnf
 [client]
