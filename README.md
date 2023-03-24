@@ -57,7 +57,7 @@ docker service create --name hlstatsxce-daemon \
     -p 27500:27500/udp \
     -e LOG_LEVEL=1 \
     -e MODE=Normal \
-    -e DB_HOST=db \
+    -e DB_HOST=db:3306 \
     -e DB_NAME=DOCKER-SECRET:secret_db_name \
     -e DB_USER=DOCKER-SECRET:secret_db_user \
     -e DB_PASSWORD=DOCKER-SECRET:secret_db_password \
@@ -84,7 +84,7 @@ In general, it is better to use environment variables than a config file, becaus
 | `CONFIG_FILE` | `"./hlstats.conf"` | Path to config file. May be absolute or relative | `-c,--configfile`
 | `LOG_LEVEL` | `"1"` | Log level for debugging | 0 - `-n, --nodebug`<br /> 1 - `-d, --debug` <br />  2 - `-dd, --debug --debug`
 | `MODE` | `"Normal"` | Player tracking mode (`Normal`, `LAN` or `NameTrack`) | `-m, --mode`
-| `DB_HOST` | `"localhost"` | Database IP or hostname, in format `<ip>` or `<hostname>`. Port may be omitted, in which case it is `27500` by default. To use a custom port, use format `<ip>:<port>` or `<hostname>:<port>` specifed. | `--db-host`
+| `DB_HOST` | `"localhost"` | Database IP or hostname, in format `<ip>:<port>` or `<hostname>:<port>`. Port may be omitted, in which case it is `3306` by default. To use a custom port, use format `<ip>:<port>` or `<hostname>:<port>` specifed. | `--db-host`
 | `DB_NAME` | `"hlstats"` | Database name | `--db-name`
 | `DB_USER` | `""` | Database user | `--db-user`
 | `DB_PASSWORD` | `""` | Database password | `--db-password`
