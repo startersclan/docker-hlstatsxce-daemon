@@ -6,5 +6,5 @@ RUN apk add --no-cache --virtual build-dependencies \
     && cpanm \
         Geo::IP::PurePerl \
     && apk del build-dependencies \
-    && rm -rf /root/.cpan /root/.cpanminus
+    && rm -rf /root/.cpan /root/.cpanm /root/.cpanminus
 '@
