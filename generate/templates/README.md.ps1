@@ -40,6 +40,12 @@ Variants may contain one or more additional Perl modules. E.g. `:geoip-geoip2-em
 | `geoip2` | `MaxMind::DB::Reader`<br> `MaxMind::DB::Reader::XS`
 | `emailsender` | `Email::Sender::Simple`
 
+Variants may also contain additional tools. E.g. `:geoip-geoip2-emailsender-curl` contains the `geoip`, `geoip2`, and `emailsender` Perl modules, and `curl`, `wget`, and `openssl` tools:
+
+| Tag component | Tools | Description
+|:---:|:---:|:---:|
+| `curl` | `curl`, `wget`, `openssl` | Useful for cron job containers for notifications or webhooks
+
 ## Usage
 
 

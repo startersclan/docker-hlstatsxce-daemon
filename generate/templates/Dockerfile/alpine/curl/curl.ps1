@@ -1,5 +1,5 @@
 @'
-# Install basic tools for cron
+# Install basic tools for curl
 RUN apk add --no-cache \
         curl \
         wget \
