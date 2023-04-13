@@ -34,5 +34,5 @@ RUN apk add --no-cache --virtual build-dependencies \
     # && cpanm \
     #     MaxMind::DB::Reader::XS \
     && apk del build-dependencies \
-    && rm -rf /root/.cpan /root/.cpanminus
+    && rm -rf /root/.cpan /root/.cpanm /root/.cpanminus
 '@
