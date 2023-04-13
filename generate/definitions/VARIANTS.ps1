@@ -10,6 +10,7 @@ $local:VARIANTS_MATRIX = @(
             @{ components = @( 'geoip' ) }
             @{ components = @( 'geoip', 'geoip2' ) }
             @{ components = @( 'geoip', 'geoip2', 'emailsender' ) }
+            @{ components = @( 'geoip', 'geoip2', 'emailsender', 'curl' ) }
         )
     }
     @{
@@ -23,6 +24,7 @@ $local:VARIANTS_MATRIX = @(
             @{ components = @( 'geoip' ); tag_as_latest = $true }
             @{ components = @( 'geoip', 'geoip2' ) }
             @{ components = @( 'geoip', 'geoip2', 'emailsender' ) }
+            @{ components = @( 'geoip', 'geoip2', 'emailsender', 'curl' ) }
         )
     }
 )

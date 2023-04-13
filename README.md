@@ -14,10 +14,12 @@ Dockerized [HLStatsX:CE](https://bitbucket.org/Maverick_of_UC/hlstatsx-community
 | `:v1.6.19-geoip-ubuntu-16.04` | [View](variants/v1.6.19-geoip-ubuntu-16.04) |
 | `:v1.6.19-geoip-geoip2-ubuntu-16.04` | [View](variants/v1.6.19-geoip-geoip2-ubuntu-16.04) |
 | `:v1.6.19-geoip-geoip2-emailsender-ubuntu-16.04` | [View](variants/v1.6.19-geoip-geoip2-emailsender-ubuntu-16.04) |
+| `:v1.6.19-geoip-geoip2-emailsender-curl-ubuntu-16.04` | [View](variants/v1.6.19-geoip-geoip2-emailsender-curl-ubuntu-16.04) |
 | `:v1.6.19-emailsender-alpine-3.8` | [View](variants/v1.6.19-emailsender-alpine-3.8) |
 | `:v1.6.19-geoip-alpine-3.8`, `:latest` | [View](variants/v1.6.19-geoip-alpine-3.8) |
 | `:v1.6.19-geoip-geoip2-alpine-3.8` | [View](variants/v1.6.19-geoip-geoip2-alpine-3.8) |
 | `:v1.6.19-geoip-geoip2-emailsender-alpine-3.8` | [View](variants/v1.6.19-geoip-geoip2-emailsender-alpine-3.8) |
+| `:v1.6.19-geoip-geoip2-emailsender-curl-alpine-3.8` | [View](variants/v1.6.19-geoip-geoip2-emailsender-curl-alpine-3.8) |
 
 Variants are based on `ubuntu:16.04` or `alpine:3.8`. All variants include `DBI` and `DBD::mysql` perl modules.
 
@@ -28,6 +30,12 @@ Variants may contain one or more additional Perl modules. E.g. `:geoip-geoip2-em
 | `geoip` | `Geo::IP::PurePerl`
 | `geoip2` | `MaxMind::DB::Reader`<br> `MaxMind::DB::Reader::XS`
 | `emailsender` | `Email::Sender::Simple`
+
+Variants may also contain additional tools. E.g. `:geoip-geoip2-emailsender-curl` contains the `geoip`, `geoip2`, and `emailsender` Perl modules, and `curl`, `wget`, and `openssl` tools:
+
+| Tag component | Tools | Description
+|:---:|:---:|:---:|
+| `curl` | `curl`, `wget`, `openssl` | Useful for cron job containers for notifications or webhooks
 
 ## Usage
 
