@@ -6,6 +6,14 @@
 
 Dockerized [HLStatsX:CE](https://bitbucket.org/Maverick_of_UC/hlstatsx-community-edition/) perl daemon.
 
+## Deprecation
+
+This project is now deprecated.
+
+As mentioned in the [FAQ](#q-perl-errors-on-startup), the daemon image starts with errors because the daemon code is outdated.
+
+A fully working daemon image with updated code (with GeoIP2 support) has been developed in https://github.com/startersclan/hlstatsx-community-edition. There is now no more need for this project, but it will be preserved only for the sake of existing support.
+
 ## Tags
 
 | Tag | Dockerfile Build Context |
